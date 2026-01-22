@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.6380000000000001,
+        "y": 7.369249999999999
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.325701061210648,
+        "y": 6.721299508306265
+      },
+      "isLocked": false,
+      "linkedName": "red2pieceleftmove2"
+    },
+    {
+      "anchor": {
+        "x": 5.45025,
+        "y": 5.06825
+      },
+      "prevControl": {
+        "x": 6.0547499999999985,
+        "y": 6.06275
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -119.99999999999999
+  },
+  "reversed": false,
+  "folder": "Red 2 Piece Left",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -55.0
+  },
+  "useDefaultConstraints": false
+}
