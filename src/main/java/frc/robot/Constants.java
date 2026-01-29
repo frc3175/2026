@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.security.PublicKey;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
@@ -90,32 +92,24 @@ public class WristConstants {
 
          
     }
-    public class CoralIntakeConstants{
+    public class IntakeConstants{
 
-        public static final int MOTORID = 46;
-        public static final int CANRANGEID = 1;
+        public static final int LEFTMOTORID = 46;
+        public static final int RIGHTMOTORID = 98;
+        public static final int RACKMOTORID = 99;
 
-        public static final double INTAKE = 12;
+        public static final double CurrentLimit = 40.0; 
+        
+
+        public static final double INTAKEIN = 12;
         public static final double OUTTAKE = -6;
-        public static final double OUTTAKEFAST = -13; //-0.5
         public static final double STOP = 0;
-        public static final double L1 = -5;
-        public static final double INTERMEDIATE = 0;
-        public static final double HOLD = 0.4;
+        public static final double RACKHOME = -5;
+        public static final double RACKMAX = 0;
+       
     
     }
-    public class AlgaeIntakeConstants{
-
-        public static final int MOTORID = 53;
-        public static final int CANRANGEID = 29;
-
-        public static final double INTAKE = 12;
-        public static final double OUTTAKE = -12;
-        public static final double HOLD = 6;
-        public static final double STOP = 0;
-        public static final double INTERMEDIATE = 0;
-    
-    }    
+      
     public class ClimberConstants{
 
         public static final int MOTORID = 22;
@@ -123,6 +117,25 @@ public class WristConstants {
         public static final int SERVOPORT = 0;
         
         public static final double HOME = 0;
+    }
+    
+    public class ShooterConstants{
+        public static final int LEFTMOTORID = 100;
+        public static final int RIGHTMOTORID = 101;
+
+        public static final double CurrentLimit = 40.0; 
+    }
+
+    public class HopperConstants{
+        public static final int FLOORMOTORID = 102;
+        
+        public static final double CurrentLimit = 40.0; 
+
+        
+    }
+
+    public class Buttons{
+
     }
 
    
