@@ -27,71 +27,8 @@ public class Constants {
 
     
 
-    public class ElevatorConstants {
-
-        public static final int BACKID = 19;
-        public static final int FRONTID = 3;
-
-        //set points
-        public static final double HOME = 0.4;  //0.4
-        public static final double HUMAN = 1.0;
-        public static final double L1 = 0;
-        public static final double L2 = 2.2; //4
-        public static final double L3 = 8.2; //10
-        public static final double L4 = 17;
-        public static final double BARGE = 17.6;
-        public static final double ALGAET2 = 3.33;
-        public static final double ALGAET3 = 8.53;
-        public static final double INTERMEDIATE = 0;
-        public static final double INTAKE = 0;
-        public static final double CLIMB = 0;
-        public static final double PROCESSOR = 0;
-        public static final double ALGAEHOME = 0;
-        
-
-        //configs
-        public static final double kp = 1; //1
-        public static final double ki = 0; //0
-        public static final double kD = 0; //0.05
-        public static final double kV = 0.05; //0.05
-        public static final double kS = 0.08; //0.08
-        public static final double kG = 0.12; //0.16
-
-        public static final double  MotionMagicCruiseVelocity = 90;
-        public static final double  MotionMagicAcceleration = 300;
-        public static final double  MotionMagicJerk = 1200;
-        public static final boolean EnableFOC = true;
-
-        public static final boolean CurrentLimitEnable = true;
-        public static final double  CurrentLimit       = 80;
-
-}
 
 
-public class WristConstants {
-
-    public static final int MOTORID = 2;
-    public static final int CANCODERID = 56;
-
-    public static final double HOME = 0; //working
-    public static final double HUMAN = 0;
-    public static final double UPHUMAN = 0;
-    public static final double L1 = -32;
-    public static final double L2 = -31.3;
-    public static final double L3 = -31.3;//-8.8
-    public static final double L4 = -28.3;
-    public static final double BARGE = -18;
-    public static final double ALGAET2 = -7.12;
-    public static final double ALGAET3 = -7.12;
-    public static final double INTERMEDIATE = -37.6;
-    public static final double INTAKE = 0;
-    public static final double CLIMB = 0;
-    public static final double PROCESSOR = 0;
-    public static final double ALGAEHOME = 0;
-   
-
-         
-    }
     public class IntakeConstants{
 
         public static final int LEFTMOTORID = 46;
@@ -128,15 +65,32 @@ public class WristConstants {
 
     public class HopperConstants{
         public static final int FLOORMOTORID = 102;
-        
+
         public static final double CurrentLimit = 40.0; 
 
         
     }
 
+    public class TowerConstants{
+
+        public static final int LEFTROLLERID = 103;
+        public static final int RIGHTROLLERID = 104;
+        public static final int KICKERID = 105;
+
+        public static final double CurrentLimit = 40.0; 
+        
+
+        public static final double RUNSPEED = 12;
+        public static final double STOP = 0;
+        
+
+    }
+
     public class Buttons{
 
     }
+
+   
 
    
     

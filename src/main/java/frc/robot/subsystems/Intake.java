@@ -47,7 +47,7 @@ public Intake() {
     m_intakeleftMotor = new TalonFX(Constants.IntakeConstants.LEFTMOTORID, Constants.CANIVORE);
     m_intakerightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
 
-    //TODO: add motion magic for rack
+    
   
      
     final TalonFXConfiguration rackConfiguration = new TalonFXConfiguration();
