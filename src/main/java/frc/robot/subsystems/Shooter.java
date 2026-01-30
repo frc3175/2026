@@ -52,7 +52,7 @@ public class Shooter extends SubsystemBase {
     .withKA(0));
   /** Creates a new Shooter. */
   public Shooter() {
-    //TODO: add tower code 
+    
     for(int i = 0; i < 2; ++i){
       var status = m_leftmotor.getConfigurator().apply(shooterconfig);
       if(status.isOK()) break;
@@ -69,7 +69,7 @@ public class Shooter extends SubsystemBase {
   
   }
 
-  public Command SetTarget(double velocity){
+  public Command SetVelocity(double velocity){
     return run(() -> { 
       leftsetpointreq.withVelocity(RotationsPerSecond.of(velocity));
       m_leftmotor.setControl(leftsetpointreq);

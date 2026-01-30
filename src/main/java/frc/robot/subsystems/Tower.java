@@ -39,7 +39,7 @@ DutyCycleOut intakePercentOutput;
 
 
 
-public Tower() {
+public Tower(){
     m_kickMotor = new TalonFX(Constants.TowerConstants.KICKERID , Constants.CANIVORE);
     m_leftRoller = new TalonFX(Constants.TowerConstants.LEFTROLLERID, Constants.CANIVORE);
     m_rightRoller = new TalonFX(Constants.TowerConstants.RIGHTROLLERID, Constants.CANIVORE);

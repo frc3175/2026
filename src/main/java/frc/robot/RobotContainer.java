@@ -25,6 +25,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tower;
 import frc.robot.subsystems.Hopper;
 
 
@@ -36,8 +37,7 @@ public class RobotContainer {
 
      private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController driverController = new CommandXboxController(Constants.DRIVER_CONTROLER);
-    private final CommandXboxController opController  = new CommandXboxController(Constants.OPERATOR_CONTROLER);
+    
    
     
     public final Limelight m_ll = new Limelight();
@@ -45,12 +45,14 @@ public class RobotContainer {
 
 
 
-    public final Shooter m_elevator = new Shooter();
-    public final Hopper m_wrist = new Hopper();
+    public final Shooter m_shooter = new Shooter();
+    public final Hopper m_hopper = new Hopper();
     public final Intake m_intake = new Intake();
+    public final Tower m_tower  = new Tower();
     
     
     public final Climber m_climber = new Climber();
+
    
 
     
@@ -58,6 +60,8 @@ public class RobotContainer {
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+ 
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -107,18 +111,18 @@ public class RobotContainer {
             // Drivetrain will execute this command periodically
             new SwerveDrive(
                 drivetrain, 
-                () -> -driverController.getRawAxis(translationAxis), 
-                () -> -driverController.getRawAxis(strafeAxis), 
-                () -> -driverController.getRawAxis(rotationAxis), 
+                () -> -Constants.DRIVER_CONTROLER.getRawAxis(translationAxis), 
+                () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
+                () -> -Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
-                () -> driverController.rightBumper().getAsBoolean(),
+                () -> Constants.DRIVER_CONTROLER.rightBumper().getAsBoolean(),
                 () -> SmartDashboard.getBoolean("Max speed", false))
         );
 
         
          drivetrain.registerTelemetry(logger::telemeterize);
 
-         driverController.x().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+         Constants.Buttons.FIELDRESET.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         
 
@@ -126,15 +130,24 @@ public class RobotContainer {
         
 
 
-        driverController.rightTrigger().onTrue(new AutoRight(m_ll));
-        driverController.leftTrigger().onTrue(new AutoLeft(m_ll));
+        Constants.Buttons.AUTOALIGNRIGHT.onTrue(new AutoRight(m_ll));
+        Constants.Buttons.AUTOALIGNLEFT.onTrue(new AutoLeft(m_ll));
 
-        
+        Constants.Buttons.SHOOT.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)));
+
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 
     
         
-        opController.leftBumper().onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)));
-        opController.leftBumper().onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
+        Constants.Buttons.INTAKE.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)).alongWith(new InstantCommand(() -> m_intake.extendintake())));
+        Constants.Buttons.INTAKE.onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
+
+        Constants.Buttons.SPINUP.onTrue(new InstantCommand(() -> m_shooter.SetVelocity(Constants.ShooterConstants.SPINSPEED)));
+
+        Constants.Buttons.EXTENDHOP.onTrue(new InstantCommand(() -> m_intake.extendintake()));
+        Constants.Buttons.RETRACTHOP.onTrue(new InstantCommand(() -> m_intake.retractintake()));
+
+
+
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         

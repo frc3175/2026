@@ -4,6 +4,8 @@ import java.security.PublicKey;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class Constants {
     public static final double TRACK_WIDTH = Units.inchesToMeters(22.875);
@@ -21,8 +23,12 @@ public class Constants {
     public static final String CANIVORE = "elevatoryiboi";
     public static final String RIO = "rio";
 
-    public static final int DRIVER_CONTROLER = 0;
-    public static final int OPERATOR_CONTROLER = 1;
+    public static final CommandXboxController DRIVER_CONTROLER = new CommandXboxController(0);
+    public static final CommandXboxController OPERATOR_CONTROLER = new CommandXboxController(1);
+    
+
+   
+   
   
 
     
@@ -61,6 +67,7 @@ public class Constants {
         public static final int RIGHTMOTORID = 101;
 
         public static final double CurrentLimit = 40.0; 
+        public static final double SPINSPEED = 12;
     }
 
     public class HopperConstants{
@@ -87,6 +94,19 @@ public class Constants {
     }
 
     public class Buttons{
+        public static final Trigger FIELDRESET = DRIVER_CONTROLER.x();
+        public static final Trigger AUTOALIGNLEFT = DRIVER_CONTROLER.leftTrigger();
+        public static final Trigger AUTOALIGNRIGHT = DRIVER_CONTROLER.rightTrigger();
+
+        public static final Trigger SHOOT = DRIVER_CONTROLER.a();
+
+        public static final Trigger INTAKE =  OPERATOR_CONTROLER.rightBumper();
+
+        public static final Trigger SPINUP = OPERATOR_CONTROLER.leftBumper();
+        
+        public static final Trigger EXTENDHOP = OPERATOR_CONTROLER.x();
+        public static final Trigger RETRACTHOP = OPERATOR_CONTROLER.b();
+        
 
     }
 
