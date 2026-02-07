@@ -7,11 +7,12 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
-import com.ctre.phoenix6.BaseStatusSignal;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.CoastOut;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.setshootvel;
 
 public class Shooter extends SubsystemBase {
 
@@ -30,6 +32,8 @@ public class Shooter extends SubsystemBase {
   private final TalonFX m_rightmotor = new TalonFX(Constants.ShooterConstants.RIGHTMOTORID, Constants.CANIVORE);
   
   private final CoastOut coastreq = new CoastOut();
+
+  public  boolean m_running = false;
 
   private final VelocityVoltage leftsetpointreq = new VelocityVoltage(0);
 
@@ -53,27 +57,31 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   public Shooter() {
     
-    for(int i = 0; i < 2; ++i){
-      var status = m_leftmotor.getConfigurator().apply(shooterconfig);
-      if(status.isOK()) break;
-    }
-    m_rightmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Aligned));
+    
+    m_rightmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
 
-    setDefaultCommand(coastshooter());
+    setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("shooter velocity", getVelocity());
+    SmartDashboard.putBoolean("shooterruning", m_running);
+
+    
   
   }
 
-  public Command SetVelocity(double velocity){
-    return run(() -> { 
-      leftsetpointreq.withVelocity(RotationsPerSecond.of(velocity));
-      m_leftmotor.setControl(leftsetpointreq);
-    });
+  public void setshootvel(double velocity){
+    if(Constants.Buttons.SPINUP.getAsBoolean()){
+      m_leftmotor.setControl(new DutyCycleOut(velocity));
+      m_running = true;      
+    }
+    else{
+      m_running = false;
+      m_leftmotor.setControl(new DutyCycleOut(0));
+    }
   }
 
   public Command coastshooter(){

@@ -7,15 +7,12 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.AutoLeft;
 import frc.robot.commands.AutoRight;
 import frc.robot.commands.SwerveDrive;
@@ -41,17 +38,17 @@ public class RobotContainer {
    
     
     public final Limelight m_ll = new Limelight();
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    // public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
 
 
     public final Shooter m_shooter = new Shooter();
-    public final Hopper m_hopper = new Hopper();
-    public final Intake m_intake = new Intake();
-    public final Tower m_tower  = new Tower();
+    // public final Hopper m_hopper = new Hopper();
+    // public final Intake m_intake = new Intake();
+     public final Tower m_tower  = new Tower();
     
     
-    public final Climber m_climber = new Climber();
+    // public final Climber m_climber = new Climber();
 
    
 
@@ -64,7 +61,7 @@ public class RobotContainer {
  
 
     /* Path follower */
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
 
 
@@ -88,7 +85,7 @@ public class RobotContainer {
             .andThen(new SetElevator(m_elevator, m_robotState, "HOME")));*/
 
         
-        autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
+        // autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
 
       
         
@@ -97,7 +94,7 @@ public class RobotContainer {
     
  
        
-        SmartDashboard.putData("Auto Mode", autoChooser);
+        // SmartDashboard.putData("Auto Mode", autoChooser);
         SmartDashboard.putNumber("set elevator", 0);
 
         configureBindings();
@@ -107,22 +104,22 @@ public class RobotContainer {
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
+        // drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
-            new SwerveDrive(
-                drivetrain, 
-                () -> -Constants.DRIVER_CONTROLER.getRawAxis(translationAxis), 
-                () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
-                () -> -Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
-                () -> true, 
-                () -> Constants.DRIVER_CONTROLER.rightBumper().getAsBoolean(),
-                () -> SmartDashboard.getBoolean("Max speed", false))
-        );
+        //     new SwerveDrive(
+        //         drivetrain, 
+        //         () -> -Constants.DRIVER_CONTROLER.getRawAxis(translationAxis), 
+        //         () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
+        //         () -> -Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
+        //         () -> true, 
+        //         () -> Constants.DRIVER_CONTROLER.rightBumper().getAsBoolean(),
+        //         () -> SmartDashboard.getBoolean("Max speed", false))
+        // );
 
         
-         drivetrain.registerTelemetry(logger::telemeterize);
+        //  drivetrain.registerTelemetry(logger::telemeterize);
 
-         Constants.Buttons.FIELDRESET.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        //  Constants.Buttons.FIELDRESET.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         
 
@@ -134,17 +131,18 @@ public class RobotContainer {
         Constants.Buttons.AUTOALIGNLEFT.onTrue(new AutoLeft(m_ll));
 
         Constants.Buttons.SHOOT.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)));
+        
 
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 
     
         
-        Constants.Buttons.INTAKE.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)).alongWith(new InstantCommand(() -> m_intake.extendintake())));
-        Constants.Buttons.INTAKE.onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
+        // Constants.Buttons.INTAKE.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)).alongWith(new InstantCommand(() -> m_intake.extendintake())));
+        // Constants.Buttons.INTAKE.onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
 
-        Constants.Buttons.SPINUP.onTrue(new InstantCommand(() -> m_shooter.SetVelocity(Constants.ShooterConstants.SPINSPEED)));
+        //Constants.Buttons.SPINUP.onTrue(new InstantCommand(() -> m_shooter.SetVelocity(Constants.ShooterConstants.SPINSPEED)));
 
-        Constants.Buttons.EXTENDHOP.onTrue(new InstantCommand(() -> m_intake.extendintake()));
-        Constants.Buttons.RETRACTHOP.onTrue(new InstantCommand(() -> m_intake.retractintake()));
+        // Constants.Buttons.EXTENDHOP.onTrue(new InstantCommand(() -> m_intake.extendintake()));
+        // Constants.Buttons.RETRACTHOP.onTrue(new InstantCommand(() -> m_intake.retractintake()));
 
 
 
@@ -153,7 +151,7 @@ public class RobotContainer {
         
         
 
-drivetrain.registerTelemetry(logger::telemeterize);
+// drivetrain.registerTelemetry(logger::telemeterize);
 
          
 
@@ -164,7 +162,7 @@ drivetrain.registerTelemetry(logger::telemeterize);
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        return autoChooser.getSelected();
+        return null;
        // return null;
     }
 }

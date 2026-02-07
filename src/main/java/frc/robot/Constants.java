@@ -1,6 +1,5 @@
 package frc.robot;
 
-import java.security.PublicKey;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
@@ -38,8 +37,8 @@ public class Constants {
     public class IntakeConstants{
 
         public static final int LEFTMOTORID = 46;
-        public static final int RIGHTMOTORID = 98;
-        public static final int RACKMOTORID = 99;
+        public static final int RIGHTMOTORID = 25;
+        public static final int RACKMOTORID = 26;
 
         public static final double CurrentLimit = 40.0; 
         
@@ -63,15 +62,15 @@ public class Constants {
     }
     
     public class ShooterConstants{
-        public static final int LEFTMOTORID = 100;
-        public static final int RIGHTMOTORID = 101;
+        public static final int LEFTMOTORID = 13;
+        public static final int RIGHTMOTORID = 11;
 
         public static final double CurrentLimit = 40.0; 
-        public static final double SPINSPEED = 12;
+        public static final double SPINSPEED = -0.57;
     }
 
     public class HopperConstants{
-        public static final int FLOORMOTORID = 102;
+        public static final int FLOORMOTORID = 21;
 
         public static final double CurrentLimit = 40.0; 
 
@@ -80,14 +79,14 @@ public class Constants {
 
     public class TowerConstants{
 
-        public static final int LEFTROLLERID = 103;
-        public static final int RIGHTROLLERID = 104;
-        public static final int KICKERID = 105;
+        public static final int LEFTROLLERID = 22;
+        public static final int RIGHTROLLERID = 23;
+        public static final int KICKERID = 12;
 
         public static final double CurrentLimit = 40.0; 
         
 
-        public static final double RUNSPEED = 12;
+        public static final double RUNSPEED = -12;
         public static final double STOP = 0;
         
 
@@ -98,7 +97,7 @@ public class Constants {
         public static final Trigger AUTOALIGNLEFT = DRIVER_CONTROLER.leftTrigger();
         public static final Trigger AUTOALIGNRIGHT = DRIVER_CONTROLER.rightTrigger();
 
-        public static final Trigger SHOOT = DRIVER_CONTROLER.a();
+        public static final Trigger SHOOT = OPERATOR_CONTROLER.a();
 
         public static final Trigger INTAKE =  OPERATOR_CONTROLER.rightBumper();
 
