@@ -42,10 +42,10 @@ public class RobotContainer {
 
 
 
-    public final Shooter m_shooter = new Shooter();
-    // public final Hopper m_hopper = new Hopper();
+    public static final Shooter m_shooter = new Shooter();
+     public static final Hopper m_hopper = new Hopper();
     // public final Intake m_intake = new Intake();
-     public final Tower m_tower  = new Tower();
+     public static final Tower m_tower  = new Tower();
     
     
     // public final Climber m_climber = new Climber();

@@ -73,6 +73,7 @@ public class Constants {
         public static final int FLOORMOTORID = 21;
 
         public static final double CurrentLimit = 40.0; 
+        public static final double FLOORSPEED = 0.2;
 
         
     }

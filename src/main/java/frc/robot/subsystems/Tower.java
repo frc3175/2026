@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.TowerRun;
 
 
@@ -63,7 +64,7 @@ public Tower(){
     // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
 
     towerVelocity = new DutyCycleOut(0);
-    setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED));
+    setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED, RobotContainer.m_hopper, Constants.HopperConstants.FLOORSPEED));
     //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
 
 
