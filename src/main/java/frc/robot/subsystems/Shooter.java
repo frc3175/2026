@@ -48,12 +48,12 @@ public class Shooter extends SubsystemBase {
     .withMotorOutput(intialconfig.MotorOutput.clone().withInverted(InvertedValue.CounterClockwise_Positive))
     .withFeedback(intialconfig.Feedback.clone().withSensorToMechanismRatio(1))
     .withSlot0(intialconfig.Slot0.clone()
-    .withKP(0.8)
-    .withKI(0)
-    .withKD(0)
-    .withKS(0)
-    .withKV(0.12)
-    .withKA(0));
+    .withKP(Constants.ShooterConstants.SHOOTER_P)
+    .withKI(Constants.ShooterConstants.SHOOTER_I)
+    .withKD(Constants.ShooterConstants.SHOOTER_D)
+    .withKS(Constants.ShooterConstants.SHOOTER_S)
+    .withKV(Constants.ShooterConstants.SHOOTER_V)
+    .withKA(Constants.ShooterConstants.SHOOTER_A));
   /** Creates a new Shooter. */
   public Shooter() {
     

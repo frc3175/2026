@@ -7,6 +7,7 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
+import com.ctre.phoenix6.SignalLogger;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -43,7 +44,7 @@ public class RobotContainer {
 
 
     public static final Shooter m_shooter = new Shooter();
-     public static final Hopper m_hopper = new Hopper();
+     //public static final Hopper m_hopper = new Hopper();
     // public final Intake m_intake = new Intake();
      public static final Tower m_tower  = new Tower();
     
@@ -62,6 +63,10 @@ public class RobotContainer {
 
     /* Path follower */
     // private final SendableChooser<Command> autoChooser;
+
+    public SignalLogger m_signallogger = new SignalLogger();
+
+    
 
 
 
@@ -86,6 +91,8 @@ public class RobotContainer {
 
         
         // autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
+        SignalLogger.setPath("C:\\Users\\robot\\Documents\\DataLogs");
+        SignalLogger.start();
 
       
         

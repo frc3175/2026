@@ -48,23 +48,30 @@ public Tower(){
     
   
      
-    final TalonFXConfiguration rackConfiguration = new TalonFXConfiguration();
-    rackConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    rackConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
-    rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+    final TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
+    kickConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
+    kickConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
+    kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+    kickConfiguration.Slot0.kP = Constants.TowerConstants.TOWER_P;
+    kickConfiguration.Slot0.kI = Constants.TowerConstants.TOWER_I;
+    kickConfiguration.Slot0.kD = Constants.TowerConstants.TOWER_D;
+    kickConfiguration.Slot0.kS = Constants.TowerConstants.TOWER_S;
+    kickConfiguration.Slot0.kA = Constants.TowerConstants.TOWER_A;
+    kickConfiguration.Slot0.kV = Constants.TowerConstants.TOWER_V;
+
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
     rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
-    rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+    kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
 
    
 
-    m_kickMotor.getConfigurator().apply(rackConfiguration, 0.050);
+    m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
     // m_leftRoller.getConfigurator().apply(rollerConfiguration, 0.050);
     // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
 
     towerVelocity = new DutyCycleOut(0);
-    setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED, RobotContainer.m_hopper, Constants.HopperConstants.FLOORSPEED));
+    setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED));
     //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
 
 

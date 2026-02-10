@@ -12,15 +12,15 @@ import frc.robot.subsystems.Tower;
 public class TowerRun extends Command {
   public Tower m_tower;
   public double m_velocity;
-  public Hopper m_hopper;
-  public double m_floorvel;
+  // public Hopper m_hopper;
+  // public double m_floorvel;
   /** Creates a new TowerRun. */
-  public TowerRun(Tower tower, double velocity, Hopper hopper, double floorvel ) {
+  public TowerRun(Tower tower, double velocity /*,  Hopper hopper, double floorvel */ ) {
     m_tower = tower;
     m_velocity = velocity;
-    m_hopper = hopper;
-    m_floorvel = floorvel;
-    addRequirements(m_tower, m_hopper);
+    // m_hopper = hopper;
+    // m_floorvel = floorvel;
+    addRequirements(m_tower);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -32,7 +32,7 @@ public class TowerRun extends Command {
   @Override
   public void execute() {
     m_tower.towerrun(m_velocity);
-    m_hopper.runfloor(m_floorvel);
+    // m_hopper.runfloor(m_floorvel);
   }
 
   // Called once the command ends or is interrupted.

@@ -67,6 +67,14 @@ public class Constants {
 
         public static final double CurrentLimit = 40.0; 
         public static final double SPINSPEED = -0.57;
+        public static final double SHOOTER_P = 0.8;
+        public static final double SHOOTER_I = 0;
+        public static final double SHOOTER_D = 0;
+        public static final double SHOOTER_V = 0.12;
+        public static final double SHOOTER_S = 0;
+        public static final double SHOOTER_A = 0;
+    
+
     }
 
     public class HopperConstants{
@@ -85,6 +93,12 @@ public class Constants {
         public static final int KICKERID = 12;
 
         public static final double CurrentLimit = 40.0; 
+        public static final double TOWER_P = 0.8;
+        public static final double TOWER_I = 0;
+        public static final double TOWER_D = 0;
+        public static final double TOWER_V = 0.12;
+        public static final double TOWER_S = 0;
+        public static final double TOWER_A = 0;
         
 
         public static final double RUNSPEED = -12;
