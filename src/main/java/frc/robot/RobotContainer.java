@@ -96,14 +96,15 @@ public class RobotContainer {
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractintake()));
         
         // autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
+
+
+
+        SignalLogger.start();
         
 
       
         
 
-       
-    
- 
        
         // SmartDashboard.putData("Auto Mode", autoChooser);
         SmartDashboard.putNumber("set elevator", 0);
@@ -148,7 +149,7 @@ public class RobotContainer {
     
         
         Intakein.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)));//.alongWith(new InstantCommand(() -> m_intake.extendintake())));
-        Intakein.onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
+        Intakein.onFalse(new InstantCommand(() -> m_intake.intakerun(0)));
 
         Spinup.onTrue(new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED))).onFalse(new InstantCommand(() -> m_shooter.setshootvel(0)));
 

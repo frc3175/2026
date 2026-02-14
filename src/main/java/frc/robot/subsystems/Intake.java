@@ -7,8 +7,10 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
@@ -68,13 +70,15 @@ public Intake() {
 
     intakePercentOutput = new DutyCycleOut(0);
 
+    m_intakerightMotor.setControl(new Follower(Constants.IntakeConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
+
 
     m_motmag = new MotionMagicVoltage(0);
 
     configure();
 
 
-    setDefaultCommand(new IntakeRun(this, Constants.IntakeConstants.INTAKEIN));
+    //setDefaultCommand(new IntakeRun(this, Constants.IntakeConstants.INTAKEIN));
 
     
 
@@ -95,7 +99,7 @@ public Intake() {
     
     intakePercentOutput.Output = velocity * 5;
         m_intakeleftMotor.setControl(intakePercentOutput);
-        m_intakerightMotor.setControl(intakePercentOutput);
+   
     
    
   }
@@ -104,7 +108,7 @@ public Intake() {
    public void outake(double velocity){
     intakePercentOutput.Output = -velocity * 5;
         m_intakeleftMotor.setControl(intakePercentOutput);
-        m_intakerightMotor.setControl(intakePercentOutput);
+        
   }
 
 public void setpos(double postion){
@@ -115,7 +119,7 @@ public void setpos(double postion){
   }
 
   public void extendintake(){
-    m_rackMotor.setControl(m_motmag.withPosition(Constants.IntakeConstants.RACKMAX));
+    m_rackMotor.setControl(new DutyCycleOut(Constants.IntakeConstants.RACKMAX));
   }
 
    public void retractintake(){

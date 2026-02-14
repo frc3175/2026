@@ -36,7 +36,7 @@ public class Constants {
 
     public class IntakeConstants{
 
-        public static final int LEFTMOTORID = 46;
+        public static final int LEFTMOTORID = 37;
         public static final int RIGHTMOTORID = 25;
         public static final int RACKMOTORID = 26;
 
@@ -46,8 +46,8 @@ public class Constants {
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
-        public static final double RACKHOME = -5;
-        public static final double RACKMAX = 0;
+        public static final double RACKHOME = 0;
+        public static final double RACKMAX = 0.1;
 
         public static final double INTAKE_P = 0.8;
         public static final double INTAKE_I = 0;
