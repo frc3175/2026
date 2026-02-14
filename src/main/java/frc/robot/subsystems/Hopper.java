@@ -24,6 +24,12 @@ public Hopper() {
     floorConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.CurrentLimit);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+     floorConfiguration.Slot0.kP = Constants.HopperConstants.HOPPER_P;
+    floorConfiguration.Slot0.kI = Constants.HopperConstants.HOPPER_I;
+    floorConfiguration.Slot0.kD = Constants.HopperConstants.HOPPER_D;
+    floorConfiguration.Slot0.kS = Constants.HopperConstants.HOPPER_S;
+    floorConfiguration.Slot0.kA = Constants.HopperConstants.HOPPER_A;
+    floorConfiguration.Slot0.kV = Constants.HopperConstants.HOPPER_V;
 
     // setDefaultCommand(new InstantCommand(() -> runfloor(0.2)));
  
@@ -35,6 +41,7 @@ public Hopper() {
   
   @Override
   public void periodic() {
+    
   }
 
   public void runfloor(double speed){

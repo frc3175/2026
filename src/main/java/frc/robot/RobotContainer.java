@@ -8,6 +8,7 @@ package frc.robot;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -44,8 +45,8 @@ public class RobotContainer {
 
 
     public static final Shooter m_shooter = new Shooter();
-     //public static final Hopper m_hopper = new Hopper();
-    // public final Intake m_intake = new Intake();
+     public static final Hopper m_hopper = new Hopper();
+    public final Intake m_intake = new Intake();
      public static final Tower m_tower  = new Tower();
     
     
@@ -74,21 +75,14 @@ public class RobotContainer {
     
 
     public RobotContainer() {
-        /*NamedCommands.registerCommand("Intake",  new SetIntake(m_intake, m_robotState, "INTAKE")
-            .alongWith(new SetElevator(m_elevator, m_robotState, "INTAKE"))
-            .andThen(new SetWrist(m_wrist, m_robotState, "INTAKE")));
+        
 
-        NamedCommands.registerCommand("Outtake", new SetIntake(m_intake, m_robotState, "OUTTAKE"));
 
-        NamedCommands.registerCommand("L4", new SetIntake(m_intake, m_robotState, "L4")
-            .alongWith(new SetWrist(m_wrist, m_robotState, "HOME"))
-            .alongWith(new SetElevator(m_elevator, m_robotState, "L4"))
-            .andThen(new SetWrist(m_wrist, m_robotState, "L4")));
-
-        NamedCommands.registerCommand("HOME", new SetIntake(m_intake, m_robotState, "HOME")
-            .alongWith(new SetWrist(m_wrist, m_robotState, "HOME"))
-            .andThen(new SetElevator(m_elevator, m_robotState, "HOME")));*/
-
+        NamedCommands.registerCommand("SPINUP", new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED)));
+        NamedCommands.registerCommand("SHOOT", new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED))));
+        NamedCommands.registerCommand("INTAKE",  new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)));
+        NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendintake()));
+        NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractintake()));
         
         // autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
         SignalLogger.setPath("C:\\Users\\robot\\Documents\\DataLogs");

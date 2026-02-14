@@ -16,6 +16,7 @@ import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.IntakeRun;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 
@@ -26,7 +27,7 @@ public class  Intake extends SubsystemBase {
 TalonFX m_rackMotor;
 TalonFX m_intakeleftMotor;
 TalonFX m_intakerightMotor;
-VelocityDutyCycle intakeVelocity;
+
 
 
 
@@ -65,12 +66,15 @@ public Intake() {
     m_intakeleftMotor.getConfigurator().apply(rollerConfiguration, 0.050);
     m_intakerightMotor.getConfigurator().apply(rollerConfiguration, 0.050);
 
-    intakeVelocity = new VelocityDutyCycle(0);
+    intakePercentOutput = new DutyCycleOut(0);
 
 
     m_motmag = new MotionMagicVoltage(0);
 
     configure();
+
+
+    setDefaultCommand(new IntakeRun(this, Constants.IntakeConstants.INTAKEIN));
 
     
 
@@ -88,16 +92,21 @@ public Intake() {
   }
 
   public void intakerun(double velocity){
-    intakeVelocity.Velocity = velocity * 5;
-        m_intakeleftMotor.setControl(intakeVelocity);
-        m_intakerightMotor.setControl(intakeVelocity);
+    
+    intakePercentOutput.Output = velocity * 5;
+        m_intakeleftMotor.setControl(intakePercentOutput);
+        m_intakerightMotor.setControl(intakePercentOutput);
+    
+    if(Constants.Buttons.EXTENDHOP.getAsBoolean()){
+
+    }
   }
 
 
    public void outake(double velocity){
-    intakeVelocity.Velocity = -velocity * 5;
-        m_intakeleftMotor.setControl(intakeVelocity);
-        m_intakerightMotor.setControl(intakeVelocity);
+    intakePercentOutput.Output = -velocity * 5;
+        m_intakeleftMotor.setControl(intakePercentOutput);
+        m_intakerightMotor.setControl(intakePercentOutput);
   }
 
 public void setpos(double postion){

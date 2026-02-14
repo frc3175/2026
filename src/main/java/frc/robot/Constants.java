@@ -48,6 +48,20 @@ public class Constants {
         public static final double STOP = 0;
         public static final double RACKHOME = -5;
         public static final double RACKMAX = 0;
+
+        public static final double INTAKE_P = 0.8;
+        public static final double INTAKE_I = 0;
+        public static final double INTAKE_D = 0;
+        public static final double INTAKE_V = 0.12;
+        public static final double INTAKE_S = 0;
+        public static final double INTAKE_A = 0;
+
+        public static final double RACK_P = 0.8;
+        public static final double RACK_I = 0;
+        public static final double RACK_D = 0;
+        public static final double RACK_V = 0.12;
+        public static final double RACK_S = 0;
+        public static final double RACK_A = 0;
        
     
     }
@@ -83,6 +97,13 @@ public class Constants {
         public static final double CurrentLimit = 40.0; 
         public static final double FLOORSPEED = 0.2;
 
+        public static final double HOPPER_P = 0.8;
+        public static final double HOPPER_I = 0;
+        public static final double HOPPER_D = 0;
+        public static final double HOPPER_V = 0.12;
+        public static final double HOPPER_S = 0;
+        public static final double HOPPER_A = 0;
+
         
     }
 
@@ -114,7 +135,7 @@ public class Constants {
 
         public static final Trigger SHOOT = OPERATOR_CONTROLER.a();
 
-        public static final Trigger INTAKE =  OPERATOR_CONTROLER.rightBumper();
+      
 
         public static final Trigger SPINUP = OPERATOR_CONTROLER.leftBumper();
         
