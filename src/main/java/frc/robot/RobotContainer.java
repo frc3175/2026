@@ -15,11 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutoLeft;
 import frc.robot.commands.AutoRight;
 import frc.robot.commands.SwerveDrive;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.Climber;
+import frc.robot.generated.TunerConstants; 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -31,6 +32,17 @@ import frc.robot.subsystems.Hopper;
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
 
+
+
+     public  final CommandXboxController drivecontroller = new CommandXboxController(0);
+    public  final CommandXboxController opController = new CommandXboxController(1);
+
+    public final Trigger Spinup = opController.leftBumper();
+    public final Trigger Shoot = opController.a();
+    public final Trigger Intakein = opController.rightBumper();
+    public final Trigger Extendhop = opController.x();
+    public final Trigger Retracthop = opController.b();
+
     /* Setting up bindings for necessary control of the swerve drive platform */
     
 
@@ -40,7 +52,7 @@ public class RobotContainer {
    
     
     public final Limelight m_ll = new Limelight();
-    // public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
 
 
@@ -65,7 +77,6 @@ public class RobotContainer {
     /* Path follower */
     // private final SendableChooser<Command> autoChooser;
 
-    public SignalLogger m_signallogger = new SignalLogger();
 
     
 
@@ -85,8 +96,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractintake()));
         
         // autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
-        SignalLogger.setPath("C:\\Users\\robot\\Documents\\DataLogs");
-        SignalLogger.start();
+        
 
       
         
@@ -105,22 +115,22 @@ public class RobotContainer {
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        // drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-        //     new SwerveDrive(
-        //         drivetrain, 
-        //         () -> -Constants.DRIVER_CONTROLER.getRawAxis(translationAxis), 
-        //         () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
-        //         () -> -Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
-        //         () -> true, 
-        //         () -> Constants.DRIVER_CONTROLER.rightBumper().getAsBoolean(),
-        //         () -> SmartDashboard.getBoolean("Max speed", false))
-        // );
+        drivetrain.setDefaultCommand(
+            //Drivetrain will execute this command periodically
+            new SwerveDrive(
+                drivetrain, 
+                () -> -Constants.DRIVER_CONTROLER.getRawAxis(translationAxis), 
+                () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
+                () -> -Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
+                () -> true, 
+                () -> drivecontroller.rightBumper().getAsBoolean())
+               
+        );
 
         
-        //  drivetrain.registerTelemetry(logger::telemeterize);
+         drivetrain.registerTelemetry(logger::telemeterize);
 
-        //  Constants.Buttons.FIELDRESET.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+         Constants.Buttons.FIELDRESET.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         
 
@@ -131,19 +141,21 @@ public class RobotContainer {
         Constants.Buttons.AUTOALIGNRIGHT.onTrue(new AutoRight(m_ll));
         Constants.Buttons.AUTOALIGNLEFT.onTrue(new AutoLeft(m_ll));
 
-        Constants.Buttons.SHOOT.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)));
+        Shoot.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED)))).onFalse(new InstantCommand(() -> m_tower.towerrun(0)).alongWith(new InstantCommand(() -> m_hopper.runfloor(0))));
         
 
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 
     
         
-        // Constants.Buttons.INTAKE.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)).alongWith(new InstantCommand(() -> m_intake.extendintake())));
-        // Constants.Buttons.INTAKE.onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
+        Intakein.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)));//.alongWith(new InstantCommand(() -> m_intake.extendintake())));
+        Intakein.onFalse(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.STOP)));
 
-        //Constants.Buttons.SPINUP.onTrue(new InstantCommand(() -> m_shooter.SetVelocity(Constants.ShooterConstants.SPINSPEED)));
+        Spinup.onTrue(new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED))).onFalse(new InstantCommand(() -> m_shooter.setshootvel(0)));
 
-        // Constants.Buttons.EXTENDHOP.onTrue(new InstantCommand(() -> m_intake.extendintake()));
-        // Constants.Buttons.RETRACTHOP.onTrue(new InstantCommand(() -> m_intake.retractintake()));
+        Extendhop.onTrue(new InstantCommand(() -> m_intake.extendintake()));
+        Retracthop.onTrue(new InstantCommand(() -> m_intake.retractintake()));
+
+        
 
 
 

@@ -11,10 +11,9 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.VelocityDutyCycle;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -27,9 +26,10 @@ public class Tower extends SubsystemBase {
 
 
 TalonFX m_kickMotor;
-// TalonFX m_leftRoller;
+ TalonFX m_leftRoller;
 // TalonFX m_rightRoller;
 DutyCycleOut towerVelocity;
+TalonFX m_oppsedkick;
 
 
 
@@ -42,8 +42,9 @@ DutyCycleOut intakePercentOutput;
 
 public Tower(){
     m_kickMotor = new TalonFX(Constants.TowerConstants.KICKERID , Constants.CANIVORE);
-    // m_leftRoller = new TalonFX(Constants.TowerConstants.LEFTROLLERID, Constants.CANIVORE);
+    m_leftRoller = new TalonFX(Constants.TowerConstants.LEFTROLLERID, Constants.CANIVORE);
     // m_rightRoller = new TalonFX(Constants.TowerConstants.RIGHTROLLERID, Constants.CANIVORE);
+    m_oppsedkick = new TalonFX(Constants.TowerConstants.OPKICKID, Constants.CANIVORE);
 
     
   
@@ -71,8 +72,9 @@ public Tower(){
     // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
 
     towerVelocity = new DutyCycleOut(0);
-    setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED));
+    //setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED));
     //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
+    m_oppsedkick.setControl(new Follower(Constants.TowerConstants.KICKERID, MotorAlignmentValue.Opposed));
 
 
    
@@ -93,14 +95,15 @@ public Tower(){
   }
 
   public void towerrun(double velocity){
-    if(Constants.Buttons.SHOOT.getAsBoolean()){
+   // if(Constants.Buttons.SHOOT.getAsBoolean()){
     towerVelocity.Output = velocity * 5;
         m_kickMotor.setControl(towerVelocity);
-    }
-    else{
-      m_kickMotor.setControl(new DutyCycleOut(0));
-    }
-        //m_leftRoller.setControl(towerVelocity);
+        m_leftRoller.setControl(towerVelocity);
+    //}
+    //else{
+     
+    //}
+      
     }
        
   

@@ -43,8 +43,8 @@ public class Constants {
         public static final double CurrentLimit = 40.0; 
         
 
-        public static final double INTAKEIN = 12;
-        public static final double OUTTAKE = -6;
+        public static final double INTAKEIN = 1;
+        public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double RACKHOME = -5;
         public static final double RACKMAX = 0;
@@ -68,7 +68,7 @@ public class Constants {
       
     public class ClimberConstants{
 
-        public static final int MOTORID = 22;
+        // public static final int MOTORID = 22;
 
         public static final int SERVOPORT = 0;
         
@@ -81,7 +81,7 @@ public class Constants {
 
         public static final double CurrentLimit = 40.0; 
         public static final double SPINSPEED = -0.57;
-        public static final double SHOOTER_P = 0.8;
+        public static final double SHOOTER_P = 1.2;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
         public static final double SHOOTER_V = 0.12;
@@ -92,10 +92,10 @@ public class Constants {
     }
 
     public class HopperConstants{
-        public static final int FLOORMOTORID = 21;
+        public static final int FLOORMOTORID = 32;
 
         public static final double CurrentLimit = 40.0; 
-        public static final double FLOORSPEED = 0.2;
+        public static final double FLOORSPEED = -1;
 
         public static final double HOPPER_P = 0.8;
         public static final double HOPPER_I = 0;
@@ -112,17 +112,18 @@ public class Constants {
         public static final int LEFTROLLERID = 22;
         public static final int RIGHTROLLERID = 23;
         public static final int KICKERID = 12;
+        public static final int OPKICKID = 21;
 
         public static final double CurrentLimit = 40.0; 
-        public static final double TOWER_P = 0.8;
+        public static final double TOWER_P = 0.9;
         public static final double TOWER_I = 0;
-        public static final double TOWER_D = 0;
+        public static final double TOWER_D = 0.2;
         public static final double TOWER_V = 0.12;
         public static final double TOWER_S = 0;
         public static final double TOWER_A = 0;
         
 
-        public static final double RUNSPEED = -12;
+        public static final double RUNSPEED = -1;
         public static final double STOP = 0;
         
 

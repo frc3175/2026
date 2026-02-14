@@ -46,8 +46,7 @@ public class SwerveDrive extends Command {
                        DoubleSupplier strafeSup, 
                        DoubleSupplier rotationSup, 
                        BooleanSupplier robotCentricSup, 
-                       BooleanSupplier isEvading,
-                       BooleanSupplier isCrawling) {
+                       BooleanSupplier isEvading) {
 
         m_swerveDrivetrain = swerveDrivetrain;
         addRequirements(m_swerveDrivetrain);
@@ -57,7 +56,7 @@ public class SwerveDrive extends Command {
         m_rotationSup = rotationSup;
         m_robotCentricSup = robotCentricSup;
         m_isEvading = isEvading;
-        m_isCrawling = isCrawling;
+     
 
 
 
@@ -133,7 +132,7 @@ public class SwerveDrive extends Command {
             
             // Use open-loop control for drive motors
 
-         if (m_isCrawling.getAsBoolean()){
+    
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed *0.15) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed *0.15) // Drive left with negative X (left)
@@ -143,24 +142,9 @@ public class SwerveDrive extends Command {
                     
 
 
-         } 
+          
 
-         else{
-            
-
-
-
-
-        m_swerveDrivetrain.setControl(
-                drive.withVelocityX( xAxisSquared * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY( yAxisSquared * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(rAxisSquared * MaxAngularRate)
-                    .withCenterOfRotation(newCenterOfRotation) // Drive counterclockwise with negative X (left)
-        
-                    
-
-        );
-         }
+      
     }
     
 

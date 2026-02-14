@@ -97,9 +97,7 @@ public Intake() {
         m_intakeleftMotor.setControl(intakePercentOutput);
         m_intakerightMotor.setControl(intakePercentOutput);
     
-    if(Constants.Buttons.EXTENDHOP.getAsBoolean()){
-
-    }
+   
   }
 
 
