@@ -80,13 +80,13 @@ public class Constants {
         public static final int RIGHTMOTORID = 11;
 
         public static final double CurrentLimit = 80.0; 
-        public static final double SPINSPEED = -47;
-        public static final double SHOOTER_P = 1.2;
+        public static final double SPINSPEED = -48.75;
+        public static final double SHOOTER_P = 2;
         public static final double SHOOTER_I = 0;
-        public static final double SHOOTER_D = 1;
-        public static final double SHOOTER_V = 1;
+        public static final double SHOOTER_D = 2;
+        public static final double SHOOTER_V = 8;
         public static final double SHOOTER_S = 0;
-        public static final double SHOOTER_A = 10;
+        public static final double SHOOTER_A = 80;
         /* 
         current good values
         public static final double SPINSPEED = -49.75;

@@ -145,7 +145,7 @@ public class RobotContainer {
 
        
 
-        Shoot.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED)))).onFalse(new InstantCommand(() -> m_tower.towerrun(0)).alongWith(new InstantCommand(() -> m_hopper.runfloor(0))));
+        Shoot.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED))).alongWith(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)))).onFalse(new InstantCommand(() -> m_tower.towerrun(0)).alongWith(new InstantCommand(() -> m_hopper.runfloor(0))).alongWith(new InstantCommand(() -> m_intake.intakerun((0)))));
         
 
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 
@@ -154,7 +154,7 @@ public class RobotContainer {
         Intakein.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)));//.alongWith(new InstantCommand(() -> m_intake.extendintake())));
         Intakein.onFalse(new InstantCommand(() -> m_intake.intakerun(0)));
 
-        Spinup.onTrue(new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED))).onFalse(new InstantCommand(() -> m_shooter.setshootvel(5)));
+        Spinup.onTrue(new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED))).onFalse(new InstantCommand(() -> m_shooter.setshootvel(-5)));
 
         Extendhop.onTrue(new InstantCommand(() -> m_intake.extendintake())).onFalse(new InstantCommand(() -> m_intake.stoprack()));
         Retracthop.onTrue(new InstantCommand(() -> m_intake.retractintake())).onFalse(new InstantCommand(() -> m_intake.stoprack()));
