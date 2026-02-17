@@ -8,12 +8,15 @@ package frc.robot;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -42,6 +45,7 @@ public class RobotContainer {
     public final Trigger Intakein = opController.rightBumper();
     public final Trigger Extendhop = opController.x();
     public final Trigger Retracthop = opController.b();
+    public final Trigger isdisable = new Trigger(() -> DriverStation.isDisabled());
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     
@@ -131,7 +135,7 @@ public class RobotContainer {
         
          drivetrain.registerTelemetry(logger::telemeterize);
 
-         Constants.Buttons.FIELDRESET.onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+         drivecontroller.x().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         
 
@@ -139,8 +143,7 @@ public class RobotContainer {
         
 
 
-        Constants.Buttons.AUTOALIGNRIGHT.onTrue(new AutoRight(m_ll));
-        Constants.Buttons.AUTOALIGNLEFT.onTrue(new AutoLeft(m_ll));
+       
 
         Shoot.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED)))).onFalse(new InstantCommand(() -> m_tower.towerrun(0)).alongWith(new InstantCommand(() -> m_hopper.runfloor(0))));
         
@@ -151,10 +154,14 @@ public class RobotContainer {
         Intakein.onTrue(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)));//.alongWith(new InstantCommand(() -> m_intake.extendintake())));
         Intakein.onFalse(new InstantCommand(() -> m_intake.intakerun(0)));
 
-        Spinup.onTrue(new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED))).onFalse(new InstantCommand(() -> m_shooter.setshootvel(0)));
+        Spinup.onTrue(new InstantCommand(() -> m_shooter.setshootvel(Constants.ShooterConstants.SPINSPEED))).onFalse(new InstantCommand(() -> m_shooter.setshootvel(5)));
 
-        Extendhop.onTrue(new InstantCommand(() -> m_intake.extendintake()));
-        Retracthop.onTrue(new InstantCommand(() -> m_intake.retractintake()));
+        Extendhop.onTrue(new InstantCommand(() -> m_intake.extendintake())).onFalse(new InstantCommand(() -> m_intake.stoprack()));
+        Retracthop.onTrue(new InstantCommand(() -> m_intake.retractintake())).onFalse(new InstantCommand(() -> m_intake.stoprack()));
+
+        isdisable.onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+
+        
 
         
 
@@ -163,9 +170,11 @@ public class RobotContainer {
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         
+
+        
         
 
-// drivetrain.registerTelemetry(logger::telemeterize);
+
 
          
 

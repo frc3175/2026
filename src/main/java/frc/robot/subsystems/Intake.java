@@ -78,7 +78,7 @@ public Intake() {
     configure();
 
 
-    //setDefaultCommand(new IntakeRun(this, Constants.IntakeConstants.INTAKEIN));
+    
 
     
 
@@ -123,7 +123,11 @@ public void setpos(double postion){
   }
 
    public void retractintake(){
-    m_rackMotor.setControl(m_motmag.withPosition(Constants.IntakeConstants.RACKHOME));
+    m_rackMotor.setControl(new DutyCycleOut(Constants.IntakeConstants.RACKHOME));
+  }
+
+  public void stoprack(){
+    m_rackMotor.setControl(new DutyCycleOut(0));
   }
 
 

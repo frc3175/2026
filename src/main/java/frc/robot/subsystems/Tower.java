@@ -11,9 +11,9 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 
-
-
+import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
@@ -28,7 +28,7 @@ public class Tower extends SubsystemBase {
 TalonFX m_kickMotor;
  TalonFX m_leftRoller;
 // TalonFX m_rightRoller;
-DutyCycleOut towerVelocity;
+ VelocityVoltage towerVelocity;
 TalonFX m_oppsedkick;
 
 
@@ -68,11 +68,10 @@ public Tower(){
    
 
     m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
-    // m_leftRoller.getConfigurator().apply(rollerConfiguration, 0.050);
+     m_leftRoller.getConfigurator().apply(rollerConfiguration, 0.050);
     // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
 
-    towerVelocity = new DutyCycleOut(0);
-    //setDefaultCommand(new TowerRun(this, Constants.TowerConstants.RUNSPEED));
+    towerVelocity = new VelocityVoltage(0);
     //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
     m_oppsedkick.setControl(new Follower(Constants.TowerConstants.KICKERID, MotorAlignmentValue.Opposed));
 
@@ -96,7 +95,7 @@ public Tower(){
 
   public void towerrun(double velocity){
    // if(Constants.Buttons.SHOOT.getAsBoolean()){
-    towerVelocity.Output = velocity * 5;
+    towerVelocity.Velocity = velocity;
         m_kickMotor.setControl(towerVelocity);
         m_leftRoller.setControl(towerVelocity);
     //}
@@ -109,12 +108,7 @@ public Tower(){
   
 
 
-   public void outake(double velocity){
-    towerVelocity.Output = -velocity * 5;
-        //m_leftRoller.setControl(towerVelocity);
-        
-  }
-
+   
 
   }
 

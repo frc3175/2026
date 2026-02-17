@@ -74,14 +74,14 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setshootvel(double velocity){
-    //if(Constants.Buttons.SPINUP.getAsBoolean()){
-      m_leftmotor.setControl(new DutyCycleOut(velocity));
+   
+      m_leftmotor.setControl(new VelocityVoltage(velocity));
       m_running = velocity != 0;      
-    //}
-    //else{
+   
+
      
       
-   // }
+   
   }
 
   public Command coastshooter(){

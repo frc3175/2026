@@ -31,7 +31,7 @@ public Hopper() {
     floorConfiguration.Slot0.kA = Constants.HopperConstants.HOPPER_A;
     floorConfiguration.Slot0.kV = Constants.HopperConstants.HOPPER_V;
 
-    // setDefaultCommand(new InstantCommand(() -> runfloor(0.2)));
+    
  
 
 
