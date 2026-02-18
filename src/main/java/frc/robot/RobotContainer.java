@@ -145,7 +145,7 @@ public class RobotContainer {
 
        
 
-        Shoot.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED))).alongWith(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.INTAKEIN)))).onFalse(new InstantCommand(() -> m_tower.towerrun(0)).alongWith(new InstantCommand(() -> m_hopper.runfloor(0))).alongWith(new InstantCommand(() -> m_intake.intakerun((0)))));
+        Shoot.onTrue(new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runfloor(Constants.HopperConstants.FLOORSPEED))).alongWith(new InstantCommand(() -> m_intake.intakerun(Constants.IntakeConstants.OUTTAKE)))).onFalse(new InstantCommand(() -> m_tower.towerrun(0)).alongWith(new InstantCommand(() -> m_hopper.runfloor(0))).alongWith(new InstantCommand(() -> m_intake.intakerun((0)))));
         
 
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 

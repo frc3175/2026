@@ -40,7 +40,7 @@ public class Constants {
         public static final int RIGHTMOTORID = 25;
         public static final int RACKMOTORID = 23;
 
-        public static final double CurrentLimit = 40.0; 
+        public static final double CurrentLimit = 80.0; 
         
 
         public static final double INTAKEIN = 1;
@@ -78,15 +78,25 @@ public class Constants {
     public class ShooterConstants{
         public static final int LEFTMOTORID = 13;
         public static final int RIGHTMOTORID = 11;
+        public static final int exLEFTMOTORID = 31;
+        public static final int exRIGHTMOTORID = 32;
 
         public static final double CurrentLimit = 80.0; 
-        public static final double SPINSPEED = -48.75;
-        public static final double SHOOTER_P = 2;
+        // public static final double SPINSPEED = -48.75;
+        // public static final double SHOOTER_P = 2;
+        // public static final double SHOOTER_I = 0;
+        // public static final double SHOOTER_D = 2;
+        // public static final double SHOOTER_V = 8;
+        // public static final double SHOOTER_S = 0;
+        // public static final double SHOOTER_A = 80;
+
+        public static final double SPINSPEED = -48.25;
+        public static final double SHOOTER_P = 4;
         public static final double SHOOTER_I = 0;
-        public static final double SHOOTER_D = 2;
-        public static final double SHOOTER_V = 8;
+        public static final double SHOOTER_D = 0;
+        public static final double SHOOTER_V = 0.12;
         public static final double SHOOTER_S = 0;
-        public static final double SHOOTER_A = 80;
+        public static final double SHOOTER_A = 1;
         /* 
         current good values
         public static final double SPINSPEED = -49.75;

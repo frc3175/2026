@@ -5,11 +5,11 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Amps;
+
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.CoastOut;
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -26,21 +26,45 @@ public class Shooter extends SubsystemBase {
 
   private final TalonFX m_leftmotor = new TalonFX(Constants.ShooterConstants.LEFTMOTORID, Constants.CANIVORE);
   private final TalonFX m_rightmotor = new TalonFX(Constants.ShooterConstants.RIGHTMOTORID, Constants.CANIVORE);
-  
+  private final TalonFX m_exleftmotor = new TalonFX(Constants.ShooterConstants.exLEFTMOTORID, Constants.CANIVORE);
+  private final TalonFX m_exrightmotor = new TalonFX(Constants.ShooterConstants.exRIGHTMOTORID, Constants.RIO);
+
   private final CoastOut coastreq = new CoastOut();
 
   public  boolean m_running = false;
 
   private final VelocityVoltage leftsetpointreq = new VelocityVoltage(0);
 
-  private static final TalonFXConfiguration intialconfig = new TalonFXConfiguration()
+  // private static final TalonFXConfiguration intialconfig = new TalonFXConfiguration()
+  //   .withMotorOutput(
+  //     new MotorOutputConfigs()
+  //       .withNeutralMode(NeutralModeValue.Coast)
+  //   ).withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.CurrentLimit))
+  //   .withStatorCurrentLimitEnable(true));
+
+  //   public final TalonFXConfiguration shooterconfig = intialconfig.clone()
+  //   .withMotorOutput(intialconfig.MotorOutput.clone().withInverted(InvertedValue.CounterClockwise_Positive))
+  //   .withFeedback(intialconfig.Feedback.clone().withSensorToMechanismRatio(1))
+  //   .withSlot0(intialconfig.Slot0.clone()
+  //   .withKP(Constants.ShooterConstants.SHOOTER_P)
+  //   .withKI(Constants.ShooterConstants.SHOOTER_I)
+  //   .withKD(Constants.ShooterConstants.SHOOTER_D)
+  //   .withKS(Constants.ShooterConstants.SHOOTER_S)
+  //   .withKV(Constants.ShooterConstants.SHOOTER_V)
+  //   .withKA(Constants.ShooterConstants.SHOOTER_A));
+
+
+   
+  /** Creates a new Shooter. */
+  public Shooter() {
+      final TalonFXConfiguration intialconfig = new TalonFXConfiguration()
     .withMotorOutput(
       new MotorOutputConfigs()
         .withNeutralMode(NeutralModeValue.Coast)
     ).withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.CurrentLimit))
     .withStatorCurrentLimitEnable(true));
 
-    public final TalonFXConfiguration shooterconfig = intialconfig.clone()
+     final TalonFXConfiguration shooterconfig = intialconfig.clone()
     .withMotorOutput(intialconfig.MotorOutput.clone().withInverted(InvertedValue.CounterClockwise_Positive))
     .withFeedback(intialconfig.Feedback.clone().withSensorToMechanismRatio(1))
     .withSlot0(intialconfig.Slot0.clone()
@@ -51,14 +75,14 @@ public class Shooter extends SubsystemBase {
     .withKV(Constants.ShooterConstants.SHOOTER_V)
     .withKA(Constants.ShooterConstants.SHOOTER_A));
 
-
-   
-  /** Creates a new Shooter. */
-  public Shooter() {
+    m_leftmotor.getConfigurator().apply(shooterconfig);
      
 
     
     m_rightmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
+    // m_exrightmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
+    // m_exleftmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Aligned));
+
 
     //setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
   }
