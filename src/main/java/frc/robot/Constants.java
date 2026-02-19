@@ -4,7 +4,6 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class Constants {
     public static final double TRACK_WIDTH = Units.inchesToMeters(22.875);
@@ -24,15 +23,6 @@ public class Constants {
 
     public static final CommandXboxController DRIVER_CONTROLER = new CommandXboxController(0);
     public static final CommandXboxController OPERATOR_CONTROLER = new CommandXboxController(1);
-    
-
-   
-   
-  
-
-    
-
-
 
     public class IntakeConstants{
 
@@ -41,6 +31,8 @@ public class Constants {
         public static final int RACKMOTORID = 23;
 
         public static final double CurrentLimit = 80.0; 
+
+        public static final double HARDSTOPCURRENTLIMIT = 40.0;
         
 
         public static final double INTAKEIN = 1;
@@ -48,6 +40,7 @@ public class Constants {
         public static final double STOP = 0;
         public static final double RACKHOME = 0.1;
         public static final double RACKMAX = -0.1;
+        public static final double RACKHOLD = -0.02;
 
         public static final double INTAKE_P = 0.8;
         public static final double INTAKE_I = 0;
@@ -63,7 +56,6 @@ public class Constants {
         public static final double RACK_S = 0;
         public static final double RACK_A = 0;
        
-    
     }
       
     public class ClimberConstants{
@@ -76,12 +68,12 @@ public class Constants {
     }
     
     public class ShooterConstants{
-        public static final int LEFTMOTORID = 13;
-        public static final int RIGHTMOTORID = 11;
-        public static final int exLEFTMOTORID = 31;
-        public static final int exRIGHTMOTORID = 32;
+        public static final int FRONTLEFTMOTORID = 13;
+        public static final int FRONTRIGHTMOTORID = 11;
+        public static final int BACKLEFTMOTORID = 31;
+        public static final int BACKRIGHTMOTORID = 32;
 
-        public static final double CurrentLimit = 80.0; 
+        public static final double SHOOTERCURRENTLIMIT = 80.0; 
         // public static final double SPINSPEED = -48.75;
         // public static final double SHOOTER_P = 2;
         // public static final double SHOOTER_I = 0;
@@ -97,6 +89,8 @@ public class Constants {
         public static final double SHOOTER_V = 0.12;
         public static final double SHOOTER_S = 0;
         public static final double SHOOTER_A = 1;
+
+        public static final double IDLESPEED = -5;
         /* 
         current good values
         public static final double SPINSPEED = -49.75;
@@ -122,9 +116,9 @@ public class Constants {
     }
 
     public class HopperConstants{
-        public static final int FLOORMOTORID = 32;
+        public static final int HOPPERFLOORMOTORID = 32;
 
-        public static final double CurrentLimit = 40.0; 
+        public static final double HOPPERCURRENTLIMIT = 40.0; 
         public static final double FLOORSPEED = -1;
 
         public static final double HOPPER_P = 0.8;
@@ -144,7 +138,7 @@ public class Constants {
         public static final int KICKERID = 12;
         public static final int OPKICKID = 21;
 
-        public static final double CurrentLimit = 80.0; 
+        public static final double TOWERCURRENTLIMIT = 80.0; 
         public static final double RUNSPEED = -60;
         public static final double TOWER_P = 0.9;
         public static final double TOWER_I = 0;
@@ -160,13 +154,11 @@ public class Constants {
 
     }
 
-    
+    public class AutoAlignConstants { //TODO: use correct hub ids
+        public static final int REDHUBID = 6;
+        public static final int BLUEHUBID = 7;
+    }
 
-   
-
-   
-    
-
-     
-    
+    /** Meters per Second */
+    public static final double MAX_SPEED = Units.feetToMeters(23.25);
 }

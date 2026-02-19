@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Amps;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.CoastOut;
@@ -24,95 +25,67 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
 
-  private final TalonFX m_leftmotor = new TalonFX(Constants.ShooterConstants.LEFTMOTORID, Constants.CANIVORE);
-  private final TalonFX m_rightmotor = new TalonFX(Constants.ShooterConstants.RIGHTMOTORID, Constants.CANIVORE);
-  private final TalonFX m_exleftmotor = new TalonFX(Constants.ShooterConstants.exLEFTMOTORID, Constants.CANIVORE);
-  private final TalonFX m_exrightmotor = new TalonFX(Constants.ShooterConstants.exRIGHTMOTORID, Constants.RIO);
+  private final TalonFX m_frontLeftShooterMotor;
+  private final TalonFX m_frontRightShooterMotor;
+  private final TalonFX m_backLeftShooterMotor;
+  private final TalonFX m_backRightShooterMotor;
 
-  private final CoastOut coastreq = new CoastOut();
+  private final CoastOut coastRequest = new CoastOut();
 
   public  boolean m_running = false;
 
-  private final VelocityVoltage leftsetpointreq = new VelocityVoltage(0);
-
-  // private static final TalonFXConfiguration intialconfig = new TalonFXConfiguration()
-  //   .withMotorOutput(
-  //     new MotorOutputConfigs()
-  //       .withNeutralMode(NeutralModeValue.Coast)
-  //   ).withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.CurrentLimit))
-  //   .withStatorCurrentLimitEnable(true));
-
-  //   public final TalonFXConfiguration shooterconfig = intialconfig.clone()
-  //   .withMotorOutput(intialconfig.MotorOutput.clone().withInverted(InvertedValue.CounterClockwise_Positive))
-  //   .withFeedback(intialconfig.Feedback.clone().withSensorToMechanismRatio(1))
-  //   .withSlot0(intialconfig.Slot0.clone()
-  //   .withKP(Constants.ShooterConstants.SHOOTER_P)
-  //   .withKI(Constants.ShooterConstants.SHOOTER_I)
-  //   .withKD(Constants.ShooterConstants.SHOOTER_D)
-  //   .withKS(Constants.ShooterConstants.SHOOTER_S)
-  //   .withKV(Constants.ShooterConstants.SHOOTER_V)
-  //   .withKA(Constants.ShooterConstants.SHOOTER_A));
-
-
+  private VelocityVoltage shooterVelocityVoltage = new VelocityVoltage(0);
    
   /** Creates a new Shooter. */
   public Shooter() {
-      final TalonFXConfiguration intialconfig = new TalonFXConfiguration()
-    .withMotorOutput(
-      new MotorOutputConfigs()
-        .withNeutralMode(NeutralModeValue.Coast)
-    ).withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.CurrentLimit))
-    .withStatorCurrentLimitEnable(true));
+    this.m_frontLeftShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTLEFTMOTORID, Constants.CANIVORE);
+    this.m_frontRightShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTRIGHTMOTORID, Constants.CANIVORE);
+    this.m_backLeftShooterMotor = new TalonFX(Constants.ShooterConstants.BACKLEFTMOTORID, Constants.CANIVORE);
+    this.m_backRightShooterMotor = new TalonFX(Constants.ShooterConstants.BACKRIGHTMOTORID, Constants.CANIVORE);
 
-     final TalonFXConfiguration shooterconfig = intialconfig.clone()
-    .withMotorOutput(intialconfig.MotorOutput.clone().withInverted(InvertedValue.CounterClockwise_Positive))
-    .withFeedback(intialconfig.Feedback.clone().withSensorToMechanismRatio(1))
-    .withSlot0(intialconfig.Slot0.clone()
-    .withKP(Constants.ShooterConstants.SHOOTER_P)
-    .withKI(Constants.ShooterConstants.SHOOTER_I)
-    .withKD(Constants.ShooterConstants.SHOOTER_D)
-    .withKS(Constants.ShooterConstants.SHOOTER_S)
-    .withKV(Constants.ShooterConstants.SHOOTER_V)
-    .withKA(Constants.ShooterConstants.SHOOTER_A));
+    final TalonFXConfiguration shooterConfig = new TalonFXConfiguration()
+      .withMotorOutput(new MotorOutputConfigs()
+          .withNeutralMode(NeutralModeValue.Coast)
+          .withInverted(InvertedValue.CounterClockwise_Positive))
+      .withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.SHOOTERCURRENTLIMIT))
+      .withStatorCurrentLimitEnable(true));
+      
+    var slot0Configs = shooterConfig.Slot0;
+      
+    slot0Configs.kP = Constants.ShooterConstants.SHOOTER_P;
+    slot0Configs.kI = Constants.ShooterConstants.SHOOTER_I;
+    slot0Configs.kD = Constants.ShooterConstants.SHOOTER_D;
 
-    m_leftmotor.getConfigurator().apply(shooterconfig);
-     
+    slot0Configs.kS = Constants.ShooterConstants.SHOOTER_S;
+    slot0Configs.kV = Constants.ShooterConstants.SHOOTER_V;
+    slot0Configs.kA = Constants.ShooterConstants.SHOOTER_A;
 
-    
-    m_rightmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
-    // m_exrightmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
-    // m_exleftmotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Aligned));
-
-
-    //setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
+    m_frontLeftShooterMotor.getConfigurator().apply(shooterConfig);
+    // m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Aligned));
+    m_frontRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
+    // m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
+      //setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("shooter velocity", getVelocity());
-    SmartDashboard.putBoolean("shooterruning", m_running);
-
-    
-  
+    SmartDashboard.putNumber("shooter velocity", getShooterVelocity());
+    SmartDashboard.putBoolean("shooterruning", this.shooterVelocityVoltage.Velocity != 0);
   }
 
-  public void setshootvel(double velocity){
-   
-      m_leftmotor.setControl(new VelocityVoltage(velocity));
-      m_running = velocity != 0;      
-   
-
-     
-      
-   
+  public void setShooterVelocity(double velocity) {
+    this.shooterVelocityVoltage.Velocity = velocity;
+    m_frontLeftShooterMotor.setControl(this.shooterVelocityVoltage);
+      //m_running = velocity != 0;      
   }
 
-  public Command coastshooter(){
-    return runOnce(() -> m_leftmotor.setControl(coastreq));
+  public Command coastShooter() {
+    return runOnce(() -> m_frontLeftShooterMotor.setControl(coastRequest));
   }
 
-  public double getVelocity(){
-    return m_leftmotor.getVelocity().getValueAsDouble();
+  public double getShooterVelocity() {
+    return m_frontLeftShooterMotor.getVelocity().getValueAsDouble();
   }
+
 }

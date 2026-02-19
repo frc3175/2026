@@ -11,52 +11,30 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
-import com.ctre.phoenix6.controls.PositionDutyCycle;
-import com.ctre.phoenix6.controls.VelocityDutyCycle;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.IntakeRun;
-
-import com.ctre.phoenix6.hardware.CANcoder;
-
-public class  Intake extends SubsystemBase {
+public class Intake extends SubsystemBase {
   
+  TalonFX m_rackMotor;
+  TalonFX m_intakeLeftMotor;
+  TalonFX m_intakeRightMotor;
 
+  DutyCycleOut intakePercentOutput;
+  DutyCycleOut intakeRackOutput;
 
-TalonFX m_rackMotor;
-TalonFX m_intakeleftMotor;
-TalonFX m_intakerightMotor;
+  public Intake() {
 
-
-
-
-DutyCycleOut intakePercentOutput;
-
-MotionMagicVoltage m_motmag;
-
-PositionDutyCycle m_PositionDutyCycle;
-CANcoder m_canCoder;
-double cancoderzero = 0.5;
-double cancoderoffset = 0;
-
-
-
-
-public Intake() {
-    m_rackMotor = new TalonFX(Constants.IntakeConstants.RACKMOTORID , Constants.CANIVORE);
-    m_intakeleftMotor = new TalonFX(Constants.IntakeConstants.LEFTMOTORID, Constants.CANIVORE);
-    m_intakerightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
-
-    
-  
+    this.m_rackMotor = new TalonFX(Constants.IntakeConstants.RACKMOTORID , Constants.CANIVORE);
+    this.m_intakeLeftMotor = new TalonFX(Constants.IntakeConstants.LEFTMOTORID, Constants.CANIVORE);
+    this.m_intakeRightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
      
     final TalonFXConfiguration rackConfiguration = new TalonFXConfiguration();
     rackConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     rackConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
     rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
     rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
@@ -65,103 +43,45 @@ public Intake() {
    
 
     m_rackMotor.getConfigurator().apply(rackConfiguration, 0.050);
-    m_intakeleftMotor.getConfigurator().apply(rollerConfiguration, 0.050);
-    m_intakerightMotor.getConfigurator().apply(rollerConfiguration, 0.050);
+    m_intakeLeftMotor.getConfigurator().apply(rollerConfiguration, 0.050);
+    m_intakeRightMotor.getConfigurator().apply(rollerConfiguration, 0.050);
 
-    intakePercentOutput = new DutyCycleOut(0);
+    this.intakePercentOutput = new DutyCycleOut(0);
+    this.intakeRackOutput = new DutyCycleOut(0);
 
-    m_intakerightMotor.setControl(new Follower(Constants.IntakeConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
-
-
-    m_motmag = new MotionMagicVoltage(0);
-
-    configure();
-
-
-    
-
-    
-
+    m_intakeRightMotor.setControl(new Follower(Constants.IntakeConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
     // periodic, run Motion Magic with slot 0 configs,
   }
   
   @Override
   public void periodic() {
-    
     SmartDashboard.putNumber("rackpose", 0);
-    SmartDashboard.putNumber("Roller vel", m_intakeleftMotor.getVelocity().getValueAsDouble());
-    
-    m_motmag.Slot = 0;
-  
+    SmartDashboard.putNumber("Roller vel", m_intakeLeftMotor.getVelocity().getValueAsDouble());
   }
 
-  public void intakerun(double velocity){
-    
-    intakePercentOutput.Output = velocity * 5;
-        m_intakeleftMotor.setControl(intakePercentOutput);
-   
-    
-   
+  public void runIntake(double percentOutput){
+    this.intakePercentOutput.Output = percentOutput * 5;
+        m_intakeLeftMotor.setControl(this.intakePercentOutput);
   }
 
-
-   public void outake(double velocity){
-    intakePercentOutput.Output = -velocity * 5;
-        m_intakeleftMotor.setControl(intakePercentOutput);
-        
+  public void extendIntake(){
+    this.intakeRackOutput.Output = Constants.IntakeConstants.RACKMAX;
+    m_rackMotor.setControl(this.intakeRackOutput);
   }
 
-public void setpos(double postion){
-
-    m_rackMotor.setControl(m_motmag.withPosition(postion));
-
-
+   public void retractIntake(){
+    this.intakeRackOutput.Output = Constants.IntakeConstants.RACKHOME;
+    m_rackMotor.setControl(this.intakeRackOutput);
   }
 
-  public void extendintake(){
-    m_rackMotor.setControl(new DutyCycleOut(Constants.IntakeConstants.RACKMAX));
+  public void stopRack(){
+    this.intakeRackOutput.Output = Constants.IntakeConstants.RACKHOLD;
+    m_rackMotor.setControl(this.intakeRackOutput);
   }
 
-   public void retractintake(){
-    m_rackMotor.setControl(new DutyCycleOut(Constants.IntakeConstants.RACKHOME));
+  public double getRackStatorCurrent() {
+    return this.m_rackMotor.getStatorCurrent().getValueAsDouble();
   }
-
-  public void stoprack(){
-    m_rackMotor.setControl(new DutyCycleOut(0));
-  }
-
-
-
-
-
-
-
-  public void configure(){
-    var talonFXConfigs = new TalonFXConfiguration();
-    
-    // var canCoderConfigs = new CANcoderConfiguration();
-
-    var slot0Configs = talonFXConfigs.Slot0;
-    
-
-    slot0Configs.kP = 0.2; // change as needed
-    slot0Configs.kI = 0;
-    slot0Configs.kD = 0;
-
-    var motionMagicConfigs = talonFXConfigs.MotionMagic;
-    motionMagicConfigs.MotionMagicCruiseVelocity = 160;//160; // 80 rps cruise velocity
-    motionMagicConfigs.MotionMagicAcceleration = 600;//240; // 160 rps/s acceleration (0.5 seconds)
-    motionMagicConfigs.MotionMagicJerk = 1750;
-    
-     // 1600 rps/s^2 jerk (0.1 seconds)
-
-    m_motmag.EnableFOC = true;
-
-  }
-
-
-
-    
 
 }
 

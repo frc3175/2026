@@ -5,19 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeRun extends Command {
-  private Intake m_intake;
-  private double m_percentout;
-
-  
+  private final Intake m_intake;
   /** Creates a new IntakeRun. */
-  public IntakeRun(Intake intake, double percentout) {
+  public IntakeRun(Intake intake) {
 
-    m_intake = intake;
-    m_percentout = percentout;
+    this.m_intake = intake;
     addRequirements(m_intake);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -30,7 +27,7 @@ public class IntakeRun extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.intakerun(m_percentout);
+    m_intake.runIntake(Constants.IntakeConstants.INTAKEIN);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +37,6 @@ public class IntakeRun extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

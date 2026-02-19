@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class setshootvel extends Command {
+public class SpinUp extends Command {
   private Shooter m_shooter;
   private double m_velocity;
   /** Creates a new setshootvel. */
-  public setshootvel(Shooter shooter, double velocity) {
-    m_shooter = shooter;
-    m_velocity = velocity;
+  public SpinUp(Shooter shooter, double velocity) {
+    this.m_shooter = shooter;
+    this.m_velocity = velocity;
     addRequirements(m_shooter);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +27,7 @@ public class setshootvel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setshootvel(m_velocity);
+    m_shooter.setShooterVelocity(this.m_velocity);
   }
 
   // Called once the command ends or is interrupted.
@@ -38,6 +38,6 @@ public class setshootvel extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -12,105 +12,73 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
-
-import edu.wpi.first.units.measure.Velocity;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.commands.TowerRun;
 
 
+//TODO: please clean this up, i feel like left roller motor isn't used anywhere? If it isn't used please remove the references to it
 public class Tower extends SubsystemBase {
   
+  TalonFX m_kickMotor;
+  TalonFX m_leftRoller;
+  // TalonFX m_rightRoller;
+  VelocityVoltage towerVelocity;
+  TalonFX m_opposedKicker;
 
+  DutyCycleOut intakePercentOutput;
 
-TalonFX m_kickMotor;
- TalonFX m_leftRoller;
-// TalonFX m_rightRoller;
- VelocityVoltage towerVelocity;
-TalonFX m_oppsedkick;
+  public Tower(){
+      m_kickMotor = new TalonFX(Constants.TowerConstants.KICKERID , Constants.CANIVORE);
+      m_leftRoller = new TalonFX(Constants.TowerConstants.LEFTROLLERID, Constants.CANIVORE);
+      // m_rightRoller = new TalonFX(Constants.TowerConstants.RIGHTROLLERID, Constants.CANIVORE);
+      m_opposedKicker = new TalonFX(Constants.TowerConstants.OPKICKID, Constants.CANIVORE);
 
+      final TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
+      kickConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
+      kickConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
+      kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+      kickConfiguration.Slot0.kP = Constants.TowerConstants.TOWER_P;
+      kickConfiguration.Slot0.kI = Constants.TowerConstants.TOWER_I;
+      kickConfiguration.Slot0.kD = Constants.TowerConstants.TOWER_D;
+      kickConfiguration.Slot0.kS = Constants.TowerConstants.TOWER_S;
+      kickConfiguration.Slot0.kA = Constants.TowerConstants.TOWER_A;
+      kickConfiguration.Slot0.kV = Constants.TowerConstants.TOWER_V;
 
-
-DutyCycleOut intakePercentOutput;
-
-
-
-
-
-
-public Tower(){
-    m_kickMotor = new TalonFX(Constants.TowerConstants.KICKERID , Constants.CANIVORE);
-    m_leftRoller = new TalonFX(Constants.TowerConstants.LEFTROLLERID, Constants.CANIVORE);
-    // m_rightRoller = new TalonFX(Constants.TowerConstants.RIGHTROLLERID, Constants.CANIVORE);
-    m_oppsedkick = new TalonFX(Constants.TowerConstants.OPKICKID, Constants.CANIVORE);
-
-    
-  
-     
-    final TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
-    kickConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    kickConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
-    kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
-    kickConfiguration.Slot0.kP = Constants.TowerConstants.TOWER_P;
-    kickConfiguration.Slot0.kI = Constants.TowerConstants.TOWER_I;
-    kickConfiguration.Slot0.kD = Constants.TowerConstants.TOWER_D;
-    kickConfiguration.Slot0.kS = Constants.TowerConstants.TOWER_S;
-    kickConfiguration.Slot0.kA = Constants.TowerConstants.TOWER_A;
-    kickConfiguration.Slot0.kV = Constants.TowerConstants.TOWER_V;
-
-    final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
-    rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
-    kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
-
-   
-
-    m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
-     m_leftRoller.getConfigurator().apply(rollerConfiguration, 0.050);
-    // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
-
-    towerVelocity = new VelocityVoltage(0);
-    //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
-    m_oppsedkick.setControl(new Follower(Constants.TowerConstants.KICKERID, MotorAlignmentValue.Opposed));
-
-
-   
+      final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
+      rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
+      rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
+      kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
 
     
 
-    // periodic, run Motion Magic with slot 0 configs,
+      m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
+      m_leftRoller.getConfigurator().apply(rollerConfiguration, 0.050);
+      // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
+
+      towerVelocity = new VelocityVoltage(0);
+      //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
+      m_opposedKicker.setControl(new Follower(Constants.TowerConstants.KICKERID, MotorAlignmentValue.Opposed));
+
+      // periodic, run Motion Magic with slot 0 configs,
   }
-  
+    
   @Override
   public void periodic() {
     
-    
-    
-    
-    
-  
   }
 
   public void towerrun(double velocity){
-   // if(Constants.Buttons.SHOOT.getAsBoolean()){
+  // if(Constants.Buttons.SHOOT.getAsBoolean()){
     towerVelocity.Velocity = velocity;
         m_kickMotor.setControl(towerVelocity);
         m_leftRoller.setControl(towerVelocity);
     //}
     //else{
-     
+    
     //}
       
-    }
-       
-  
-
-
-   
-
   }
+}
 
 
 
