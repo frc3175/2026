@@ -4,55 +4,61 @@
 
 package frc.robot.commands;
 
+import java.util.Optional;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
-
-
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
-import frc.robot.util.AutoutilsRight;
+import frc.robot.util.AutoUtilsHub;
 
 
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 
-public class AutoRight extends Command {
+public class AutoDrive extends Command {
   public Command m_path;
  private boolean end = false;
  private Pose2d endPose;
  private Limelight m_limelight;
-
  PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
-  /** Creates a new AutoWorkPlease. */
-  public AutoRight(Limelight limelight) {
-    m_limelight = limelight;
-    
-
+  /** Creates a new AutoDrive. */
+  public AutoDrive(Limelight limelight) {
+    this.m_limelight = limelight;
     // Use addRequirements() here to declare subsystem dependencies.
   }
-  
-
+ 
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    endPose = AutoutilsRight.getnewpose(m_limelight.algaegetTargetid());
-
-            // Create the path using the waypoints created above
-            final  Command path =  AutoBuilder.pathfindToPose(
-              endPose,
-              constraints,
-              0 
-      );
+    //endPose = getNearestLeftPose(m_drivetrain.getState().Pose);
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    int goal = Constants.AutoAlignConstants.BLUEHUBID;
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+        goal = Constants.AutoAlignConstants.REDHUBID;
+      } 
+    }
+    endPose = AutoUtilsHub.getNewPose(this.m_limelight, goal);
+    // Create the path using the waypoints created above
+    final  Command path =  AutoBuilder.pathfindToPose(
+      endPose,
+      constraints,
+      0 
+        );
       m_path = path;
-
   }
+    
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_limelight.algaegetTargetid()!=-1) {
+    if(m_limelight.shooterGetTargetid()!=-1) {
       m_path.schedule();
     }
 

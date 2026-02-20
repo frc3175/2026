@@ -9,34 +9,33 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
+//TODO: Is this using pid or just duty cycle out??? It looks like we configure a pid and then just... don't use it?
 public class Hopper extends SubsystemBase {
   
-TalonFX m_floormotor;
+  private final TalonFX m_floormotor;
 
-public Hopper() {
-    m_floormotor = new TalonFX(Constants.HopperConstants.FLOORMOTORID , Constants.CANIVORE);
+  public Hopper() {
+    this.m_floormotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
+
     final TalonFXConfiguration floorConfiguration = new TalonFXConfiguration();
     floorConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.CurrentLimit);
+    floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.HOPPERCURRENTLIMIT);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
-     floorConfiguration.Slot0.kP = Constants.HopperConstants.HOPPER_P;
-    floorConfiguration.Slot0.kI = Constants.HopperConstants.HOPPER_I;
-    floorConfiguration.Slot0.kD = Constants.HopperConstants.HOPPER_D;
-    floorConfiguration.Slot0.kS = Constants.HopperConstants.HOPPER_S;
-    floorConfiguration.Slot0.kA = Constants.HopperConstants.HOPPER_A;
-    floorConfiguration.Slot0.kV = Constants.HopperConstants.HOPPER_V;
 
-    
- 
+    var slot0Configs = floorConfiguration.Slot0;
 
+    slot0Configs.kP = Constants.HopperConstants.HOPPER_P;
+    slot0Configs.kI = Constants.HopperConstants.HOPPER_I;
+    slot0Configs.kD = Constants.HopperConstants.HOPPER_D;
 
+    slot0Configs.kS = Constants.HopperConstants.HOPPER_S;
+    slot0Configs.kA = Constants.HopperConstants.HOPPER_A;
+    slot0Configs.kV = Constants.HopperConstants.HOPPER_V;
 
-    
+    //this.m_floormotor.getConfigurator().apply(floorConfiguration); TODO: is this being *used*, if not, delete the pid
   }
   
   @Override
@@ -44,11 +43,9 @@ public Hopper() {
     
   }
 
-  public void runfloor(double speed){
+  public void runFloor(double speed){
     m_floormotor.setControl(new DutyCycleOut(speed));
   }
-
-  
 
 }
 

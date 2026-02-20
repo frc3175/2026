@@ -5,22 +5,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Tower;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TowerRun extends Command {
+public class ShootFuel extends Command {
   public Tower m_tower;
-  public double m_velocity;
-  // public Hopper m_hopper;
+  public Hopper m_hopper;
+  public Intake m_intake;
   // public double m_floorvel;
   /** Creates a new TowerRun. */
-  public TowerRun(Tower tower, double velocity /*,  Hopper hopper, double floorvel */ ) {
-    m_tower = tower;
-    m_velocity = velocity;
+  public ShootFuel(Tower tower, Hopper hopper, Intake intake) {
+    this.m_tower = tower;
+    this.m_intake = intake;
+    this.m_hopper = hopper;
     // m_hopper = hopper;
     // m_floorvel = floorvel;
-    addRequirements(m_tower);
+    addRequirements(this.m_tower, this.m_hopper, this.m_intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,17 +33,20 @@ public class TowerRun extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_tower.towerrun(m_velocity);
-    // m_hopper.runfloor(m_floorvel);
+    m_tower.towerrun(Constants.TowerConstants.RUNSPEED);
+    m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED);
+    m_intake.runIntake(Constants.IntakeConstants.INTAKEIN);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
