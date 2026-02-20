@@ -12,7 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-//TODO: Is this using pid or just duty cycle out??? It looks like we configure a pid and then just... don't use it?
+
 public class Hopper extends SubsystemBase {
   
   private final TalonFX m_floormotor;
@@ -27,15 +27,9 @@ public class Hopper extends SubsystemBase {
 
     var slot0Configs = floorConfiguration.Slot0;
 
-    slot0Configs.kP = Constants.HopperConstants.HOPPER_P;
-    slot0Configs.kI = Constants.HopperConstants.HOPPER_I;
-    slot0Configs.kD = Constants.HopperConstants.HOPPER_D;
+   
 
-    slot0Configs.kS = Constants.HopperConstants.HOPPER_S;
-    slot0Configs.kA = Constants.HopperConstants.HOPPER_A;
-    slot0Configs.kV = Constants.HopperConstants.HOPPER_V;
-
-    //this.m_floormotor.getConfigurator().apply(floorConfiguration); TODO: is this being *used*, if not, delete the pid
+    this.m_floormotor.getConfigurator().apply(floorConfiguration); 
   }
   
   @Override

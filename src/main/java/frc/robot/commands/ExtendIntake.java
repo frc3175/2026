@@ -12,9 +12,9 @@ public class ExtendIntake extends Command {
     private Timer m_timer;
     
     public ExtendIntake(Intake intake) {
-        this.m_intake = intake;
-        this.m_timer = new Timer();
-        addRequirements(this.m_intake);
+        m_intake = intake;
+        m_timer = new Timer();
+        addRequirements(m_intake);
 
     }
 

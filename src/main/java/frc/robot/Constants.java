@@ -121,20 +121,13 @@ public class Constants {
         public static final double HOPPERCURRENTLIMIT = 40.0; 
         public static final double FLOORSPEED = -1;
 
-        public static final double HOPPER_P = 0.8;
-        public static final double HOPPER_I = 0;
-        public static final double HOPPER_D = 0;
-        public static final double HOPPER_V = 0.12;
-        public static final double HOPPER_S = 0;
-        public static final double HOPPER_A = 0;
+        
 
         
     }
 
     public class TowerConstants{
 
-        public static final int LEFTROLLERID = 22;
-        public static final int RIGHTROLLERID = 34;
         public static final int KICKERID = 12;
         public static final int OPKICKID = 21;
 
@@ -154,9 +147,9 @@ public class Constants {
 
     }
 
-    public class AutoAlignConstants { //TODO: use correct hub ids
-        public static final int REDHUBID = 6;
-        public static final int BLUEHUBID = 7;
+    public class AutoAlignConstants { 
+        public static final int REDHUBID = 10;
+        public static final int BLUEHUBID = 25;
     }
 
     /** Meters per Second */

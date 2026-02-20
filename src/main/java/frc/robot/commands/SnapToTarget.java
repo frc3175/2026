@@ -11,10 +11,10 @@ public class SnapToTarget extends Command {
 
     public SnapToTarget(Limelight limelight, CommandSwerveDrivetrain drivetrain) {
 
-        this.m_drivetrain = drivetrain;
-        this.m_limelight = limelight;
+        m_drivetrain = drivetrain;
+        m_limelight = limelight;
 
-        addRequirements(this.m_limelight, this.m_drivetrain);
+        addRequirements(m_limelight, m_drivetrain);
 
     }
 

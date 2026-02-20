@@ -8,8 +8,8 @@ public class SpinDown extends Command {
   public Shooter m_shooter;
   /** Creates a new setshootvel. */
   public SpinDown(Shooter shooter) {
-    this.m_shooter = shooter;
-    addRequirements(this.m_shooter);
+    m_shooter = shooter;
+    addRequirements(m_shooter);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -13,9 +13,9 @@ public class RetractIntake extends Command {
     private final Timer m_timer;
     
     public RetractIntake(Intake intake) {
-        this.m_intake = intake;
-        this.m_timer = new Timer();
-        addRequirements(this.m_intake);
+        m_intake = intake;
+        m_timer = new Timer();
+        addRequirements(m_intake);
 
     }
 

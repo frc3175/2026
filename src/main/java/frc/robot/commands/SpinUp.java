@@ -13,8 +13,8 @@ public class SpinUp extends Command {
   private double m_velocity;
   /** Creates a new setshootvel. */
   public SpinUp(Shooter shooter, double velocity) {
-    this.m_shooter = shooter;
-    this.m_velocity = velocity;
+    m_shooter = shooter;
+    m_velocity = velocity;
     addRequirements(m_shooter);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,7 +27,7 @@ public class SpinUp extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setShooterVelocity(this.m_velocity);
+    m_shooter.setShooterVelocity(m_velocity);
   }
 
   // Called once the command ends or is interrupted.

@@ -12,12 +12,12 @@ public class StopShootingFuel extends Command {
   // public double m_floorvel;
   /** Creates a new TowerRun. */
   public StopShootingFuel(Tower tower, Hopper hopper, Intake intake) {
-    this.m_tower = tower;
-    this.m_intake = intake;
-    this.m_hopper = hopper;
+    m_tower = tower;
+    m_intake = intake;
+    m_hopper = hopper;
     // m_hopper = hopper;
     // m_floorvel = floorvel;
-    addRequirements(this.m_tower, this.m_hopper, this.m_intake);
+    addRequirements(m_tower, m_hopper, m_intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

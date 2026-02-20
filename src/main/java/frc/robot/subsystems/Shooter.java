@@ -61,9 +61,9 @@ public class Shooter extends SubsystemBase {
     slot0Configs.kA = Constants.ShooterConstants.SHOOTER_A;
 
     m_frontLeftShooterMotor.getConfigurator().apply(shooterConfig);
-    // m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Aligned));
+     m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Aligned));
     m_frontRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
-    // m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
+    m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
       //setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
   }
 

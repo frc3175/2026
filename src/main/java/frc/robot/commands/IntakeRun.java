@@ -14,7 +14,7 @@ public class IntakeRun extends Command {
   /** Creates a new IntakeRun. */
   public IntakeRun(Intake intake) {
 
-    this.m_intake = intake;
+    m_intake = intake;
     addRequirements(m_intake);
 
     // Use addRequirements() here to declare subsystem dependencies.

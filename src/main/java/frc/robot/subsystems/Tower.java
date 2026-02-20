@@ -16,12 +16,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 
-//TODO: please clean this up, i feel like left roller motor isn't used anywhere? If it isn't used please remove the references to it
 public class Tower extends SubsystemBase {
   
   TalonFX m_kickMotor;
-  TalonFX m_leftRoller;
-  // TalonFX m_rightRoller;
   VelocityVoltage towerVelocity;
   TalonFX m_opposedKicker;
 
@@ -29,7 +26,7 @@ public class Tower extends SubsystemBase {
 
   public Tower(){
       m_kickMotor = new TalonFX(Constants.TowerConstants.KICKERID , Constants.CANIVORE);
-      m_leftRoller = new TalonFX(Constants.TowerConstants.LEFTROLLERID, Constants.CANIVORE);
+     
       // m_rightRoller = new TalonFX(Constants.TowerConstants.RIGHTROLLERID, Constants.CANIVORE);
       m_opposedKicker = new TalonFX(Constants.TowerConstants.OPKICKID, Constants.CANIVORE);
 
@@ -52,11 +49,10 @@ public class Tower extends SubsystemBase {
     
 
       m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
-      m_leftRoller.getConfigurator().apply(rollerConfiguration, 0.050);
-      // m_rightRoller.getConfigurator().apply(rollerConfiguration, 0.050);
-
+     
+      
       towerVelocity = new VelocityVoltage(0);
-      //m_rightRoller.setControl(new Follower(Constants.TowerConstants.LEFTROLLERID, MotorAlignmentValue.Opposed));
+      
       m_opposedKicker.setControl(new Follower(Constants.TowerConstants.KICKERID, MotorAlignmentValue.Opposed));
 
       // periodic, run Motion Magic with slot 0 configs,
@@ -68,14 +64,9 @@ public class Tower extends SubsystemBase {
   }
 
   public void towerrun(double velocity){
-  // if(Constants.Buttons.SHOOT.getAsBoolean()){
+  
     towerVelocity.Velocity = velocity;
         m_kickMotor.setControl(towerVelocity);
-        m_leftRoller.setControl(towerVelocity);
-    //}
-    //else{
-    
-    //}
       
   }
 }
