@@ -26,9 +26,9 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
 
-    this.m_rackMotor = new TalonFX(Constants.IntakeConstants.RACKMOTORID , Constants.CANIVORE);
-    this.m_intakeLeftMotor = new TalonFX(Constants.IntakeConstants.LEFTMOTORID, Constants.CANIVORE);
-    this.m_intakeRightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
+    m_rackMotor = new TalonFX(Constants.IntakeConstants.RACKMOTORID , Constants.CANIVORE);
+    m_intakeLeftMotor = new TalonFX(Constants.IntakeConstants.LEFTMOTORID, Constants.CANIVORE);
+    m_intakeRightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
      
     final TalonFXConfiguration rackConfiguration = new TalonFXConfiguration();
     rackConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
@@ -46,8 +46,8 @@ public class Intake extends SubsystemBase {
     m_intakeLeftMotor.getConfigurator().apply(rollerConfiguration, 0.050);
     m_intakeRightMotor.getConfigurator().apply(rollerConfiguration, 0.050);
 
-    this.intakePercentOutput = new DutyCycleOut(0);
-    this.intakeRackOutput = new DutyCycleOut(0);
+    intakePercentOutput = new DutyCycleOut(0);
+    intakeRackOutput = new DutyCycleOut(0);
 
     m_intakeRightMotor.setControl(new Follower(Constants.IntakeConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
     // periodic, run Motion Magic with slot 0 configs,
@@ -60,27 +60,27 @@ public class Intake extends SubsystemBase {
   }
 
   public void runIntake(double percentOutput){
-    this.intakePercentOutput.Output = percentOutput * 5;
-        m_intakeLeftMotor.setControl(this.intakePercentOutput);
+    intakePercentOutput.Output = percentOutput * 5;
+        m_intakeLeftMotor.setControl(intakePercentOutput);
   }
 
   public void extendIntake(){
-    this.intakeRackOutput.Output = Constants.IntakeConstants.RACKMAX;
-    m_rackMotor.setControl(this.intakeRackOutput);
+    intakeRackOutput.Output = Constants.IntakeConstants.RACKMAX;
+    m_rackMotor.setControl(intakeRackOutput);
   }
 
    public void retractIntake(){
-    this.intakeRackOutput.Output = Constants.IntakeConstants.RACKHOME;
-    m_rackMotor.setControl(this.intakeRackOutput);
+    intakeRackOutput.Output = Constants.IntakeConstants.RACKHOME;
+    m_rackMotor.setControl(intakeRackOutput);
   }
 
   public void stopRack(){
-    this.intakeRackOutput.Output = Constants.IntakeConstants.RACKHOLD;
-    m_rackMotor.setControl(this.intakeRackOutput);
+    intakeRackOutput.Output = Constants.IntakeConstants.RACKHOLD;
+    m_rackMotor.setControl(intakeRackOutput);
   }
 
   public double getRackStatorCurrent() {
-    return this.m_rackMotor.getStatorCurrent().getValueAsDouble();
+    return m_rackMotor.getStatorCurrent().getValueAsDouble();
   }
 
 }

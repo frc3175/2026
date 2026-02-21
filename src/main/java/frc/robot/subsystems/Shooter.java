@@ -38,10 +38,10 @@ public class Shooter extends SubsystemBase {
    
   /** Creates a new Shooter. */
   public Shooter() {
-    this.m_frontLeftShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTLEFTMOTORID, Constants.CANIVORE);
-    this.m_frontRightShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTRIGHTMOTORID, Constants.CANIVORE);
-    this.m_backLeftShooterMotor = new TalonFX(Constants.ShooterConstants.BACKLEFTMOTORID, Constants.CANIVORE);
-    this.m_backRightShooterMotor = new TalonFX(Constants.ShooterConstants.BACKRIGHTMOTORID, Constants.CANIVORE);
+    m_frontLeftShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTLEFTMOTORID, Constants.CANIVORE);
+    m_frontRightShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTRIGHTMOTORID, Constants.CANIVORE);
+    m_backLeftShooterMotor = new TalonFX(Constants.ShooterConstants.BACKLEFTMOTORID, Constants.CANIVORE);
+    m_backRightShooterMotor = new TalonFX(Constants.ShooterConstants.BACKRIGHTMOTORID, Constants.CANIVORE);
 
     final TalonFXConfiguration shooterConfig = new TalonFXConfiguration()
       .withMotorOutput(new MotorOutputConfigs()
@@ -61,7 +61,10 @@ public class Shooter extends SubsystemBase {
     slot0Configs.kA = Constants.ShooterConstants.SHOOTER_A;
 
     m_frontLeftShooterMotor.getConfigurator().apply(shooterConfig);
-     m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Aligned));
+    m_backLeftShooterMotor.getConfigurator().apply(shooterConfig);
+    m_frontRightShooterMotor.getConfigurator().apply(shooterConfig);
+    m_backRightShooterMotor.getConfigurator().apply(shooterConfig);
+    m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
     m_frontRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
     m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
       //setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
@@ -71,13 +74,12 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("shooter velocity", getShooterVelocity());
-    SmartDashboard.putBoolean("shooterruning", this.shooterVelocityVoltage.Velocity != 0);
+    SmartDashboard.putBoolean("shooterruning", shooterVelocityVoltage.Velocity != 0);
   }
 
   public void setShooterVelocity(double velocity) {
-    this.shooterVelocityVoltage.Velocity = velocity;
-    m_frontLeftShooterMotor.setControl(this.shooterVelocityVoltage);
-      //m_running = velocity != 0;      
+    shooterVelocityVoltage.Velocity = velocity;
+    m_frontLeftShooterMotor.setControl(shooterVelocityVoltage);      
   }
 
   public Command coastShooter() {

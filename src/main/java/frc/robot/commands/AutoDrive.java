@@ -28,7 +28,7 @@ public class AutoDrive extends Command {
  PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
   /** Creates a new AutoDrive. */
   public AutoDrive(Limelight limelight) {
-    this.m_limelight = limelight;
+    m_limelight = limelight;
     // Use addRequirements() here to declare subsystem dependencies.
   }
  
@@ -44,7 +44,7 @@ public class AutoDrive extends Command {
         goal = Constants.AutoAlignConstants.REDHUBID;
       } 
     }
-    endPose = AutoUtilsHub.getNewPose(this.m_limelight, goal);
+    endPose = AutoUtilsHub.getNewPose(m_limelight, goal);
     // Create the path using the waypoints created above
     final  Command path =  AutoBuilder.pathfindToPose(
       endPose,

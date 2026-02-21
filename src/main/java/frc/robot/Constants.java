@@ -6,8 +6,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Constants {
-    public static final double TRACK_WIDTH = Units.inchesToMeters(22.875);
-    public static final double WHEEL_BASE = Units.inchesToMeters(22.875);
+    public static final double TRACK_WIDTH = Units.inchesToMeters(23.5);
+    public static final double WHEEL_BASE = Units.inchesToMeters(23.5);
 
      public static final Translation2d[] moduleTranslations = new Translation2d[]{
             new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0),
@@ -35,36 +35,13 @@ public class Constants {
         public static final double HARDSTOPCURRENTLIMIT = 40.0;
         
 
-        public static final double INTAKEIN = 1;
-        public static final double OUTTAKE = -0.5;
+        public static final double INTAKEIN = -0.9;
+        public static final double OUTTAKE = 0.5;
         public static final double STOP = 0;
-        public static final double RACKHOME = 0.1;
-        public static final double RACKMAX = -0.1;
+        public static final double RACKHOME = 0.25;
+        public static final double RACKMAX = -0.25;
         public static final double RACKHOLD = -0.02;
-
-        public static final double INTAKE_P = 0.8;
-        public static final double INTAKE_I = 0;
-        public static final double INTAKE_D = 0;
-        public static final double INTAKE_V = 0.12;
-        public static final double INTAKE_S = 0;
-        public static final double INTAKE_A = 0;
-
-        public static final double RACK_P = 0.8;
-        public static final double RACK_I = 0;
-        public static final double RACK_D = 0;
-        public static final double RACK_V = 0.12;
-        public static final double RACK_S = 0;
-        public static final double RACK_A = 0;
        
-    }
-      
-    public class ClimberConstants{
-
-        // public static final int MOTORID = 22;
-
-        public static final int SERVOPORT = 0;
-        
-        public static final double HOME = 0;
     }
     
     public class ShooterConstants{
@@ -113,17 +90,12 @@ public class Constants {
         */
 
 
-    }
+    } 
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 32;
-
         public static final double HOPPERCURRENTLIMIT = 40.0; 
-        public static final double FLOORSPEED = -1;
-
-        
-
-        
+        public static final double FLOORSPEED = -1; 
     }
 
     public class TowerConstants{
@@ -139,8 +111,6 @@ public class Constants {
         public static final double TOWER_V = 0.12;
         public static final double TOWER_S = 0;
         public static final double TOWER_A = 15;
-        
-
        
         public static final double STOP = 0;
         
@@ -153,5 +123,5 @@ public class Constants {
     }
 
     /** Meters per Second */
-    public static final double MAX_SPEED = Units.feetToMeters(23.25);
+    public static final double MAX_SPEED = Units.feetToMeters(16.86);
 }

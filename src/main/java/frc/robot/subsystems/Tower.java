@@ -49,6 +49,7 @@ public class Tower extends SubsystemBase {
     
 
       m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
+      m_opposedKicker.getConfigurator().apply(kickConfiguration, 0.050);
      
       
       towerVelocity = new VelocityVoltage(0);

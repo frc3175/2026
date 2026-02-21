@@ -18,18 +18,13 @@ public class Hopper extends SubsystemBase {
   private final TalonFX m_floormotor;
 
   public Hopper() {
-    this.m_floormotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
+    m_floormotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
 
     final TalonFXConfiguration floorConfiguration = new TalonFXConfiguration();
     floorConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.HOPPERCURRENTLIMIT);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
-
-    var slot0Configs = floorConfiguration.Slot0;
-
-   
-
-    this.m_floormotor.getConfigurator().apply(floorConfiguration); 
+    m_floormotor.getConfigurator().apply(floorConfiguration); 
   }
   
   @Override
