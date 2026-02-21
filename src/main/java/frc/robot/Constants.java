@@ -59,7 +59,7 @@ public class Constants {
         // public static final double SHOOTER_S = 0;
         // public static final double SHOOTER_A = 80;
 
-        public static final double SPINSPEED = -48.25;
+        public static final double SPINSPEED = -47.25;
         public static final double SHOOTER_P = 4;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
@@ -67,7 +67,7 @@ public class Constants {
         public static final double SHOOTER_S = 0;
         public static final double SHOOTER_A = 1;
 
-        public static final double IDLESPEED = -5;
+        public static final double IDLESPEED = 0;
         /* 
         current good values
         public static final double SPINSPEED = -49.75;
@@ -94,7 +94,16 @@ public class Constants {
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 32;
-        public static final double HOPPERCURRENTLIMIT = 40.0; 
+        public static final double HOPPERCURRENTLIMIT = 40.0;
+        
+        public static final double HOPPER_P = 0.8;
+        public static final double HOPPER_I = 0;
+        public static final double HOPPER_D = 0;
+        
+        public static final double HOPPER_V = 0.12;
+        public static final double HOPPER_S = 0;
+        public static final double HOPPER_A = 0;
+        
         public static final double FLOORSPEED = -1; 
     }
 

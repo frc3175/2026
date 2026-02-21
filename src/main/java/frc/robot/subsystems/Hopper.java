@@ -24,6 +24,17 @@ public class Hopper extends SubsystemBase {
     floorConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.HOPPERCURRENTLIMIT);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+    
+    var slot0Configs = floorConfiguration.Slot0;
+    
+    slot0Configs.kP = Constants.HopperConstants.HOPPER_P;
+    slot0Configs.kI = Constants.HopperConstants.HOPPER_I;
+    slot0Configs.kD = Constants.HopperConstants.HOPPER_D;
+
+    slot0Configs.kS = Constants.HopperConstants.HOPPER_S;
+    slot0Configs.kV = Constants.HopperConstants.HOPPER_V;
+    slot0Configs.kA = Constants.HopperConstants.HOPPER_A;
+
     m_floormotor.getConfigurator().apply(floorConfiguration); 
   }
   
