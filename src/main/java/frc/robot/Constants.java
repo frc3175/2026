@@ -59,8 +59,8 @@ public class Constants {
         // public static final double SHOOTER_S = 0;
         // public static final double SHOOTER_A = 80;
 
-        public static final double SPINSPEED = -47.25;
-        public static final double SHOOTER_P = 4;
+        public static final double SPINSPEED = -48;
+        public static final double SHOOTER_P = 4.5;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
         public static final double SHOOTER_V = 0.12;
