@@ -47,7 +47,6 @@ public class Constants {
     public class ShooterConstants{
         public static final int FRONTLEFTMOTORID = 13;
         public static final int FRONTRIGHTMOTORID = 11;
-        public static final int BACKLEFTMOTORID = 31;
         public static final int BACKRIGHTMOTORID = 32;
 
         public static final double SHOOTERCURRENTLIMIT = 80.0; 

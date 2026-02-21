@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Amps;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.CoastOut;
@@ -27,7 +26,6 @@ public class Shooter extends SubsystemBase {
 
   private final TalonFX m_frontLeftShooterMotor;
   private final TalonFX m_frontRightShooterMotor;
-  private final TalonFX m_backLeftShooterMotor;
   private final TalonFX m_backRightShooterMotor;
 
   private final CoastOut coastRequest = new CoastOut();
@@ -40,7 +38,6 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     m_frontLeftShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTLEFTMOTORID, Constants.CANIVORE);
     m_frontRightShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTRIGHTMOTORID, Constants.CANIVORE);
-    m_backLeftShooterMotor = new TalonFX(Constants.ShooterConstants.BACKLEFTMOTORID, Constants.CANIVORE);
     m_backRightShooterMotor = new TalonFX(Constants.ShooterConstants.BACKRIGHTMOTORID, Constants.CANIVORE);
 
     final TalonFXConfiguration shooterConfig = new TalonFXConfiguration()
@@ -61,13 +58,10 @@ public class Shooter extends SubsystemBase {
     slot0Configs.kA = Constants.ShooterConstants.SHOOTER_A;
 
     m_frontLeftShooterMotor.getConfigurator().apply(shooterConfig);
-    m_backLeftShooterMotor.getConfigurator().apply(shooterConfig);
     m_frontRightShooterMotor.getConfigurator().apply(shooterConfig);
     m_backRightShooterMotor.getConfigurator().apply(shooterConfig);
-   // m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
     m_frontRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
     m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
-      //setDefaultCommand(new setshootvel(this, Constants.ShooterConstants.SPINSPEED));
   }
 
   @Override

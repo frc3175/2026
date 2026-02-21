@@ -134,9 +134,9 @@ public class SwerveDrive extends Command {
 
     
             m_swerveDrivetrain.setControl(
-                drive.withVelocityX( xAxisSquared * MaxSpeed *0.15) // Drive forward with negative Y (forward)
-                    .withVelocityY( yAxisSquared * MaxSpeed *0.15) // Drive left with negative X (left)
-                    .withRotationalRate(rAxisSquared * MaxAngularRate *0.5)
+                drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
+                    .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
+                    .withRotationalRate(rAxisSquared * MaxAngularRate )
                     .withCenterOfRotation(newCenterOfRotation)); // Drive counterclockwise with negative X (left)
                      // Drive counterclockwise with negative X (left)
                     
