@@ -42,7 +42,7 @@ public class RobotContainer {
     public  final CommandXboxController opController = new CommandXboxController(1);
 
     public final Trigger Spinup = opController.leftBumper();
-    public final Trigger ShootButton = opController.a();
+    public final Trigger ShootButton = drivecontroller.rightBumper();
     public final Trigger IntakeInButton = opController.rightBumper();
     public final Trigger Extendhop = opController.x();
     public final Trigger Retracthop = opController.b();
@@ -100,7 +100,7 @@ public class RobotContainer {
                 () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
                 () -> Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
-                () -> drivecontroller.rightBumper().getAsBoolean(),
+                () -> drivecontroller.a().getAsBoolean(),
                 () -> m_ll.getXOffset(),
                 () -> m_ll.getDistanceToTarget(),
                 () -> drivecontroller.leftBumper().getAsBoolean()
