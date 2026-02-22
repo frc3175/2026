@@ -35,8 +35,6 @@ public class Constants {
         public static final double HARDSTOPCURRENTLIMIT = 40.0;
         
 
-        public static final double INTAKEIN = -0.9;
-        public static final double OUTTAKE = 0.5;
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
