@@ -25,6 +25,7 @@ import frc.robot.commands.SpinDown;
 import frc.robot.commands.SpinUp;
 import frc.robot.commands.StopShootingFuel;
 import frc.robot.commands.SwerveDrive;
+import frc.robot.commands.UnclogTower;
 import frc.robot.generated.TunerConstants; 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Hopper;
@@ -45,6 +46,7 @@ public class RobotContainer {
     public final Trigger IntakeInButton = opController.rightBumper();
     public final Trigger Extendhop = opController.x();
     public final Trigger Retracthop = opController.b();
+    public final Trigger UnclogTower = opController.y();
     public final Trigger isdisable = new Trigger(() -> DriverStation.isDisabled());
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -96,10 +98,13 @@ public class RobotContainer {
                 drivetrain, 
                 () -> -Constants.DRIVER_CONTROLER.getRawAxis(translationAxis), 
                 () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
-                () -> -Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
+                () -> Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
-                () -> drivecontroller.rightBumper().getAsBoolean())
-               
+                () -> drivecontroller.rightBumper().getAsBoolean(),
+                () -> m_ll.getXOffset(),
+                () -> m_ll.getDistanceToTarget(),
+                () -> drivecontroller.leftBumper().getAsBoolean()
+            )
         );
 
         
@@ -118,7 +123,7 @@ public class RobotContainer {
 
         Extendhop.onTrue(new ExtendIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
         Retracthop.onTrue(new RetractIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
-
+        UnclogTower.onTrue(new UnclogTower(m_tower, m_hopper)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
         isdisable.onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
 
         //TODO: op: hopper controls, climber controls, outtake, passing

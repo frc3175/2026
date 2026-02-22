@@ -11,19 +11,17 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Tower;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ShootFuel extends Command {
+public class UnclogTower extends Command {
   public Tower m_tower;
   public Hopper m_hopper;
-  public Intake m_intake;
   // public double m_floorvel;
   /** Creates a new TowerRun. */
-  public ShootFuel(Tower tower, Hopper hopper, Intake intake) {
+  public UnclogTower(Tower tower, Hopper hopper) {
     m_tower = tower;
-    m_intake = intake;
     m_hopper = hopper;
     // m_hopper = hopper;
     // m_floorvel = floorvel;
-    addRequirements(m_tower, m_hopper, m_intake);
+    addRequirements(m_tower, m_hopper);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -33,8 +31,8 @@ public class ShootFuel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_tower.towerrun(Constants.TowerConstants.RUNSPEED);
-    m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED);
+    m_tower.towerrun(-Constants.TowerConstants.RUNSPEED);
+    m_hopper.runFloor(-Constants.HopperConstants.FLOORSPEED);
     //m_intake.runIntake(Constants.IntakeConstants.INTAKEIN);
   }
 

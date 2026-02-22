@@ -61,7 +61,7 @@ public class Shooter extends SubsystemBase {
     m_frontRightShooterMotor.getConfigurator().apply(shooterConfig);
     m_backRightShooterMotor.getConfigurator().apply(shooterConfig);
     m_frontRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
-    m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
+    m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Aligned));
   }
 
   @Override

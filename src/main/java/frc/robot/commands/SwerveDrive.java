@@ -32,6 +32,9 @@ public class SwerveDrive extends Command {
     private BooleanSupplier m_robotCentricSup;
     private BooleanSupplier m_isEvading;
     public BooleanSupplier m_isCrawling;
+    private DoubleSupplier m_tx;
+    private DoubleSupplier m_distanceToTarget;
+    private BooleanSupplier m_isAligning;
     //public SlewRateLimiter xAxisLimiter;
     //public SlewRateLimiter yAxisLimiter;
     
@@ -46,7 +49,10 @@ public class SwerveDrive extends Command {
                        DoubleSupplier strafeSup, 
                        DoubleSupplier rotationSup, 
                        BooleanSupplier robotCentricSup, 
-                       BooleanSupplier isEvading) {
+                       BooleanSupplier isEvading,
+                       DoubleSupplier tx,
+                       DoubleSupplier distanceToTarget,
+                       BooleanSupplier isAligning) {
 
         m_swerveDrivetrain = swerveDrivetrain;
         addRequirements(m_swerveDrivetrain);
@@ -56,16 +62,12 @@ public class SwerveDrive extends Command {
         m_rotationSup = rotationSup;
         m_robotCentricSup = robotCentricSup;
         m_isEvading = isEvading;
+        m_tx = tx;
+        m_distanceToTarget = distanceToTarget;
+        m_isAligning = isAligning;
      
-
-
-
           //xAxisLimiter = new SlewRateLimiter(1.5);
           //yAxisLimiter = new SlewRateLimiter(1.5);
-
-        
-       
-
     }
 
     private Translation2d getCenterOfRotation(final Rotation2d direction, final double rotation) {
@@ -132,20 +134,19 @@ public class SwerveDrive extends Command {
             
             // Use open-loop control for drive motors
 
+        double rAxisActual;
+        if(m_isAligning.getAsBoolean()) {
+            rAxisActual = m_swerveDrivetrain.alignToTarget(m_tx.getAsDouble(), m_distanceToTarget.getAsDouble());
+        } else {
+            rAxisActual = rAxisSquared * Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY * -1;
+        }
     
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
-                    .withRotationalRate(rAxisSquared * MaxAngularRate )
+                    .withRotationalRate(rAxisActual )
                     .withCenterOfRotation(newCenterOfRotation)); // Drive counterclockwise with negative X (left)
                      // Drive counterclockwise with negative X (left)
-                    
 
-
-          
-
-      
     }
-    
-
 }

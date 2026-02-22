@@ -301,15 +301,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         m_simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
-
-    
-
     public Rotation2d getgyroyaw(){
         return m_pigeon.getRotation2d();
     }
-
-    
-
 
    /**
      * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
@@ -343,5 +337,32 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         Matrix<N3, N1> visionMeasurementStdDevs
     ) {
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
+    }
+
+    public double alignToTarget(double tx, double distanceToTarget) {
+
+        double kP = Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
+
+        double distanceToGoal = distanceToTarget;
+        double cameraOffset = Constants.LimelightConstants.LIMELIGHT_OFFSET;
+        double errorRadians = Math.asin(cameraOffset/distanceToGoal);
+        double errorDegrees = errorRadians * (180/3.14159);
+
+        double cameraToTargetDegrees = tx;
+        double centerToTargetDegrees = cameraToTargetDegrees + errorDegrees;
+
+        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
+        // your limelight 3 feed, tx should return roughly 31 degrees.
+        double targetingAngularVelocity = centerToTargetDegrees * kP;
+
+        // convert to radians per second for our drive method
+        targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
+
+        //invert since tx is positive when the target is to the right of the crosshair
+        targetingAngularVelocity *= -1.0;
+
+        return targetingAngularVelocity;
+
+
     }
 }

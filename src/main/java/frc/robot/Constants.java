@@ -37,10 +37,12 @@ public class Constants {
 
         public static final double INTAKEIN = -0.9;
         public static final double OUTTAKE = 0.5;
+        public static final double INTAKEIN = 1;
+        public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double RACKHOME = 0.25;
         public static final double RACKMAX = -0.25;
-        public static final double RACKHOLD = -0.02;
+        public static final double RACKHOLD = 0;
        
     }
     
@@ -58,8 +60,8 @@ public class Constants {
         // public static final double SHOOTER_S = 0;
         // public static final double SHOOTER_A = 80;
 
-        public static final double SPINSPEED = -48;
-        public static final double SHOOTER_P = 4.5;
+        public static final double SPINSPEED = -48.5;
+        public static final double SHOOTER_P = 4.25;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
         public static final double SHOOTER_V = 0.12;
@@ -92,7 +94,7 @@ public class Constants {
     } 
 
     public class HopperConstants{
-        public static final int HOPPERFLOORMOTORID = 32;
+        public static final int HOPPERFLOORMOTORID = 44;
         public static final double HOPPERCURRENTLIMIT = 40.0;
         
         public static final double HOPPER_P = 0.8;
@@ -125,11 +127,21 @@ public class Constants {
 
     }
 
+    public class LimelightConstants {
+        public static final double LIMELIGHT_BACK_OFFSET = -11.25;
+        public static final double LIMELIGHT_MOUNTING_ANGLE = 31.24; 
+        public static final double LIMELIGHT_LENS_HEIGHT = 29.0;
+        public static final double LIMELIGHT_OFFSET = 11.5;
+    }
+
     public class AutoAlignConstants { 
         public static final int REDHUBID = 10;
         public static final int BLUEHUBID = 25;
+        public static final double TARGET_HEIGHT = 52;
+        public static final double LIMELIGHT_ANGLE_P = 0.011;
+        public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12 * 0.5;
     }
 
     /** Meters per Second */
-    public static final double MAX_SPEED = Units.feetToMeters(16.86);
+    public static final double MAX_SPEED = Units.feetToMeters(17.94);
 }

@@ -29,7 +29,7 @@ public class StopShootingFuel extends Command {
   public void execute() {
     m_tower.towerrun(0);
     m_hopper.runFloor(0);
-    m_intake.runIntake(0);
+   // m_intake.runIntake(0);
   }
 
   // Called once the command ends or is interrupted.
