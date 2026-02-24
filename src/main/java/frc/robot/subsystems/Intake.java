@@ -31,13 +31,13 @@ public class Intake extends SubsystemBase {
     m_intakeRightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
      
     final TalonFXConfiguration rackConfiguration = new TalonFXConfiguration();
+    rackConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.RACKCURRENTLIMIT);
     rackConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    rackConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
     rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
+    rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.ROLLERCURRENTLIMIT);
     rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
     rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
 
    

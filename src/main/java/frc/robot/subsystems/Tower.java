@@ -28,7 +28,7 @@ public class Tower extends SubsystemBase {
 
       final TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
       kickConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-      kickConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.CurrentLimit);
+      kickConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.TowerConstants.TOWERCURRENTLIMIT);
       kickConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
 
       var slot0Configs = kickConfiguration.Slot0;

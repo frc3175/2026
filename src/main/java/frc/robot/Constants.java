@@ -30,7 +30,8 @@ public class Constants {
         public static final int RIGHTMOTORID = 25;
         public static final int RACKMOTORID = 23;
 
-        public static final double CurrentLimit = 80.0; 
+        public static final double RACKCURRENTLIMIT = 20.0; 
+        public static final double ROLLERCURRENTLIMIT = 25.0;
 
         public static final double HARDSTOPCURRENTLIMIT = 40.0;
         
@@ -49,7 +50,7 @@ public class Constants {
         public static final int FRONTRIGHTMOTORID = 11;
         public static final int BACKRIGHTMOTORID = 32;
 
-        public static final double SHOOTERCURRENTLIMIT = 80.0; 
+        public static final double SHOOTERCURRENTLIMIT = 40.0; 
         // public static final double SPINSPEED = -48.75;
         // public static final double SHOOTER_P = 2;
         // public static final double SHOOTER_I = 0;
@@ -58,7 +59,8 @@ public class Constants {
         // public static final double SHOOTER_S = 0;
         // public static final double SHOOTER_A = 80;
 
-        public static final double SPINSPEED = -48.5;
+        public static final double SPINSPEED = -47.5;
+        public static final double TRENCHSPEED = -49.5;
         public static final double SHOOTER_P = 4.25;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;
@@ -93,7 +95,7 @@ public class Constants {
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
-        public static final double HOPPERCURRENTLIMIT = 40.0;
+        public static final double HOPPERCURRENTLIMIT = 20.0;
         
         public static final double HOPPER_P = 0.8;
         public static final double HOPPER_I = 0;
@@ -111,7 +113,7 @@ public class Constants {
         public static final int KICKERID = 12;
         public static final int OPKICKID = 21;
 
-        public static final double TOWERCURRENTLIMIT = 80.0; 
+        public static final double TOWERCURRENTLIMIT = 25.0; 
         public static final double RUNSPEED = -60;
         public static final double TOWER_P = 0.9;
         public static final double TOWER_I = 0;

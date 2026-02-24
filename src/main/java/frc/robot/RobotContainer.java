@@ -47,6 +47,7 @@ public class RobotContainer {
     public final Trigger Extendhop = opController.x();
     public final Trigger Retracthop = opController.b();
     public final Trigger UnclogTower = opController.y();
+    public final Trigger TrenchShot = opController.a();
     public final Trigger isdisable = new Trigger(() -> DriverStation.isDisabled());
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -120,6 +121,7 @@ public class RobotContainer {
         IntakeInButton.onFalse(new InstantCommand(() -> m_intake.runIntake(0)));
 
         Spinup.onTrue(new SpinUp(m_shooter, Constants.ShooterConstants.SPINSPEED)).onFalse(new SpinDown(m_shooter));
+        TrenchShot.onTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TRENCHSPEED)).onFalse(new SpinDown(m_shooter));
 
         Extendhop.onTrue(new ExtendIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
         Retracthop.onTrue(new RetractIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
