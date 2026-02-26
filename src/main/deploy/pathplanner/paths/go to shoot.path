@@ -1,0 +1,59 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.829457142857143,
+        "y": 3.3612285714285712
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 9.164307923800145,
+        "y": 3.896031279500186
+      },
+      "isLocked": false,
+      "linkedName": "intaked fuel blue"
+    },
+    {
+      "anchor": {
+        "x": 2.024657142857143,
+        "y": 2.1302999999999996
+      },
+      "prevControl": {
+        "x": 1.756570604993964,
+        "y": 2.158645597630653
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45796064400715536,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 36.86989764584404
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}
