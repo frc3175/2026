@@ -20,7 +20,7 @@ public class ExtendIntake extends Command {
 
     @Override 
     public void initialize() {
-        m_intake.extendIntake();
+       
         m_timer.reset();
         m_timer.start();
         isFinished = false;
@@ -28,9 +28,8 @@ public class ExtendIntake extends Command {
 
     @Override
     public void execute() {
-        if(m_intake.getRackStatorCurrent() > Constants.IntakeConstants.HARDSTOPCURRENTLIMIT && m_timer.get() > 0.35) {
-            isFinished = true;
-        }
+         m_intake.extendIntake();
+       
     }
 
     // Called once the command ends or is interrupted.

@@ -135,11 +135,11 @@ public class SwerveDrive extends Command {
             // Use open-loop control for drive motors
 
         double rAxisActual;
-        if(m_isAligning.getAsBoolean()) {
-            rAxisActual = m_swerveDrivetrain.alignToTarget(m_tx.getAsDouble(), m_distanceToTarget.getAsDouble());
-        } else {
+        // if(m_isAligning.getAsBoolean()) {
+        //     rAxisActual = m_swerveDrivetrain.alignToTarget(m_tx.getAsDouble(), m_distanceToTarget.getAsDouble());
+        // } else {
             rAxisActual = rAxisSquared * Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY * -1;
-        }
+       // }
     
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
