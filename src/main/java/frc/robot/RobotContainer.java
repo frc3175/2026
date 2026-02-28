@@ -6,14 +6,13 @@
 package frc.robot;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -48,7 +47,7 @@ public class RobotContainer {
     public final Trigger Retracthop = opController.b();
     public final Trigger UnclogTower = opController.y();
     public final Trigger TrenchShot = opController.a();
-    public final Trigger isdisable = new Trigger(() -> DriverStation.isDisabled());
+    
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     
@@ -80,7 +79,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
         
-        // autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
+         //autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
         SignalLogger.start();
 
         // SmartDashboard.putData("Auto Mode", autoChooser);
@@ -126,7 +125,7 @@ public class RobotContainer {
         Extendhop.onTrue(new ExtendIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
         Retracthop.onTrue(new RetractIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
         UnclogTower.onTrue(new UnclogTower(m_tower, m_hopper)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
-        isdisable.onTrue(new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+       
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         }
