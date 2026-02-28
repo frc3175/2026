@@ -346,7 +346,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double distanceToGoal = distanceToTarget;
         double cameraOffset = Constants.LimelightConstants.LIMELIGHT_OFFSET;
         double errorRadians = Math.asin(cameraOffset/distanceToGoal);
-        double errorDegrees = errorRadians * (180/3.14159);
+        double errorDegrees = Math.toDegrees(errorRadians);
 
         double cameraToTargetDegrees = tx;
         double centerToTargetDegrees = cameraToTargetDegrees + errorDegrees;
