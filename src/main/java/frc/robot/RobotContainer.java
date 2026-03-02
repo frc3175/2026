@@ -78,6 +78,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("INTAKE",  new InstantCommand(() -> m_intake.runIntake(Constants.IntakeConstants.INTAKEIN)));
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
+        NamedCommands.
         
          //autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
         SignalLogger.start();

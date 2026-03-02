@@ -3,37 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.896815742397138,
-        "y": 4.464973166368515
+        "x": 1.1470483005366723,
+        "y": 5.779230769230769
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.890840787119857,
-        "y": 4.594776386404293
+        "x": 2.4613059033989266,
+        "y": 3.410322003577817
       },
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": "at depot"
     },
     {
       "anchor": {
-        "x": 2.4126296958855096,
-        "y": 5.909033989266548
+        "x": 0.5467084078711981,
+        "y": 0.6844543828264751
       },
       "prevControl": {
-        "x": 2.1445431580223304,
-        "y": 5.937379586897201
+        "x": 0.9036672629695881,
+        "y": 1.171216457960643
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "at outpost"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.45796064400715536,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -50.59933933652059
+    "rotation": 178.83086067209263
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

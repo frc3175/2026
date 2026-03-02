@@ -66,7 +66,7 @@ public class Limelight extends SubsystemBase {
         double goalHeightInches = Constants.AutoAlignConstants.TARGET_HEIGHT; 
 
         double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+        double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
 
         //calculate distance
         double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
