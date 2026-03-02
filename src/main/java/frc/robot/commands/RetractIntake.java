@@ -21,7 +21,7 @@ public class RetractIntake extends Command {
 
     @Override 
     public void initialize() {
-        m_intake.retractIntake();
+        
         m_timer.reset();
         m_timer.start();
         isFinished = false;
@@ -29,10 +29,7 @@ public class RetractIntake extends Command {
 
     @Override
     public void execute() {
-        if(m_intake.getRackStatorCurrent() > Constants.IntakeConstants.HARDSTOPCURRENTLIMIT && m_timer.get() > 0.35) {
-            isFinished = true;
-        }
-    }
+        m_intake.retractIntake();}
 
     // Called once the command ends or is interrupted.
     @Override
