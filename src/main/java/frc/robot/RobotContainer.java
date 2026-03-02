@@ -11,8 +11,10 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -70,21 +72,22 @@ public class RobotContainer {
  
 
     /* Path follower */
-    // private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
 
         NamedCommands.registerCommand("SPINUP", new InstantCommand(() -> m_shooter.setShooterVelocity(Constants.ShooterConstants.SPINSPEED)));
         NamedCommands.registerCommand("SHOOT", new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED))));
         NamedCommands.registerCommand("INTAKE",  new InstantCommand(() -> m_intake.runIntake(Constants.IntakeConstants.INTAKEIN)));
-        NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
-        NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
-        NamedCommands.
+        // NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
+        // NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
+        NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
         
-         //autoChooser = AutoBuilder.buildAutoChooser("Red 2 Piece Left");
-        SignalLogger.start();
+         autoChooser = AutoBuilder.buildAutoChooser("New Auto");
+       
 
-        // SmartDashboard.putData("Auto Mode", autoChooser);
+        SmartDashboard.putData("Auto Mode", autoChooser);
         SmartDashboard.putNumber("set elevator", 0);
+        
 
         configureBindings();
         
@@ -126,14 +129,15 @@ public class RobotContainer {
         Extendhop.onTrue(new ExtendIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
         Retracthop.onTrue(new RetractIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
         UnclogTower.onTrue(new UnclogTower(m_tower, m_hopper)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
-       
+       opController.pov(90).onTrue(new InstantCommand(() -> m_intake.moverack(Constants.IntakeConstants.RACKVEL)));
+       opController.pov(270).onTrue(new InstantCommand(() -> m_intake.moverack(-Constants.IntakeConstants.RACKVEL)));
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         }
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        return null;
+        return autoChooser.getSelected();
        // return null;
     }
 }

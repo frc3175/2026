@@ -28,7 +28,7 @@ public class ExtendIntake extends Command {
 
     @Override
     public void execute() {
-         m_intake.extendIntake();
+         m_intake.extendintake();
        
     }
 

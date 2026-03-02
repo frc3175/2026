@@ -39,8 +39,9 @@ public class Constants {
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
-        public static final double RACKHOME = 0.25;
-        public static final double RACKMAX = -0.25;
+        public static final double RACKHOME = -0.5;
+        public static final double RACKMAX = -5;
+        public static final double RACKVEL = -0.25;
         public static final double RACKHOLD = 0;
        
     }

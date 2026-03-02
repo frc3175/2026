@@ -11,6 +11,8 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -64,15 +66,9 @@ public class Intake extends SubsystemBase {
         m_intakeLeftMotor.setControl(intakePercentOutput);
   }
 
-  public void extendIntake(){
-    intakeRackOutput.Output = Constants.IntakeConstants.RACKMAX;
-    m_rackMotor.setControl(intakeRackOutput);
-  }
-
-   public void retractIntake(){
-    intakeRackOutput.Output = Constants.IntakeConstants.RACKHOME;
-    m_rackMotor.setControl(intakeRackOutput);
-  }
+ public void moverack(double vel){
+  m_rackMotor.setControl(new VelocityVoltage(vel));
+ }
 
   public void stopRack(){
     intakeRackOutput.Output = Constants.IntakeConstants.RACKHOLD;
@@ -81,6 +77,14 @@ public class Intake extends SubsystemBase {
 
   public double getRackStatorCurrent() {
     return m_rackMotor.getStatorCurrent().getValueAsDouble();
+  }
+
+  public void extendintake(){
+    m_rackMotor.setControl(new PositionDutyCycle(Constants.IntakeConstants.RACKMAX));
+  }
+
+  public void retractintake(){
+    m_rackMotor.setControl(new PositionDutyCycle(Constants.IntakeConstants.RACKHOME));
   }
 
 }

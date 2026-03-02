@@ -10,6 +10,7 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.CoastOut;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -82,6 +83,10 @@ public class Shooter extends SubsystemBase {
 
   public double getShooterVelocity() {
     return m_frontLeftShooterMotor.getVelocity().getValueAsDouble();
+  }
+
+  public void shootpercentout(double speed){
+    m_frontLeftShooterMotor.setControl(new DutyCycleOut(speed));
   }
 
 }

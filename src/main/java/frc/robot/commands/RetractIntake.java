@@ -29,7 +29,7 @@ public class RetractIntake extends Command {
 
     @Override
     public void execute() {
-        m_intake.retractIntake();}
+        m_intake.retractintake();}
 
     // Called once the command ends or is interrupted.
     @Override
