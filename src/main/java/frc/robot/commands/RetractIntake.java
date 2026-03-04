@@ -34,14 +34,13 @@ public class RetractIntake extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_intake.stopRack();
-        m_timer.stop();
+       
     }
 
 
     @Override
     public boolean isFinished() {
-        return isFinished;
+        return true;
     }
 
 }

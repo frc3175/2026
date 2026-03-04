@@ -56,9 +56,10 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
     
-    public final Limelight m_ll = new Limelight();
+    
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
+    public final Limelight m_ll = new Limelight(drivetrain);
     public static final Shooter m_shooter = new Shooter();
     public static final Hopper m_hopper = new Hopper();
     public final Intake m_intake = new Intake();
@@ -105,8 +106,7 @@ public class RobotContainer {
                 () -> Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
                 () -> drivecontroller.a().getAsBoolean(),
-                () -> m_ll.getXOffset(),
-                () -> m_ll.getDistanceToTarget(),
+                m_ll,
                 () -> drivecontroller.leftBumper().getAsBoolean()
             )
         );
@@ -126,11 +126,11 @@ public class RobotContainer {
         Spinup.onTrue(new SpinUp(m_shooter, Constants.ShooterConstants.SPINSPEED)).onFalse(new SpinDown(m_shooter));
         TrenchShot.onTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TRENCHSPEED)).onFalse(new SpinDown(m_shooter));
 
-        Extendhop.onTrue(new ExtendIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
-        Retracthop.onTrue(new RetractIntake(m_intake)).onFalse(new InstantCommand(() -> m_intake.stopRack()));
+       Extendhop.onTrue(new ExtendIntake(m_intake));
+        Retracthop.onTrue(new RetractIntake(m_intake));
         UnclogTower.onTrue(new UnclogTower(m_tower, m_hopper)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
-       opController.pov(90).onTrue(new InstantCommand(() -> m_intake.moverack(Constants.IntakeConstants.RACKVEL)));
-       opController.pov(270).onTrue(new InstantCommand(() -> m_intake.moverack(-Constants.IntakeConstants.RACKVEL)));
+       opController.pov(90).onTrue(new InstantCommand(() -> m_intake.moverack(Constants.IntakeConstants.RACKVEL))).onFalse(new InstantCommand(() -> m_intake.moverack(0)));
+       opController.pov(270).onTrue(new InstantCommand(() -> m_intake.moverack(-Constants.IntakeConstants.RACKVEL))).onFalse(new InstantCommand(() -> m_intake.moverack(0)));
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         }

@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -37,6 +38,10 @@ public class Intake extends SubsystemBase {
     rackConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
+    rackConfiguration.Slot0.kP = Constants.IntakeConstants.RACK_P;
+    rackConfiguration.Slot0.kI = Constants.IntakeConstants.RACK_I;
+    rackConfiguration.Slot0.kD = Constants.IntakeConstants.RACK_D;
+    
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
     rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.ROLLERCURRENTLIMIT);
     rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
@@ -57,7 +62,7 @@ public class Intake extends SubsystemBase {
   
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("rackpose", 0);
+    SmartDashboard.putNumber("rackpose", getrackpose());
     SmartDashboard.putNumber("Roller vel", m_intakeLeftMotor.getVelocity().getValueAsDouble());
   }
 
@@ -67,7 +72,7 @@ public class Intake extends SubsystemBase {
   }
 
  public void moverack(double vel){
-  m_rackMotor.setControl(new VelocityVoltage(vel));
+  m_rackMotor.setControl(new DutyCycleOut(vel));
  }
 
   public void stopRack(){
@@ -80,11 +85,15 @@ public class Intake extends SubsystemBase {
   }
 
   public void extendintake(){
-    m_rackMotor.setControl(new PositionDutyCycle(Constants.IntakeConstants.RACKMAX));
+    m_rackMotor.setControl(new PositionVoltage(Constants.IntakeConstants.RACKMAX));
   }
 
   public void retractintake(){
-    m_rackMotor.setControl(new PositionDutyCycle(Constants.IntakeConstants.RACKHOME));
+    m_rackMotor.setControl(new PositionVoltage(Constants.IntakeConstants.RACKHOME));
+  }
+
+  public double getrackpose(){
+    return m_rackMotor.getPosition().getValueAsDouble();
   }
 
 }

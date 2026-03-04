@@ -11,12 +11,13 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.geometry.Translation2dPlus;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-
+import frc.robot.subsystems.Limelight;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -32,8 +33,7 @@ public class SwerveDrive extends Command {
     private BooleanSupplier m_robotCentricSup;
     private BooleanSupplier m_isEvading;
     public BooleanSupplier m_isCrawling;
-    private DoubleSupplier m_tx;
-    private DoubleSupplier m_distanceToTarget;
+    private Limelight m_ll;
     private BooleanSupplier m_isAligning;
     //public SlewRateLimiter xAxisLimiter;
     //public SlewRateLimiter yAxisLimiter;
@@ -50,8 +50,7 @@ public class SwerveDrive extends Command {
                        DoubleSupplier rotationSup, 
                        BooleanSupplier robotCentricSup, 
                        BooleanSupplier isEvading,
-                       DoubleSupplier tx,
-                       DoubleSupplier distanceToTarget,
+                       Limelight ll,
                        BooleanSupplier isAligning) {
 
         m_swerveDrivetrain = swerveDrivetrain;
@@ -62,8 +61,7 @@ public class SwerveDrive extends Command {
         m_rotationSup = rotationSup;
         m_robotCentricSup = robotCentricSup;
         m_isEvading = isEvading;
-        m_tx = tx;
-        m_distanceToTarget = distanceToTarget;
+        m_ll = ll;
         m_isAligning = isAligning;
      
           //xAxisLimiter = new SlewRateLimiter(1.5);
@@ -135,17 +133,21 @@ public class SwerveDrive extends Command {
             // Use open-loop control for drive motors
 
         double rAxisActual;
-        // if(m_isAligning.getAsBoolean()) {
-        //     rAxisActual = m_swerveDrivetrain.alignToTarget(m_tx.getAsDouble(), m_distanceToTarget.getAsDouble());
-        // } else {
+        if(m_isAligning.getAsBoolean()) {
+            rAxisActual = m_ll.aimToTarget();
+        } else {
             rAxisActual = rAxisSquared * Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY * -1;
-       // }
+       }
     
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
                     .withRotationalRate(rAxisActual )
-                    .withCenterOfRotation(newCenterOfRotation)); // Drive counterclockwise with negative X (left)
+                    .withCenterOfRotation(newCenterOfRotation));
+
+                    SmartDashboard.putNumber("rotationamount", rAxisActual);
+                    
+                    // Drive counterclockwise with negative X (left)
                      // Drive counterclockwise with negative X (left)
 
     }

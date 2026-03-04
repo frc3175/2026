@@ -39,11 +39,15 @@ public class Constants {
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
-        public static final double RACKHOME = -0.5;
-        public static final double RACKMAX = -5;
+        public static final double RACKHOME = 0.250146484375;
+        public static final double RACKMAX = -18.7900390625;
         public static final double RACKVEL = -0.25;
         public static final double RACKHOLD = 0;
        
+        public static final double RACK_P = 0.7;
+        public static final double RACK_I = 0;
+        public static final double RACK_D = 0;
+        
     }
     
     public class ShooterConstants{
@@ -129,7 +133,7 @@ public class Constants {
     }
 
     public class LimelightConstants {
-        public static final double LIMELIGHT_BACK_OFFSET = -11.25;
+        public static final double LIMELIGHT_BACK_OFFSET = -18.5;
         public static final double LIMELIGHT_MOUNTING_ANGLE = 31.24; 
         public static final double LIMELIGHT_LENS_HEIGHT = 29.0;
         public static final double LIMELIGHT_OFFSET = 11.5;
@@ -139,7 +143,7 @@ public class Constants {
         public static final int REDHUBID = 10;
         public static final int BLUEHUBID = 25;
         public static final double TARGET_HEIGHT = 52;
-        public static final double LIMELIGHT_ANGLE_P = 0.011;
+        public static final double LIMELIGHT_ANGLE_P = 0.05;
         public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12 * 0.5;
     }
 

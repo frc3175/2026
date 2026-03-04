@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import org.opencv.core.Mat;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,11 +22,12 @@ public class Limelight extends SubsystemBase {
     NetworkTableEntry ta;
     NetworkTableEntry tid;
     NetworkTable table;
+    CommandSwerveDrivetrain m_drivetrain;
 
     double priorityID;
 
 
-    public Limelight() {
+    public Limelight(CommandSwerveDrivetrain drivetrain) {
         // Limelight setup, if any
 
         table = NetworkTableInstance.getDefault().getTable("limelight-shooter");
@@ -44,6 +48,7 @@ public class Limelight extends SubsystemBase {
         }
 
         NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("priorityid").setNumber(priorityID);
+        m_drivetrain = drivetrain;
     }
 
         /** 
@@ -75,66 +80,65 @@ public class Limelight extends SubsystemBase {
 
     }
 
-    // public double aimToTarget() {
+    public double aimToTarget() {
 
-    //     double kP = Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
+        Pose2d botpose = m_drivetrain.getState().Pose;
 
-    //     double distanceToGoal = getDistanceToTarget();
-    //     double cameraOffset = Constants.LimelightConstants.LIMELIGHT_OFFSET;
-    //     double errorRadians = Math.asin(cameraOffset/distanceToGoal);
-    //     double errorDegrees = errorRadians * (180/3.14159);
+        double xdiff = Math.abs(botpose.getX() - 12);
+        double ydiff = Math.abs(botpose.getY() - 4);
 
-    //     double cameraToTargetDegrees = tx.getDouble(0.0);
-    //     double centerToTargetDegrees = cameraToTargetDegrees + errorDegrees;
+        double targetang = Math.atan(xdiff/ydiff) + botpose.getRotation().getRadians();
 
-    //     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
-    //     // your limelight 3 feed, tx should return roughly 31 degrees.
-    //     double targetingAngularVelocity = centerToTargetDegrees * kP;
+ 
 
-    //     // convert to radians per second for our drive method
-    //     targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
+        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
+        // your limelight 3 feed, tx should return roughly 31 degrees.
+        double targetingAngularVelocity = targetang * Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
 
-    //     //invert since tx is positive when the target is to the right of the crosshair
-    //     targetingAngularVelocity *= -1.0;
+        // convert to radians per second for our drive method
+        targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
 
-    //     return targetingAngularVelocity;
+        //invert since tx is positive when the target is to the right of the crosshair
+        //targetingAngularVelocity *= -1.0;
+
+        return targetingAngularVelocity;
 
 
+    }
+
+    // public double getXOffset() {
+    //     return limelightLeft.getEntry("tx").getDouble(0.0); // Horizontal offset (degrees)
     // }
 
-    public double getXOffset() {
-        return limelightLeft.getEntry("tx").getDouble(0.0); // Horizontal offset (degrees)
-    }
+    // public double getRightXOffset() {
+    //     return limelightRight.getEntry("tx").getDouble(0.0); // Horizontal offset (degrees)
+    // }
 
-    public double getRightXOffset() {
-        return limelightRight.getEntry("tx").getDouble(0.0); // Horizontal offset (degrees)
-    }
+    // public double getYOffset() {
+    //     return limelightLeft.getEntry("ty").getDouble(0.0); // Horizontal offset (degrees)
+    // }
 
-    public double getYOffset() {
-        return limelightLeft.getEntry("ty").getDouble(0.0); // Horizontal offset (degrees)
-    }
-
-    public double getRightYOffset() {
-        return limelightRight.getEntry("ty").getDouble(0.0); // Horizontal offset (degrees)
-    }
+    // public double getRightYOffset() {
+    //     return limelightRight.getEntry("ty").getDouble(0.0); // Horizontal offset (degrees)
+    // }
 
     public double shooterGetHorizontalOffset() {
         return limelightShooter.getEntry("tx").getDouble(0.0); // Horizontal offset (degrees)
     }
 
-    public boolean leftHasTarget() {
-        return limelightLeft.getEntry("ta").getDouble(0.0) > 0.0; // If target area is > 0
-    }
+    // public boolean leftHasTarget() {
+    //     return limelightLeft.getEntry("ta").getDouble(0.0) > 0.0; // If target area is > 0
+    // }
 
     public boolean shooterHasTarget() {
         return limelightShooter.getEntry("ta").getDouble(0.0) > 0.0; // If target area is > 0
 
     }
 
-    public boolean rightHasTarget() {
-        return limelightRight.getEntry("ta").getDouble(0.0) > 0.0; // If target area is > 0
+    // public boolean rightHasTarget() {
+    //     return limelightRight.getEntry("ta").getDouble(0.0) > 0.0; // If target area is > 0
 
-    }
+    // }
 
     public int getTargetid() {
         return ((int)limelightLeft.getEntry("tid").getDouble(0)); // If target area is > 0
@@ -148,13 +152,14 @@ public class Limelight extends SubsystemBase {
 
      @Override
   public void periodic() {
-    SmartDashboard.putNumber("x offset",getXOffset());
-    SmartDashboard.putNumber("Y offset",getYOffset());
-    SmartDashboard.putBoolean("left has tag",leftHasTarget());
-    SmartDashboard.putBoolean("right has tag",rightHasTarget());
+    // SmartDashboard.putNumber("x offset",getXOffset());
+    // SmartDashboard.putNumber("Y offset",getYOffset());
+    // SmartDashboard.putBoolean("left has tag",leftHasTarget());
+    // SmartDashboard.putBoolean("right has tag",rightHasTarget());
     SmartDashboard.putNumber("shooter horizontal offset",shooterGetHorizontalOffset());
     SmartDashboard.putBoolean("shooter has tag",shooterHasTarget());
     SmartDashboard.putNumber("targetid", getTargetid());
     SmartDashboard.putNumber("shootertargetid", shooterGetTargetid());
+    SmartDashboard.putNumber("rotation from distance", Math.atan(Math.abs(m_drivetrain.getState().Pose.getX() -12)/Math.abs(m_drivetrain.getState().Pose.getY() - 4)));
   }
 }

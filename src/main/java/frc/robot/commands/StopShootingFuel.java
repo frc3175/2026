@@ -27,7 +27,7 @@ public class StopShootingFuel extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_tower.towerrun(0);
+    m_tower.setpercentout(0);
     m_hopper.runFloor(0);
    // m_intake.runIntake(0);
   }
