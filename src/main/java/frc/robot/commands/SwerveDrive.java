@@ -140,7 +140,7 @@ public class SwerveDrive extends Command {
         
             rAxisActual = rAxisSquared * Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY * -1;
        
-    if(m_isAligning.getAsBoolean()){
+    if(!m_isAligning.getAsBoolean()){
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
@@ -154,7 +154,8 @@ public class SwerveDrive extends Command {
         m_swerveDrivetrain.setControl(
                 aligneddrive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
-                    .withTargetDirection(Rotation2d.fromRadians(m_ll.aimToTarget()))
+                    //.withTargetDirection(Rotation2d.fromRadians(m_ll.aimToTarget()))
+                    .withTargetDirection(Rotation2d.fromDegrees(180))
                     .withCenterOfRotation(newCenterOfRotation));
     }
                     // Drive counterclockwise with negative X (left)

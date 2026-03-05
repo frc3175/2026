@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AutoDrive;
 import frc.robot.commands.ExtendIntake;
 import frc.robot.commands.IntakeRun;
 import frc.robot.commands.RetractIntake;
@@ -115,6 +116,7 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
 
         drivecontroller.x().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        drivecontroller.start().onTrue(new AutoDrive(m_ll, drivetrain));
 
         ShootButton.onTrue(new ShootFuel(m_tower, m_hopper, m_intake)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 
