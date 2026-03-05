@@ -87,21 +87,21 @@ public class Limelight extends SubsystemBase {
         double xdiff = Math.abs(botpose.getX() - 12);
         double ydiff = Math.abs(botpose.getY() - 4);
 
-        double targetang = Math.atan(xdiff/ydiff) + botpose.getRotation().getRadians();
+        double targetang = Math.atan(xdiff/ydiff);
 
  
 
         // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
-        // your limelight 3 feed, tx should return roughly 31 degrees.
-        double targetingAngularVelocity = targetang * Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
+        // // your limelight 3 feed, tx should return roughly 31 degrees.
+        // double targetingAngularVelocity = targetang * Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
 
-        // convert to radians per second for our drive method
-        targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
+        // // convert to radians per second for our drive method
+        // targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
 
         //invert since tx is positive when the target is to the right of the crosshair
         //targetingAngularVelocity *= -1.0;
 
-        return targetingAngularVelocity;
+        return targetang;
 
 
     }

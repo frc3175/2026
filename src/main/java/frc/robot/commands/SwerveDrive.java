@@ -6,6 +6,7 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.MathUtil;
@@ -129,16 +130,17 @@ public class SwerveDrive extends Command {
         SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+            SwerveRequest.FieldCentricFacingAngle aligneddrive = new FieldCentricFacingAngle();
             
             // Use open-loop control for drive motors
 
         double rAxisActual;
-        if(m_isAligning.getAsBoolean()) {
-            rAxisActual = m_ll.aimToTarget();
-        } else {
+       
+        
             rAxisActual = rAxisSquared * Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY * -1;
-       }
-    
+       
+    if(m_isAligning.getAsBoolean()){
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
@@ -146,7 +148,15 @@ public class SwerveDrive extends Command {
                     .withCenterOfRotation(newCenterOfRotation));
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
-                    
+    }
+
+    else{
+        m_swerveDrivetrain.setControl(
+                aligneddrive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
+                    .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
+                    .withTargetDirection(Rotation2d.fromRadians(m_ll.aimToTarget()))
+                    .withCenterOfRotation(newCenterOfRotation));
+    }
                     // Drive counterclockwise with negative X (left)
                      // Drive counterclockwise with negative X (left)
 

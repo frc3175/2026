@@ -96,6 +96,11 @@ public class Intake extends SubsystemBase {
     return m_rackMotor.getPosition().getValueAsDouble();
   }
 
+  public Object extendIntake() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'extendIntake'");
+  }
+
 }
 
 

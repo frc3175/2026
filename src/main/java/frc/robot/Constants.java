@@ -120,6 +120,7 @@ public class Constants {
 
         public static final double TOWERCURRENTLIMIT = 25.0; 
         public static final double RUNSPEED = -60;
+        public static final double OUTSPEED = 15;
         public static final double TOWER_P = 0.9;
         public static final double TOWER_I = 0;
         public static final double TOWER_D = 0.2;

@@ -79,8 +79,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("SPINUP", new InstantCommand(() -> m_shooter.setShooterVelocity(Constants.ShooterConstants.SPINSPEED)));
         NamedCommands.registerCommand("SHOOT", new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED))));
         NamedCommands.registerCommand("INTAKE",  new InstantCommand(() -> m_intake.runIntake(Constants.IntakeConstants.INTAKEIN)));
-        // NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
-        // NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
+         //NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
+        //NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
         NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
         
          autoChooser = AutoBuilder.buildAutoChooser("New Auto");
@@ -120,11 +120,11 @@ public class RobotContainer {
          //TODO drive: llshoot, setpointshoot, llautoalign, autotrack, 
     
         
-        IntakeInButton.onTrue(new IntakeRun(m_intake));//.alongWith(new InstantCommand(() -> m_intake.extendintake())));
+        IntakeInButton.onTrue(new IntakeRun(m_intake));
         IntakeInButton.onFalse(new InstantCommand(() -> m_intake.runIntake(0)));
 
-        Spinup.onTrue(new SpinUp(m_shooter, Constants.ShooterConstants.SPINSPEED)).onFalse(new SpinDown(m_shooter));
-        TrenchShot.onTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TRENCHSPEED)).onFalse(new SpinDown(m_shooter));
+        Spinup.onTrue(new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.SPINSPEED)).onFalse(new SpinDown(m_shooter));
+        TrenchShot.onTrue(new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.TRENCHSPEED)).onFalse(new SpinDown(m_shooter));
 
        Extendhop.onTrue(new ExtendIntake(m_intake));
         Retracthop.onTrue(new RetractIntake(m_intake));

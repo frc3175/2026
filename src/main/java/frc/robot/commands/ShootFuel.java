@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hopper;
@@ -35,6 +36,8 @@ public class ShootFuel extends Command {
   public void execute() {
     m_tower.towerrun(Constants.TowerConstants.RUNSPEED);
     m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED);
+    Timer.delay(2.5);
+    m_intake.moverack(.25); 
     //m_intake.runIntake(Constants.IntakeConstants.INTAKEIN);
   }
 

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.util.AutoUtilsHub;
 
@@ -25,10 +26,14 @@ public class AutoDrive extends Command {
  private boolean end = false;
  private Pose2d endPose;
  private Limelight m_limelight;
+ private CommandSwerveDrivetrain m_drivetrain;
  PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
   /** Creates a new AutoDrive. */
-  public AutoDrive(Limelight limelight) {
+  public AutoDrive(Limelight limelight, CommandSwerveDrivetrain drivetrain) {
+    m_drivetrain = drivetrain;
     m_limelight = limelight;
+    
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
  
@@ -44,7 +49,7 @@ public class AutoDrive extends Command {
         goal = Constants.AutoAlignConstants.REDHUBID;
       } 
     }
-    endPose = AutoUtilsHub.getNewPose(m_limelight, goal);
+    endPose = AutoUtilsHub.getNewPose(m_limelight, m_drivetrain);
     // Create the path using the waypoints created above
     final  Command path =  AutoBuilder.pathfindToPose(
       endPose,
