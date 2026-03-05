@@ -26,8 +26,8 @@ public class AutoUtilsHub {
         
          PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); 
         Pose2d currbotpose = drivetrain.getState().Pose;
-        double xdiff = Math.abs(currbotpose.getX() - 12);
-        double ydiff = Math.abs(currbotpose.getY() - 4);
+        double xdiff = Math.abs(12 - currbotpose.getX());
+        double ydiff = Math.abs(4 - currbotpose.getY());
         double currdistaway = Math.sqrt((xdiff*xdiff) + (ydiff*ydiff));
         double rangedist = Units.inchesToMeters(145) - currdistaway; //distance to get in range 145 in is in range
         double rangex = rangedist*currbotpose.getRotation().getCos();
