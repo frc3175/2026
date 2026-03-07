@@ -40,11 +40,11 @@ public class Constants {
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double RACKHOME = 0.250146484375;
-        public static final double RACKMAX = -18.7900390625;
+        public static final double RACKMAX = -20.05; //-20.0500390625
         public static final double RACKVEL = -0.25;
         public static final double RACKHOLD = 0;
        
-        public static final double RACK_P = 0.7;
+        public static final double RACK_P = 0.9;
         public static final double RACK_I = 0;
         public static final double RACK_D = 0;
         
@@ -134,10 +134,12 @@ public class Constants {
     }
 
     public class LimelightConstants {
-        public static final double LIMELIGHT_BACK_OFFSET = -18.5;
+       // public static final double LIMELIGHT_BACK_OFFSET = -18.5;
         public static final double LIMELIGHT_MOUNTING_ANGLE = 31.24; 
         public static final double LIMELIGHT_LENS_HEIGHT = 29.0;
-        public static final double LIMELIGHT_OFFSET = 11.5;
+        //public static final double LIMELIGHT_OFFSET = 11.5;
+        public static final double LIMELIGHT_OFFSET = -18.5;
+        public static final double LIMELIGHT_BACK_OFFSET = 11.5;
     }
 
     public class AutoAlignConstants { 

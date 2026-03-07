@@ -7,32 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "blue over bump"
+            "pathName": "to outpost"
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "intake fuel blue"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "INTAKE"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "INTAKESTOP"
+            "waitTime": 3.0
           }
         },
         {
@@ -44,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "go to shoot blue"
+            "pathName": "outpost to shoot"
           }
         },
         {
@@ -72,15 +53,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "psudeo-shimmy bump"
+            "pathName": "shimmy outpost"
           }
         },
         {
@@ -98,7 +73,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 200.0
+            "waitTime": 2.0
           }
         },
         {
@@ -117,6 +92,12 @@
           "type": "named",
           "data": {
             "name": "SPINDOWN"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "outpost shoot to center"
           }
         }
       ]

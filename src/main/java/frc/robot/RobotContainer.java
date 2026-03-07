@@ -6,6 +6,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.SignalLogger;
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -77,12 +78,15 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
 
-        NamedCommands.registerCommand("SPINUP", new InstantCommand(() -> m_shooter.setShooterVelocity(Constants.ShooterConstants.SPINSPEED)));
-        NamedCommands.registerCommand("SHOOT", new InstantCommand(() -> m_tower.towerrun(Constants.TowerConstants.RUNSPEED)).alongWith(new InstantCommand(() -> m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED))));
-        NamedCommands.registerCommand("INTAKE",  new InstantCommand(() -> m_intake.runIntake(Constants.IntakeConstants.INTAKEIN)));
-         //NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
-        //NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractIntake()));
+        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.SPINSPEED));
+        NamedCommands.registerCommand("SHOOT", new ShootFuel(m_tower, m_hopper, m_intake));
+         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.extendIntake()));
+        NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.retractintake()));
         NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
+        NamedCommands.registerCommand("STOPSHOOT", new StopShootingFuel(m_tower, m_hopper, m_intake));
+        NamedCommands.registerCommand("SPINDOWN", new SpinDown(m_shooter));
+        NamedCommands.registerCommand("INTAKE", new IntakeRun(m_intake));
+        NamedCommands.registerCommand("INTAKESTOP", new InstantCommand(() -> m_intake.runIntake(0)));
         
          autoChooser = AutoBuilder.buildAutoChooser("New Auto");
        

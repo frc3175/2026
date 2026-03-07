@@ -36,8 +36,8 @@ public class ShootFuel extends Command {
   public void execute() {
     m_tower.towerrun(Constants.TowerConstants.RUNSPEED);
     m_hopper.runFloor(Constants.HopperConstants.FLOORSPEED);
-    Timer.delay(2.5);
-    m_intake.moverack(.25); 
+    //Timer.delay(2.5);
+    //m_intake.moverack(.25); 
     //m_intake.runIntake(Constants.IntakeConstants.INTAKEIN);
   }
 
