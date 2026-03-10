@@ -7,13 +7,17 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.geometry.Translation2dPlus;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
@@ -135,12 +139,19 @@ public class SwerveDrive extends Command {
             
             // Use open-loop control for drive motors
 
-        double rAxisActual;
-       
         
-            rAxisActual = rAxisSquared * Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY * -1;
+            double rAxisActual;
        
-    if(!m_isAligning.getAsBoolean()){
+         if(!m_isAligning.getAsBoolean()){
+            rAxisActual = rAxisSquared * MaxAngularRate * -1;
+       }
+        else{
+            rAxisActual = 0.2 <= Math.abs(0.7 * (m_ll.aimToTarget() + m_swerveDrivetrain.getState().Pose.getRotation().getRadians())  * 0.75) &&  
+            Math.abs(0.7 * (m_ll.aimToTarget() + m_swerveDrivetrain.getState().Pose.getRotation().getRadians())  * 0.75) <= 0.5 ? 
+            0.5 : 0.7 * (m_ll.aimToTarget() + m_swerveDrivetrain.getState().Pose.getRotation().getRadians())  * 0.75 ;
+        }
+       
+    
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
@@ -148,18 +159,13 @@ public class SwerveDrive extends Command {
                     .withCenterOfRotation(newCenterOfRotation));
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
-    }
+    
 
-    else{
-        m_swerveDrivetrain.setControl(
-                aligneddrive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
-                    .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
-                    //.withTargetDirection(Rotation2d.fromRadians(m_ll.aimToTarget()))
-                    .withTargetDirection(Rotation2d.fromDegrees(180))
-                    .withCenterOfRotation(newCenterOfRotation));
-    }
-                    // Drive counterclockwise with negative X (left)
-                     // Drive counterclockwise with negative X (left)
+                    
+                    
+    
+
+                    
 
     }
 }

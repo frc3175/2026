@@ -305,6 +305,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return m_pigeon.getRotation2d();
     }
 
+    public double get360gyro(){
+        return m_pigeon.getRotation2d().getDegrees() % 360;
+    }
+
    /**
      * Adds a vision measurement to the Kalman Filter. This will correct the odometry pose estimate
      * while still accounting for measurement noise.

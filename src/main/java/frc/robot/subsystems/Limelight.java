@@ -2,6 +2,10 @@ package frc.robot.subsystems;
 
 import org.opencv.core.Mat;
 
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.swerve.SwerveDrivetrain;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -84,10 +88,10 @@ public class Limelight extends SubsystemBase {
 
         Pose2d botpose = m_drivetrain.getState().Pose;
 
-        double xdiff = Math.abs(botpose.getX() - 12);
-        double ydiff = Math.abs(botpose.getY() - 4);
+        double xdiff = 12 - botpose.getX();
+        double ydiff = 4 -botpose.getY();
 
-        double targetang = Math.atan(xdiff/ydiff);
+        double targetang = Math.atan2(ydiff, xdiff);
 
  
 
@@ -101,7 +105,7 @@ public class Limelight extends SubsystemBase {
         //invert since tx is positive when the target is to the right of the crosshair
         //targetingAngularVelocity *= -1.0;
 
-        return targetang;
+        return Math.toDegrees(-targetang) + 90;
 
 
     }
@@ -160,6 +164,7 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putBoolean("shooter has tag",shooterHasTarget());
     SmartDashboard.putNumber("targetid", getTargetid());
     SmartDashboard.putNumber("shootertargetid", shooterGetTargetid());
-    SmartDashboard.putNumber("rotation from distance", Math.atan(Math.abs(m_drivetrain.getState().Pose.getX() -12)/Math.abs(m_drivetrain.getState().Pose.getY() - 4)));
+    SmartDashboard.putNumber("rotation from distance", Math.toDegrees(Math.atan2(12 - m_drivetrain.getState().Pose.getX() , 4 - m_drivetrain.getState().Pose.getY() )));
+    SmartDashboard.putNumber("to ang", aimToTarget() - m_drivetrain.getState().Pose.getRotation().getRadians());
   }
 }

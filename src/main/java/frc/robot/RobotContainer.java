@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutoDrive;
+import frc.robot.commands.AutoTurn;
+import frc.robot.commands.AutoUnclogTower;
 import frc.robot.commands.ExtendIntake;
 import frc.robot.commands.IntakeRun;
 import frc.robot.commands.RetractIntake;
@@ -87,7 +89,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("SPINDOWN", new SpinDown(m_shooter));
         NamedCommands.registerCommand("INTAKE", new IntakeRun(m_intake));
         NamedCommands.registerCommand("INTAKESTOP", new InstantCommand(() -> m_intake.runIntake(0)));
-        
+        NamedCommands.registerCommand("UNCLOGAUTO", new AutoUnclogTower(m_tower, m_hopper));
+
          autoChooser = AutoBuilder.buildAutoChooser("New Auto");
        
 
@@ -120,6 +123,7 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
 
         drivecontroller.x().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        drivecontroller.pov(90).whileTrue(new AutoTurn(drivetrain, m_ll));
         drivecontroller.start().onTrue(new AutoDrive(m_ll, drivetrain));
 
         ShootButton.onTrue(new ShootFuel(m_tower, m_hopper, m_intake)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
@@ -137,6 +141,7 @@ public class RobotContainer {
         UnclogTower.onTrue(new UnclogTower(m_tower, m_hopper)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
        opController.pov(90).onTrue(new InstantCommand(() -> m_intake.moverack(Constants.IntakeConstants.RACKVEL))).onFalse(new InstantCommand(() -> m_intake.moverack(0)));
        opController.pov(270).onTrue(new InstantCommand(() -> m_intake.moverack(-Constants.IntakeConstants.RACKVEL))).onFalse(new InstantCommand(() -> m_intake.moverack(0)));
+
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         }
