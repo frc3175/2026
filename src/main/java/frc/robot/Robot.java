@@ -117,8 +117,8 @@ public class Robot extends TimedRobot {
       
      
   
-      LimelightHelpers.SetRobotOrientation("limelight-shooter",m_robotContainer.drivetrain.getgyroyaw().getDegrees() + 90, 0, 0, 0, 0, 0);
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-shooter");
+      LimelightHelpers.SetRobotOrientation("limelight-shooter",m_robotContainer.drivetrain.getgyroyaw().getDegrees(), 0, 0, 0, 0, 0);
+      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-shooter");
       if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
          m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
         

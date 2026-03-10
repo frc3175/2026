@@ -105,7 +105,7 @@ public class Limelight extends SubsystemBase {
         //invert since tx is positive when the target is to the right of the crosshair
         //targetingAngularVelocity *= -1.0;
 
-        return Math.toDegrees(-targetang) + 90;
+        return Math.toDegrees(-targetang);
 
 
     }
