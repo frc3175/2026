@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.LimelightHelpers;
 
 @SuppressWarnings("all")
 /**
@@ -282,7 +283,43 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-        
+
+        if (m_Limelight != null) {
+            double yawDeg = getState().Pose.getRotation().getDegrees();
+            double yawRateDegPerSec = Math.toDegrees(getState().Speeds.omegaRadiansPerSecond);
+
+            LimelightHelpers.SetRobotOrientation(
+                "limelight-shooter",
+                yawDeg,
+                yawRateDegPerSec,
+                0,
+                0,
+                0,
+                0
+            );
+
+            LimelightHelpers.SetRobotOrientation(
+                "limelight-left",
+                yawDeg,
+                yawRateDegPerSec,
+                0,
+                0,
+                0,
+                0
+            );
+
+            LimelightHelpers.SetRobotOrientation(
+                "limelight-right",
+                yawDeg,
+                yawRateDegPerSec,
+                0,
+                0,
+                0,
+                0
+            );
+
+            addVisionUpdatesFromLimelight(m_Limelight);
+        }
         
     }
 

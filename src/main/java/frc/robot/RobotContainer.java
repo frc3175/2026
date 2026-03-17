@@ -40,6 +40,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tower;
+import frc.robot.util.LimelightHelpers;
 
 
 public class RobotContainer {
@@ -82,6 +83,8 @@ public class RobotContainer {
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
+
+        m_shooter.m_Limelight = m_ll; // give shooter access to limelight object, dangerous but im lazy
 
         NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.SPINSPEED));
         NamedCommands.registerCommand("SHOOT", new ShootFuel(m_tower, m_hopper, m_intake));
