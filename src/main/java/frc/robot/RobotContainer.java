@@ -12,6 +12,9 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 
+import java.util.Optional;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -40,7 +43,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tower;
-import frc.robot.util.LimelightHelpers;
+import frc.robot.LimelightHelpers;
+import frc.robot.util.ShooterLookup;
+
 
 
 public class RobotContainer {
@@ -72,6 +77,8 @@ public class RobotContainer {
     public static final Hopper m_hopper = new Hopper();
     public final Intake m_intake = new Intake();
     public static final Tower m_tower  = new Tower();    
+    public final ShooterLookup shooterLookup = new ShooterLookup();
+
     // public final Climber m_climber = new Climber();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -163,5 +170,26 @@ public class RobotContainer {
         SmartDashboard.putNumber("to ang", m_ll.AimToTarget(botpose.getX(), botpose.getY(), 12, 4) - drivetrain.getState().Pose.getRotation().getRadians());
 
 
+    }
+
+    public Pose2d getCurrentHubPose() {
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+
+        if (alliance.isPresent() && alliance.get() == Alliance.Red) {
+            return Constants.FieldConstants.RED_HUB;
+        }
+
+        return Constants.FieldConstants.BLUE_HUB;
+    }
+
+    public double getDistanceToTargetMeters() {
+        Pose2d robotPose = drivetrain.getState().Pose;
+        Pose2d hubPose = getCurrentHubPose();
+
+        return robotPose.getTranslation().getDistance(hubPose.getTranslation());
+    }
+
+    public double getDesiredShooterVelocity() {
+        return shooterLookup.calculateFlywheelVelocity(getDistanceToTargetMeters());
     }
 }

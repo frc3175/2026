@@ -4,6 +4,9 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 
 public class Constants {
     public static final double TRACK_WIDTH = Units.inchesToMeters(23.5);
@@ -97,6 +100,11 @@ public class Constants {
 
 
     } 
+    public static final class FieldConstants {
+        public static final Pose2d BLUE_HUB = new Pose2d(4.625, 4.035, new Rotation2d());
+        public static final Pose2d RED_HUB  = new Pose2d(11.92, 4.035, new Rotation2d());
+    }
+
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
