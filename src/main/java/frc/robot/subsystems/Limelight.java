@@ -198,15 +198,14 @@ import java.util.Optional;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.PoseEstimate;
+import frc.robot.LimelightHelpers.RawFiducial;
 
 public class Limelight extends SubsystemBase {
 
@@ -214,52 +213,50 @@ public class Limelight extends SubsystemBase {
         public final String cameraName;
         public final Pose2d pose;
         public final double timestampSeconds;
-        public final double tagArea;
+        public final double avgTagArea;
         public final int tagCount;
-        public final double primaryTagDistanceMeters;
+        public final double avgTagDistanceMeters;
         public final double poseErrorMeters;
+        public final boolean isMegaTag2;
 
         public VisionMeasurement(
             String cameraName,
             Pose2d pose,
             double timestampSeconds,
-            double tagArea,
+            double avgTagArea,
             int tagCount,
-            double primaryTagDistanceMeters,
-            double poseErrorMeters
+            double avgTagDistanceMeters,
+            double poseErrorMeters,
+            boolean isMegaTag2
         ) {
             this.cameraName = cameraName;
             this.pose = pose;
             this.timestampSeconds = timestampSeconds;
-            this.tagArea = tagArea;
+            this.avgTagArea = avgTagArea;
             this.tagCount = tagCount;
-            this.primaryTagDistanceMeters = primaryTagDistanceMeters;
+            this.avgTagDistanceMeters = avgTagDistanceMeters;
             this.poseErrorMeters = poseErrorMeters;
+            this.isMegaTag2 = isMegaTag2;
         }
     }
 
     private static class CameraConfig {
         public final String name;
-        public final NetworkTable table;
 
-        public CameraConfig(String name, NetworkTable table) {
+        public CameraConfig(String name) {
             this.name = name;
-            this.table = table;
         }
     }
 
-    private final NetworkTable shooterTable = NetworkTableInstance.getDefault().getTable("limelight-shooter");
-    private final NetworkTable leftTable = NetworkTableInstance.getDefault().getTable("limelight-left");
-    private final NetworkTable rightTable = NetworkTableInstance.getDefault().getTable("limelight-right");
-    private Pose2d lastAcceptedVisionPose = null;
-
     private final List<CameraConfig> cameras = List.of(
-        new CameraConfig("shooter", shooterTable),
-        new CameraConfig("left", leftTable),
-        new CameraConfig("right", rightTable)
+        new CameraConfig("limelight-shooter"),
+        new CameraConfig("limelight-left"),
+        new CameraConfig("limelight-right")
     );
 
-    Limelight() {}
+    private Pose2d lastAcceptedVisionPose = null;
+
+    public Limelight() {}
 
     public List<VisionMeasurement> getAcceptedVisionMeasurements(Pose2d currentOdometryPose) {
         List<VisionMeasurement> accepted = new ArrayList<>();
@@ -269,65 +266,82 @@ public class Limelight extends SubsystemBase {
             measurement.ifPresent(accepted::add);
         }
 
-        accepted.sort(Comparator
-            .comparingInt((VisionMeasurement m) -> -m.tagCount)
-            .thenComparingDouble(m -> m.poseErrorMeters)
-            .thenComparingDouble(m -> m.primaryTagDistanceMeters));
+        accepted.sort(
+            Comparator.comparingInt((VisionMeasurement m) -> -m.tagCount)
+                .thenComparingDouble(m -> m.avgTagDistanceMeters)
+                .thenComparingDouble(m -> m.poseErrorMeters)
+        );
 
         return accepted;
     }
 
     private Optional<VisionMeasurement> getMeasurementFromCamera(CameraConfig camera, Pose2d currentOdometryPose) {
-        NetworkTable table = camera.table;
+        PoseEstimate estimate = getPoseEstimate(camera.name);
+        if (estimate == null) return Optional.empty();
+        if (!LimelightHelpers.validPoseEstimate(estimate)) return Optional.empty();
+        if (estimate.pose == null) return Optional.empty();
 
-        double tv = table.getEntry("tv").getDouble(0.0);
-        if (tv < 1.0) return Optional.empty();
+        Pose2d pose = estimate.pose;
 
-        String poseEntry = getBotPoseEntryName();
-        double[] botpose = table.getEntry(poseEntry).getDoubleArray(new double[0]);
-        if (botpose.length < 7) return Optional.empty();
-
-        double x = botpose[0];
-        double y = botpose[1];
-        double yawDeg = botpose[5];
-        double latencyMs = botpose[6];
-
-        if (!Double.isFinite(x) || !Double.isFinite(y) || !Double.isFinite(yawDeg) || !Double.isFinite(latencyMs)) {
+        if (!Double.isFinite(pose.getX()) || !Double.isFinite(pose.getY()) || !Double.isFinite(pose.getRotation().getRadians())) {
             return Optional.empty();
         }
 
-        Pose2d pose = new Pose2d(x, y, Rotation2d.fromDegrees(yawDeg));
-        double timestampSeconds = Timer.getFPGATimestamp() - latencyMs / 1000.0;
-
         if (!isPoseInsideField(pose)) return Optional.empty();
 
-        double ta = table.getEntry("ta").getDouble(0.0);
-        double tid = table.getEntry("tid").getDouble(-1.0);
+        if (estimate.tagCount < 1) return Optional.empty();
 
-        int tagCount = tid >= 0 ? 1 : 0;
+        if (estimate.avgTagArea < 0.1) return Optional.empty();
+
+        if (estimate.tagCount == 1 && estimate.avgTagDist > 4.0) return Optional.empty();
+
+        if (!passesAmbiguityCheck(estimate.rawFiducials, estimate.tagCount)) return Optional.empty();
+
         double poseErrorMeters = pose.getTranslation().getDistance(currentOdometryPose.getTranslation());
-
-        if (poseErrorMeters > 2.5) return Optional.empty();
-        if (ta < 0.1) return Optional.empty();
+        if (poseErrorMeters > 2.0) return Optional.empty();
 
         if (lastAcceptedVisionPose != null) {
-            double delta = pose.getTranslation().getDistance(lastAcceptedVisionPose.getTranslation());
-            if (delta > 5.0) return Optional.empty();
+            double deltaFromLastVision = pose.getTranslation().getDistance(lastAcceptedVisionPose.getTranslation());
+            if (deltaFromLastVision > 5.0) return Optional.empty();
         }
 
-        double distanceMeters = estimateDistanceMeters(table);
-        
         lastAcceptedVisionPose = pose;
 
         return Optional.of(new VisionMeasurement(
             camera.name,
             pose,
-            timestampSeconds,
-            ta,
-            tagCount,
-            distanceMeters,
-            poseErrorMeters
+            estimate.timestampSeconds,
+            estimate.avgTagArea,
+            estimate.tagCount,
+            estimate.avgTagDist,
+            poseErrorMeters,
+            estimate.isMegaTag2
         ));
+    }
+
+    private PoseEstimate getPoseEstimate(String limelightName) {
+        if (useMegaTag2()) {
+            return LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightName);
+        }
+        return LimelightHelpers.getBotPoseEstimate_wpiBlue(limelightName);
+    }
+
+    private boolean useMegaTag2() {
+        return true;
+    }
+
+    private boolean passesAmbiguityCheck(RawFiducial[] rawFiducials, int tagCount) {
+        if (tagCount >= 2) return true;
+        if (rawFiducials == null || rawFiducials.length == 0) return false;
+
+        double bestAmbiguity = Double.MAX_VALUE;
+        for (RawFiducial fid : rawFiducials) {
+            if (fid != null) {
+                bestAmbiguity = Math.min(bestAmbiguity, fid.ambiguity);
+            }
+        }
+
+        return bestAmbiguity <= 0.1;
     }
 
     private boolean isPoseInsideField(Pose2d pose) {
@@ -337,44 +351,22 @@ public class Limelight extends SubsystemBase {
             && pose.getY() < 9.0;
     }
 
-    private String getBotPoseEntryName() {
-        var alliance = DriverStation.getAlliance();
-
-        // comment in if botpose_wpired is needed
-        // if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-        //     return "botpose_wpired";
-        // }
-        return "botpose_wpiblue";
-    }
-
-    private double estimateDistanceMeters(NetworkTable table) {
-        double ty = table.getEntry("ty").getDouble(0.0);
-        double mountAngleDeg = frc.robot.Constants.LimelightConstants.LIMELIGHT_MOUNTING_ANGLE;
-        double lensHeightInches = frc.robot.Constants.LimelightConstants.LIMELIGHT_LENS_HEIGHT;
-        double goalHeightInches = frc.robot.Constants.AutoAlignConstants.TARGET_HEIGHT;
-
-        double angleDeg = mountAngleDeg + ty;
-        double angleRad = Math.toRadians(angleDeg);
-
-        if (Math.abs(Math.tan(angleRad)) < 1e-6) return 999.0;
-
-        double distanceInches = (goalHeightInches - lensHeightInches) / Math.tan(angleRad);
-        return distanceInches * 0.0254;
-    }
-
     public Matrix<N3, N1> getStdDevsForMeasurement(VisionMeasurement measurement) {
         double xy;
         double theta;
 
-        if (measurement.tagCount >= 2) {
-            xy = 0.15;
-            theta = Math.toRadians(8.0);
-        } else if (measurement.primaryTagDistanceMeters < 2.5) {
-            xy = 0.25;
-            theta = Math.toRadians(15.0);
+        if (measurement.tagCount >= 2 && measurement.avgTagDistanceMeters < 3.0) {
+            xy = 0.12;
+            theta = Math.toRadians(6.0);
+        } else if (measurement.tagCount >= 2) {
+            xy = 0.20;
+            theta = Math.toRadians(10.0);
+        } else if (measurement.avgTagDistanceMeters < 2.5) {
+            xy = 0.35;
+            theta = Math.toRadians(18.0);
         } else {
-            xy = 0.6;
-            theta = Math.toRadians(30.0);
+            xy = 0.75;
+            theta = Math.toRadians(999.0); // basically do not trust heading much on weak single-tag
         }
 
         return VecBuilder.fill(xy, xy, theta);
@@ -382,8 +374,12 @@ public class Limelight extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putBoolean("LL Shooter Has Target", shooterTable.getEntry("tv").getDouble(0.0) >= 1.0);
-        SmartDashboard.putBoolean("LL Left Has Target", leftTable.getEntry("tv").getDouble(0.0) >= 1.0);
-        SmartDashboard.putBoolean("LL Right Has Target", rightTable.getEntry("tv").getDouble(0.0) >= 1.0);
+        SmartDashboard.putBoolean("LL Shooter Has Target", LimelightHelpers.getTV("limelight-shooter"));
+        SmartDashboard.putBoolean("LL Left Has Target", LimelightHelpers.getTV("limelight-left"));
+        SmartDashboard.putBoolean("LL Right Has Target", LimelightHelpers.getTV("limelight-right"));
+
+        SmartDashboard.putNumber("LL Shooter Target Count", LimelightHelpers.getTargetCount("limelight-shooter"));
+        SmartDashboard.putNumber("LL Left Target Count", LimelightHelpers.getTargetCount("limelight-left"));
+        SmartDashboard.putNumber("LL Right Target Count", LimelightHelpers.getTargetCount("limelight-right"));
     }
 }
