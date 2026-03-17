@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,8 +25,8 @@ import frc.robot.subsystems.Limelight;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AutoTurn extends Command {
 
-  private CommandSwerveDrivetrain drivetrain;
-  private Limelight camera;
+  private CommandSwerveDrivetrain m_drivetrain;
+  private Limelight m_limeLight;
   private CommandXboxController m_controller;
   
  
@@ -39,8 +40,8 @@ public class AutoTurn extends Command {
 
 
   public AutoTurn(CommandSwerveDrivetrain drive, Limelight limelight) {
-    drivetrain = drive;
-    camera = limelight;
+    m_drivetrain = drive;
+    m_limeLight = limelight;
 
     
     turnController.setTolerance(1);
@@ -51,16 +52,18 @@ public class AutoTurn extends Command {
   @Override
   public void initialize() {
   
-    
+     
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    
-        double yaw = drivetrain.get360gyro();
-        double angle = camera.aimToTarget();
+    Pose2d botpose = m_drivetrain.getState().Pose;
+
+        double yaw = m_drivetrain.get360gyro();
+        double angle = m_limeLight.AimToTarget(botpose.getX(), botpose.getY(), 12, 4);
         turnController.setSetpoint(angle); //maybe -
         // xController.setSetpoint(2);
         
@@ -69,27 +72,14 @@ public class AutoTurn extends Command {
 
         
         
-        drivetrain.setControl(
+        m_drivetrain.setControl(
           motion// Drive left with negative X (left)
           .withRotationalRate(turnController.calculate(yaw)));
 
             if(turnController.atSetpoint()){
               end(true);
             }
-            
-
           
-
-
-
-
-          // double x = dis.getX();
-          // double y = dis.getY();
-          // double xSpeed = xController.calculate(x);
-          // double ySpeed = yController.calculate(y);
-          // rotationSpeed = -turnController.calculate(yaw, 0);
-          // drivetrain.drive(new Translation2d(xSpeed, ySpeed),-rotationSpeed , false, false);
-
 
        }
     
