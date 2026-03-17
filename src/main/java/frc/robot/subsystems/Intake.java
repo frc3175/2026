@@ -101,6 +101,11 @@ public class Intake extends SubsystemBase {
     throw new UnsupportedOperationException("Unimplemented method 'extendIntake'");
   }
 
+  public void resetIntakeRackZero() {
+    m_rackMotor.setPosition(0);
+    retractintake();
+  }
+
 }
 
 

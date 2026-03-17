@@ -28,7 +28,7 @@ public class IntakeRun extends Command {
   @Override
   public void execute() {
     m_intake.runIntake(Constants.IntakeConstants.INTAKEIN);
-   // m_intake.extendintake();
+    m_intake.extendintake();
   }
 
   // Called once the command ends or is interrupted.

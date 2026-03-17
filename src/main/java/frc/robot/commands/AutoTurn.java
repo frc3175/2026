@@ -61,8 +61,9 @@ public class AutoTurn extends Command {
     
         double yaw = drivetrain.get360gyro();
         double angle = camera.aimToTarget();
-        turnController.setSetpoint(angle);
+        turnController.setSetpoint(angle); //maybe -
         // xController.setSetpoint(2);
+        
         // yController.setSetpoint(7);
 
 

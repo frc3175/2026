@@ -144,12 +144,11 @@ public class SwerveDrive extends Command {
        
          if(!m_isAligning.getAsBoolean()){
             rAxisActual = rAxisSquared * MaxAngularRate * -1;
-       }
-        else{
-            rAxisActual = 0.2 <= Math.abs(0.7 * (m_ll.aimToTarget() + m_swerveDrivetrain.getState().Pose.getRotation().getRadians())  * 0.75) &&  
-            Math.abs(0.7 * (m_ll.aimToTarget() + m_swerveDrivetrain.getState().Pose.getRotation().getRadians())  * 0.75) <= 0.5 ? 
-            0.5 : 0.7 * (m_ll.aimToTarget() + m_swerveDrivetrain.getState().Pose.getRotation().getRadians())  * 0.75 ;
         }
+        else{
+            rAxisActual = -m_ll.shooterGetHorizontalOffset();
+        }
+   
        
     
             m_swerveDrivetrain.setControl(

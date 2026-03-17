@@ -41,17 +41,17 @@ public class Limelight extends SubsystemBase {
         tid = table.getEntry("tid");
 
         var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if(alliance.get() == DriverStation.Alliance.Red) {
-                priorityID = Constants.AutoAlignConstants.REDHUBID;
-            } else {
-                priorityID = Constants.AutoAlignConstants.BLUEHUBID;
-            }
-        } else {
-            priorityID = Constants.AutoAlignConstants.BLUEHUBID;
-        }
+        // if (alliance.isPresent()) {
+        //     if(alliance.get() == DriverStation.Alliance.Red) {
+        //         priorityID = Constants.AutoAlignConstants.REDHUBID;
+        //     } else {
+        //         priorityID = Constants.AutoAlignConstants.BLUEHUBID;
+        //     }
+        // } else {
+        //     priorityID = Constants.AutoAlignConstants.BLUEHUBID;
+        // }
 
-        NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("priorityid").setNumber(priorityID);
+        // NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("priorityid").setNumber(priorityID);
         m_drivetrain = drivetrain;
     }
 
@@ -88,8 +88,10 @@ public class Limelight extends SubsystemBase {
 
         Pose2d botpose = m_drivetrain.getState().Pose;
 
-        double xdiff = 12 - botpose.getX();
-        double ydiff = 4 -botpose.getY();
+        // double xdiff = 12 - botpose.getX();
+        // double ydiff = 4 -botpose.getY();
+        double xdiff = 12 - botpose.getX() ;
+        double ydiff = botpose.getY() - 4;
 
         double targetang = Math.atan2(ydiff, xdiff);
 
@@ -105,7 +107,8 @@ public class Limelight extends SubsystemBase {
         //invert since tx is positive when the target is to the right of the crosshair
         //targetingAngularVelocity *= -1.0;
 
-        return Math.toDegrees(-targetang);
+        return Math.toDegrees(targetang) -75;
+        // return Math.toDegrees(targetang);
 
 
     }

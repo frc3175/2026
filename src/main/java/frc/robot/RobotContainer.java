@@ -113,7 +113,7 @@ public class RobotContainer {
                 () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
                 () -> Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
-                () -> drivecontroller.a().getAsBoolean(),
+                () -> drivecontroller.leftTrigger().getAsBoolean(),
                 m_ll,
                 () -> drivecontroller.leftBumper().getAsBoolean()
             )
@@ -141,7 +141,7 @@ public class RobotContainer {
         UnclogTower.onTrue(new UnclogTower(m_tower, m_hopper)).onFalse(new StopShootingFuel(m_tower, m_hopper, m_intake));
        opController.pov(90).onTrue(new InstantCommand(() -> m_intake.moverack(Constants.IntakeConstants.RACKVEL))).onFalse(new InstantCommand(() -> m_intake.moverack(0)));
        opController.pov(270).onTrue(new InstantCommand(() -> m_intake.moverack(-Constants.IntakeConstants.RACKVEL))).onFalse(new InstantCommand(() -> m_intake.moverack(0)));
-
+        opController.pov(180).onTrue(new InstantCommand(() -> m_intake.resetIntakeRackZero()));
 
         //TODO: op: hopper controls, climber controls, outtake, passing
         }
