@@ -7,12 +7,15 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.geometry.Translation2dPlus;
 import frc.robot.Constants;
 
 public class Limelight extends SubsystemBase {
@@ -61,40 +64,42 @@ public class Limelight extends SubsystemBase {
      * 
      */
 
-    public double getDistanceToTarget()  {
+    // public double getDistanceToTarget()  {
 
-        double targetOffsetAngle_Vertical = ty.getDouble(0.0);
+    //     double targetOffsetAngle_Vertical = ty.getDouble(0.0);
 
-        // how many degrees back is your limelight rotated from perfectly vertical?
-        double limelightMountAngleDegrees = Constants.LimelightConstants.LIMELIGHT_MOUNTING_ANGLE; 
+    //     // how many degrees back is your limelight rotated from perfectly vertical?
+    //     double limelightMountAngleDegrees = Constants.LimelightConstants.LIMELIGHT_MOUNTING_ANGLE; 
 
-        // distance from the center of the Limelight lens to the floor
-        double limelightLensHeightInches = Constants.LimelightConstants.LIMELIGHT_LENS_HEIGHT; 
+    //     // distance from the center of the Limelight lens to the floor
+    //     double limelightLensHeightInches = Constants.LimelightConstants.LIMELIGHT_LENS_HEIGHT; 
 
-        // distance from the target to the floor
-        double goalHeightInches = Constants.AutoAlignConstants.TARGET_HEIGHT; 
+    //     // distance from the target to the floor
+    //     double goalHeightInches = Constants.AutoAlignConstants.TARGET_HEIGHT; 
 
-        double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
-        double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
+    //     double angleToGoalDegrees = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    //     double angleToGoalRadians = Math.toRadians(angleToGoalDegrees);
 
-        //calculate distance
-        double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
+    //     //calculate distance
+    //     double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches) / Math.tan(angleToGoalRadians);
 
-        return distanceFromLimelightToGoalInches - Constants.LimelightConstants.LIMELIGHT_BACK_OFFSET;
+    //     return distanceFromLimelightToGoalInches - Constants.LimelightConstants.LIMELIGHT_BACK_OFFSET;
 
-    }
+  //  }
 
     public double aimToTarget() {
 
         Pose2d botpose = m_drivetrain.getState().Pose;
 
+
         // double xdiff = 12 - botpose.getX();
         // double ydiff = 4 -botpose.getY();
-        double xdiff = 12 - botpose.getX() ;
-        double ydiff = botpose.getY() - 4;
+        //double xdiff = 12 - botpose.getX() ;
+        //double ydiff = botpose.getY() - 4;
 
-        double targetang = Math.atan2(ydiff, xdiff);
+        //double targetang = Math.atan2(ydiff, xdiff);
 
+        Rotation2d targetang = Translation2dPlus.getAngle(new Translation2d(12, 4), botpose.getTranslation());
  
 
         // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
@@ -107,10 +112,22 @@ public class Limelight extends SubsystemBase {
         //invert since tx is positive when the target is to the right of the crosshair
         //targetingAngularVelocity *= -1.0;
 
-        return Math.toDegrees(targetang) -75;
+        return targetang.getDegrees() + 180;
         // return Math.toDegrees(targetang);
 
 
+    }
+
+     public double AimToTarget(double currentX, double currentY, double targetX, double targetY) {
+
+        double dx = targetX - currentX;
+        double dy = targetY - currentY;
+
+        double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
+
+        if (angle < 0) angle += 360; 
+        SmartDashboard.putNumber("rotation to align", Math.abs(angle + Constants.AutoAlignConstants.BLUE_ANGLE_OFFSET));
+        return angle;
     }
 
     // public double getXOffset() {
@@ -167,7 +184,7 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putBoolean("shooter has tag",shooterHasTarget());
     SmartDashboard.putNumber("targetid", getTargetid());
     SmartDashboard.putNumber("shootertargetid", shooterGetTargetid());
-    SmartDashboard.putNumber("rotation from distance", Math.toDegrees(Math.atan2(12 - m_drivetrain.getState().Pose.getX() , 4 - m_drivetrain.getState().Pose.getY() )));
+    // SmartDashboard.putNumber("rotation to align", aimToTarget());
     SmartDashboard.putNumber("to ang", aimToTarget() - m_drivetrain.getState().Pose.getRotation().getRadians());
   }
 }

@@ -142,12 +142,12 @@ public class SwerveDrive extends Command {
         
             double rAxisActual;
        
-         if(!m_isAligning.getAsBoolean()){
+        // if(!m_isAligning.getAsBoolean()){
             rAxisActual = rAxisSquared * MaxAngularRate * -1;
-        }
-        else{
-            rAxisActual = -m_ll.shooterGetHorizontalOffset();
-        }
+       // }
+        //else{
+            //rAxisActual = -m_ll.shooterGetHorizontalOffset();
+       // }
    
        
     

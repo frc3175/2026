@@ -1,6 +1,8 @@
 package frc.robot;
 
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -143,12 +145,14 @@ public class Constants {
         public static final double LIMELIGHT_BACK_OFFSET = 11.5;
     }
 
+    public static final class FieldConstants {
+        public static final Pose2d BLUE_HUB = new Pose2d(4.625, 4.035, new Rotation2d());
+        public static final Pose2d RED_HUB  = new Pose2d(11.92, 4.035, new Rotation2d());
+    }
+
     public class AutoAlignConstants { 
-        public static final int REDHUBID = 10;
-        public static final int BLUEHUBID = 25;
-        public static final double TARGET_HEIGHT = 52;
-        public static final double LIMELIGHT_ANGLE_P = 0.05;
-        public static final double MAX_ANGULAR_VELOCITY = Math.PI * 4.12 * 0.5;
+     public static final double RED_ANGLE_OFFSET = 68;
+     public static final double BLUE_ANGLE_OFFSET = 240 ;
     }
 
     /** Meters per Second */
