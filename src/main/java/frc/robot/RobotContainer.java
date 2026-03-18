@@ -11,8 +11,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
-
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -47,7 +45,6 @@ public class RobotContainer {
 
     public  final CommandXboxController drivecontroller = new CommandXboxController(0);
     public  final CommandXboxController opController = new CommandXboxController(1);
-    public Pose2d botpose;
 
     public final Trigger Spinup = opController.leftBumper();
     public final Trigger ShootButton = drivecontroller.rightBumper();
@@ -66,7 +63,7 @@ public class RobotContainer {
     
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    public final Limelight m_ll = new Limelight();
+    public final Limelight m_ll = new Limelight(drivetrain);
     public static final Shooter m_shooter = new Shooter();
     public static final Hopper m_hopper = new Hopper();
     public final Intake m_intake = new Intake();
@@ -153,11 +150,5 @@ public class RobotContainer {
         /* Run the path selected from the auto chooser */
         return autoChooser.getSelected();
        // return null;
-    }
-    public void periodic() {
-         botpose = drivetrain.getState().Pose;
-        SmartDashboard.putNumber("to ang", m_ll.AimToTarget(botpose.getX(), botpose.getY(), 12, 4) - drivetrain.getState().Pose.getRotation().getRadians());
-
-
     }
 }

@@ -23,8 +23,8 @@ public class AutoUtilsHub {
     public static Pose2d getNewPose(Limelight m_limelight,CommandSwerveDrivetrain drivetrain ) {
         // Double doubleInput = new Double(input);
         // int intInput = doubleInput.intValue();
-        Pose2d botpose = drivetrain.getState().Pose;         
-        PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); 
+        
+         PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); 
         Pose2d currbotpose = drivetrain.getState().Pose;
         double xdiff = Math.abs(12 - currbotpose.getX());
         double ydiff = Math.abs(4 - currbotpose.getY());
@@ -32,7 +32,7 @@ public class AutoUtilsHub {
         double rangedist = Units.inchesToMeters(145) - currdistaway; //distance to get in range 145 in is in range
         double rangex = rangedist*currbotpose.getRotation().getCos();
         double rangey = rangedist*currbotpose.getRotation().getSin();
-        Pose2d goalpose = new Pose2d(new Translation2d(currbotpose.getX() + rangex, currbotpose.getY() + rangey), Rotation2d.fromRadians(m_limelight.AimToTarget(botpose.getX(), botpose.getY(), 12, 4)));
+        Pose2d goalpose = new Pose2d(new Translation2d(currbotpose.getX() + rangex, currbotpose.getY() + rangey), Rotation2d.fromRadians(m_limelight.aimToTarget()));
         return goalpose;
 
        

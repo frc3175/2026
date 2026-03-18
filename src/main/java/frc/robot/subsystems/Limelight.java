@@ -31,7 +31,7 @@ public class Limelight extends SubsystemBase {
     double priorityID;
 
 
-    public Limelight(/*CommandSwerveDrivetrain drivetrain*/) {
+    public Limelight(CommandSwerveDrivetrain drivetrain) {
         // Limelight setup, if any
 
         table = NetworkTableInstance.getDefault().getTable("limelight-shooter");
@@ -52,7 +52,7 @@ public class Limelight extends SubsystemBase {
         // }
 
         // NetworkTableInstance.getDefault().getTable("limelight-shooter").getEntry("priorityid").setNumber(priorityID);
-        // m_drivetrain = drivetrain;
+        m_drivetrain = drivetrain;
     }
 
         /** 
@@ -84,45 +84,33 @@ public class Limelight extends SubsystemBase {
 
     }
 
-    // public double aimToTarget() {
+    public double aimToTarget() {
 
-    //     Pose2d botpose = m_drivetrain.getState().Pose;
+        Pose2d botpose = m_drivetrain.getState().Pose;
 
-    //     // double xdiff = 12 - botpose.getX();
-    //     // double ydiff = 4 -botpose.getY();
-    //     double xdiff = 12 - botpose.getX() ;
-    //     double ydiff = botpose.getY() - 4;
+        // double xdiff = 12 - botpose.getX();
+        // double ydiff = 4 -botpose.getY();
+        double xdiff = 12 - botpose.getX() ;
+        double ydiff = botpose.getY() - 4;
 
-    //     double targetang = Math.atan2(ydiff, xdiff);
+        double targetang = Math.atan2(ydiff, xdiff);
 
  
 
-    //     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
-    //     // // your limelight 3 feed, tx should return roughly 31 degrees.
-    //     // double targetingAngularVelocity = targetang * Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
+        // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
+        // // your limelight 3 feed, tx should return roughly 31 degrees.
+        // double targetingAngularVelocity = targetang * Constants.AutoAlignConstants.LIMELIGHT_ANGLE_P;
 
-    //     // // convert to radians per second for our drive method
-    //     // targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
+        // // convert to radians per second for our drive method
+        // targetingAngularVelocity *= (Constants.AutoAlignConstants.MAX_ANGULAR_VELOCITY);
 
-    //     //invert since tx is positive when the target is to the right of the crosshair
-    //     //targetingAngularVelocity *= -1.0;
+        //invert since tx is positive when the target is to the right of the crosshair
+        //targetingAngularVelocity *= -1.0;
 
-    //     return Math.toDegrees(targetang) -75;
-    //     // return Math.toDegrees(targetang);
+        return Math.toDegrees(targetang) -75;
+        // return Math.toDegrees(targetang);
 
 
-    // }
-
-    public double AimToTarget(double currentX, double currentY, double targetX, double targetY) {
-
-        double dx = targetX - currentX;
-        double dy = targetY - currentY;
-
-        double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
-
-        if (angle < 0) angle += 360; 
-
-        return angle;
     }
 
     // public double getXOffset() {
@@ -180,6 +168,6 @@ public class Limelight extends SubsystemBase {
     SmartDashboard.putNumber("targetid", getTargetid());
     SmartDashboard.putNumber("shootertargetid", shooterGetTargetid());
     SmartDashboard.putNumber("rotation from distance", Math.toDegrees(Math.atan2(12 - m_drivetrain.getState().Pose.getX() , 4 - m_drivetrain.getState().Pose.getY() )));
-    
+    SmartDashboard.putNumber("to ang", aimToTarget() - m_drivetrain.getState().Pose.getRotation().getRadians());
   }
 }
