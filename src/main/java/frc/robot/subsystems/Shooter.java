@@ -34,6 +34,7 @@ public class Shooter extends SubsystemBase {
   public  boolean m_running = false;
 
   private VelocityVoltage shooterVelocityVoltage = new VelocityVoltage(0);
+  public Limelight m_Limelight;
    
   /** Creates a new Shooter. */
   public Shooter() {

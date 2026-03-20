@@ -1,4 +1,4 @@
-package frc.robot.common;
+package frc.robot.util;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -7,7 +7,7 @@ public class ShooterLookup {
 
     private final TreeMap<Double, Double> velocityMap = new TreeMap<>();
 
-    ShooterLookup()
+    public ShooterLookup()
     {
         // example values:
         // key: distance to target in meters

@@ -27,6 +27,8 @@ public class Constants {
     public static final CommandXboxController DRIVER_CONTROLER = new CommandXboxController(0);
     public static final CommandXboxController OPERATOR_CONTROLER = new CommandXboxController(1);
 
+    public static final double slewRate = 1.5;
+
     public class IntakeConstants{
 
         public static final int LEFTMOTORID = 37;

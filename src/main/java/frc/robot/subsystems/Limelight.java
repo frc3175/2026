@@ -113,17 +113,6 @@
 
 //     // }
 
-//     public double AimToTarget(double currentX, double currentY, double targetX, double targetY) {
-
-//         double dx = targetX - currentX;
-//         double dy = targetY - currentY;
-
-//         double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
-
-//         if (angle < 0) angle += 360; 
-
-//         return angle;
-//     }
 
 //     // public double getXOffset() {
 //     //     return limelightLeft.getEntry("tx").getDouble(0.0); // Horizontal offset (degrees)
@@ -198,6 +187,8 @@ import java.util.Optional;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;

@@ -1,5 +1,7 @@
 package frc.robot.util;
 
+import java.util.Optional;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -7,6 +9,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -20,20 +24,32 @@ public class AutoUtilsHub {
         // Constructor
     }
 
-    public static Pose2d getNewPose(Limelight m_limelight,CommandSwerveDrivetrain drivetrain ) {
-        // Double doubleInput = new Double(input);
-        // int intInput = doubleInput.intValue();
+    private static double getAngleToGoal(Pose2d currentPosition, Translation2d goalPosition) {
+
+        double dx = goalPosition.getX() - currentPosition.getX();
+        double dy = goalPosition.getY()- currentPosition.getY();
+
+        double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
+
+        angle = ((angle % 360) + 360) % 360;
+
+        return angle;
+    }
+
+    private static Translation2d getGoalPose(boolean isBlueAlliance) {
+        if (isBlueAlliance) {
+            return new Translation2d(4.6269, 4.034663); //TODO: move to constants
+        } else {
+            return new Translation2d(11.91409, 4.034663);
+        }
+    }
+
+    public static Rotation2d getNewRotation(Limelight m_limelight,CommandSwerveDrivetrain drivetrain) {
         Pose2d botpose = drivetrain.getState().Pose;         
         PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); 
-        Pose2d currbotpose = drivetrain.getState().Pose;
-        double xdiff = Math.abs(12 - currbotpose.getX());
-        double ydiff = Math.abs(4 - currbotpose.getY());
-        double currdistaway = Math.sqrt((xdiff*xdiff) + (ydiff*ydiff));
-        double rangedist = Units.inchesToMeters(145) - currdistaway; //distance to get in range 145 in is in range
-        double rangex = rangedist*currbotpose.getRotation().getCos();
-        double rangey = rangedist*currbotpose.getRotation().getSin();
-        Pose2d goalpose = new Pose2d(new Translation2d(currbotpose.getX() + rangex, currbotpose.getY() + rangey), Rotation2d.fromRadians(m_limelight.AimToTarget(botpose.getX(), botpose.getY(), 12, 4)));
-        return goalpose;
+        Optional<Alliance> ally = DriverStation.getAlliance();
+        Rotation2d goalRotation = new Rotation2d(getAngleToGoal(botpose, getGoalPose(ally.get() == Alliance.Blue)));
+        return goalRotation;
 
        
         /* TODO: implement the following:
