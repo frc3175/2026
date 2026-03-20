@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -15,6 +16,8 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -153,11 +156,11 @@ public class SwerveDrive extends Command {
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
         } else {
+            Translation2d velocity = AutoUtilsHub.getOrbitVelocity(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
             m_swerveDrivetrain.setControl(
-                aligneddrive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
-                    .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
-                    .withCenterOfRotation(newCenterOfRotation)
-                    .withTargetDirection(AutoUtilsHub.getNewRotation(m_ll, m_swerveDrivetrain)));
+                aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
+                    .withVelocityY(velocity.getY()) // Drive left with negative X (left)
+                    .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_ll, m_swerveDrivetrain)));
         }
     
 

@@ -31,7 +31,7 @@ public class AutoUtilsHub {
 
         double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
 
-        angle = ((angle % 360) + 360) % 360;
+        angle = ((angle % (2*Math.PI)) + (2*Math.PI)) % (2*Math.PI);
 
         return angle;
     }
@@ -44,11 +44,14 @@ public class AutoUtilsHub {
         }
     }
 
-    public static Rotation2d getNewRotation(Limelight m_limelight,CommandSwerveDrivetrain drivetrain) {
-        Pose2d botpose = drivetrain.getState().Pose;         
-        PathConstraints constraints = new PathConstraints(4, 2, 2 * Math.PI, 4 * Math.PI); 
+    private static boolean getIsBlueAlliance() {
         Optional<Alliance> ally = DriverStation.getAlliance();
-        Rotation2d goalRotation = new Rotation2d(getAngleToGoal(botpose, getGoalPose(ally.get() == Alliance.Blue)));
+        return ally.get() == Alliance.Blue;
+    }
+
+    public static Rotation2d getOrbitRotation(Limelight m_limelight,CommandSwerveDrivetrain drivetrain) {
+        Pose2d botpose = drivetrain.getState().Pose;      
+        Rotation2d goalRotation = new Rotation2d(getAngleToGoal(botpose, getGoalPose(getIsBlueAlliance())));
         return goalRotation;
 
        
@@ -59,5 +62,22 @@ public class AutoUtilsHub {
         */
 
     } 
+    public static Translation2d getOrbitVelocity(CommandSwerveDrivetrain drivetrain, double yAxisJoystick, double xAxisJoystick, double maxSpeed) {
+        Pose2d robotPose = drivetrain.getState().Pose;
+        Translation2d goalPose = getGoalPose(getIsBlueAlliance());
+
+        Translation2d delta = goalPose.minus(robotPose.getTranslation());
+        double distance = delta.getNorm();
+        if (distance < 0.01) {
+            distance = 0.01;
+        }
+
+        Translation2d radial = delta.times(1.0 / distance);
+        Translation2d tangent = new Translation2d(-radial.getY(), radial.getX());
+        Translation2d velocity = radial.times(yAxisJoystick * maxSpeed)
+                                 .plus(tangent.times(xAxisJoystick * maxSpeed));
+
+        return velocity;
+    }
 }
 
