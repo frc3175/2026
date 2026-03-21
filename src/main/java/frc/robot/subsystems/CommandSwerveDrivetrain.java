@@ -369,7 +369,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     for (Limelight.VisionMeasurement measurement : limelight.getAcceptedVisionMeasurements(getState().Pose)) {
         addVisionMeasurement(
             measurement.pose,
-            measurement.timestampSeconds,
+            Utils.fpgaToCurrentTime(measurement.timestampSeconds), //was measurement.timestampSeconds, (I think this is better bc limelight uses fgpa)
             limelight.getStdDevsForMeasurement(measurement)
         );
     }
