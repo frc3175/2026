@@ -60,6 +60,8 @@ public class Constants {
         public static final int FRONTRIGHTMOTORID = 11;
         public static final int BACKRIGHTMOTORID = 32;
 
+        public static final double SHOOTERANGLE = 67; //TODO: FIX THIS ANGLE
+
         public static final double SHOOTERCURRENTLIMIT = 45.0; 
         // public static final double SPINSPEED = -48.75;
         // public static final double SHOOTER_P = 2;

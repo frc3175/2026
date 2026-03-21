@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.util.ShooterLookup;
 
 @SuppressWarnings("all")
 
@@ -31,9 +32,16 @@ public class AutoUtilsHub {
 
         double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
 
-        angle = ((angle % (2*Math.PI)) + (2*Math.PI)) % (2*Math.PI);
-
         return angle;
+    }
+
+    private static double getDistanceToGoal(Pose2d currentPosition, Translation2d goalPosition) {
+        Translation2d diff = goalPosition.minus(currentPosition.getTranslation());
+        return diff.getNorm();
+    }
+
+    private static Translation2d getDifferenceToGoal(Pose2d currentPosition, Translation2d goalPosition) {
+        return goalPosition.minus(currentPosition.getTranslation());
     }
 
     private static Translation2d getGoalPose(boolean isBlueAlliance) {
@@ -49,20 +57,13 @@ public class AutoUtilsHub {
         return ally.get() == Alliance.Blue;
     }
 
-    public static Rotation2d getOrbitRotation(Limelight m_limelight,CommandSwerveDrivetrain drivetrain) {
+    public static Rotation2d getOrbitRotation(CommandSwerveDrivetrain drivetrain) {
         Pose2d botpose = drivetrain.getState().Pose;      
         Rotation2d goalRotation = new Rotation2d(getAngleToGoal(botpose, getGoalPose(getIsBlueAlliance())));
         return goalRotation;
 
-       
-        /* TODO: implement the following:
-        1. Get current pose of robot
-        2. Calculate closest point along designated shooting arc (make sure to account for the fact that its a semicircle not just a full circle)
-        3. Make sure no conflicts
-        */
-
     } 
-    public static Translation2d getOrbitVelocity(CommandSwerveDrivetrain drivetrain, double yAxisJoystick, double xAxisJoystick, double maxSpeed) {
+    public static Translation2d getOrbitTranslation(CommandSwerveDrivetrain drivetrain, double yAxisJoystick, double xAxisJoystick, double maxSpeed) {
         Pose2d robotPose = drivetrain.getState().Pose;
         Translation2d goalPose = getGoalPose(getIsBlueAlliance());
 
@@ -78,6 +79,23 @@ public class AutoUtilsHub {
                                  .plus(tangent.times(xAxisJoystick * maxSpeed));
 
         return velocity;
+    }
+
+    public static Rotation2d calculateOrbitRotationOffset(CommandSwerveDrivetrain drivetrain, double shooterAngle, Translation2d velocity) {
+        double distanceToGoal = getDistanceToGoal(drivetrain.getState().Pose, getGoalPose(getIsBlueAlliance()));
+        Translation2d delta = getDifferenceToGoal(drivetrain.getState().Pose, getGoalPose(getIsBlueAlliance()));
+        Translation2d radial = delta.times(1 / distanceToGoal);
+        Translation2d tangent = new Translation2d(-radial.getY(), radial.getX());
+        double tangentSpeed = velocity.getX() * tangent.getX() + velocity.getY() * tangent.getY();
+        double shooterVelocity = ShooterLookup.calculateFlywheelVelocity(distanceToGoal);
+
+        double flightTime = distanceToGoal / (shooterVelocity * Math.cos(shooterAngle));
+
+        double lateralOffset = tangentSpeed * flightTime;
+
+        double angleOffset = Math.atan2(lateralOffset, distanceToGoal);
+
+        return new Rotation2d(angleOffset);
     }
 }
 

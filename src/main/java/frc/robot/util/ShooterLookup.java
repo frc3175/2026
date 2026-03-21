@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 public class ShooterLookup {
 
-    private final TreeMap<Double, Double> velocityMap = new TreeMap<>();
+    private static final TreeMap<Double, Double> velocityMap = new TreeMap<>();
 
     public ShooterLookup()
     {
@@ -19,13 +19,13 @@ public class ShooterLookup {
         velocityMap.put(5.0, 25.0);
     }
 
-    public double calculateFlywheelVelocity(double distanceMeters) {
+    public static double calculateFlywheelVelocity(double distanceMeters) {
         return performLookup(velocityMap, distanceMeters);
     }
-
+    
     // helpers to perform interpolation in case of multiple tables:
 
-    private double performLookup(TreeMap<Double, Double> map, double distanceMeters) {
+    private static double performLookup(TreeMap<Double, Double> map, double distanceMeters) {
 
         if (map.isEmpty()) {
             return -1;
@@ -57,7 +57,7 @@ public class ShooterLookup {
         return interpolate(lowerDistance, upperDistance, lowerValue, upperValue, distanceMeters);
     }
 
-    private double interpolate(
+    private static double interpolate(
             double lowerKey,
             double upperKey,
             double lowerValue,

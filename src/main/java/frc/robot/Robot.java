@@ -8,7 +8,6 @@ package frc.robot;
 import com.pathplanner.lib.commands.PathfindingCommand;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,7 +19,7 @@ public class Robot extends TimedRobot {
 
   private final RobotContainer m_robotContainer;
 
-  private final boolean kUseLimelight = true;
+  private final boolean kUseLimelight = false; //TODO: I think this is done somehwere else now
 
   public Robot() {
     m_robotContainer = new RobotContainer();

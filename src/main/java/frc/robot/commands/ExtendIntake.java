@@ -2,13 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
 
 public class ExtendIntake extends Command {
 
     private Intake m_intake;
-    private boolean isFinished;
     private Timer m_timer;
     
     public ExtendIntake(Intake intake) {
@@ -23,7 +21,6 @@ public class ExtendIntake extends Command {
        
         m_timer.reset();
         m_timer.start();
-        isFinished = false;
     }
 
     @Override

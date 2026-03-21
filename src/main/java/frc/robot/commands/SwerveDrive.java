@@ -1,26 +1,20 @@
 package frc.robot.commands;
 
 import java.util.Arrays;
-import java.util.Optional;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.geometry.Translation2dPlus;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
@@ -43,7 +37,6 @@ public class SwerveDrive extends Command {
     private BooleanSupplier m_robotCentricSup;
     private BooleanSupplier m_isEvading;
     public BooleanSupplier m_isCrawling;
-    private Limelight m_ll;
     private BooleanSupplier m_isAligning;
     public SlewRateLimiter xAxisLimiter;
     public SlewRateLimiter yAxisLimiter;
@@ -71,7 +64,6 @@ public class SwerveDrive extends Command {
         m_rotationSup = rotationSup;
         m_robotCentricSup = robotCentricSup;
         m_isEvading = isEvading;
-        m_ll = ll;
         m_isAligning = isAligning;
      
         xAxisLimiter = new SlewRateLimiter(Constants.slewRate);
@@ -156,11 +148,12 @@ public class SwerveDrive extends Command {
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
         } else {
-            Translation2d velocity = AutoUtilsHub.getOrbitVelocity(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
+            Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
             m_swerveDrivetrain.setControl(
                 aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
                     .withVelocityY(velocity.getY()) // Drive left with negative X (left)
-                    .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_ll, m_swerveDrivetrain)));
+                    .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_swerveDrivetrain)
+                        .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)))); //shoot while moving???
         }
     
 

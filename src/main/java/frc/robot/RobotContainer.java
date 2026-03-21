@@ -5,8 +5,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.SignalLogger;
-import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -43,7 +41,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tower;
-import frc.robot.LimelightHelpers;
 import frc.robot.util.ShooterLookup;
 
 
@@ -146,8 +143,8 @@ public class RobotContainer {
         IntakeInButton.onTrue(new IntakeRun(m_intake));
         IntakeInButton.onFalse(new InstantCommand(() -> m_intake.runIntake(0)));
 
-        Spinup.onTrue(new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.SPINSPEED)).onFalse(new SpinDown(m_shooter));
-        TrenchShot.onTrue(new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.TRENCHSPEED)).onFalse(new SpinDown(m_shooter));
+        Spinup.onTrue(new SpinUp(m_shooter, m_tower, getDesiredShooterVelocity())).onFalse(new SpinDown(m_shooter));
+        //TrenchShot.onTrue(new SpinUp(m_shooter, m_tower, Constants.ShooterConstants.TRENCHSPEED)).onFalse(new SpinDown(m_shooter));
 
        Extendhop.onTrue(new ExtendIntake(m_intake));
         Retracthop.onTrue(new RetractIntake(m_intake));
@@ -190,6 +187,6 @@ public class RobotContainer {
     }
 
     public double getDesiredShooterVelocity() {
-        return shooterLookup.calculateFlywheelVelocity(getDistanceToTargetMeters());
+        return ShooterLookup.calculateFlywheelVelocity(getDistanceToTargetMeters());
     }
 }
