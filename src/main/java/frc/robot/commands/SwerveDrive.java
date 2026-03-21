@@ -153,7 +153,8 @@ public class SwerveDrive extends Command {
                 aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
                     .withVelocityY(velocity.getY()) // Drive left with negative X (left)
                     .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_swerveDrivetrain)
-                        .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)))); //shoot while moving???
+                        .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)) //shoot while moving???
+                    )); 
         }
     
 

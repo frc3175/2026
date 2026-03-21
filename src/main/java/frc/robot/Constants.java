@@ -61,6 +61,8 @@ public class Constants {
         public static final int BACKRIGHTMOTORID = 32;
 
         public static final double SHOOTERANGLE = 67; //TODO: FIX THIS ANGLE
+        public static final double ANGLECOEFFICIENT = 1.0; //TODO: TUNE FOR SHOOT ON MOVE (PROBOBALY LOWER)
+        public static final double WHEELRADIUS = 2.0;
 
         public static final double SHOOTERCURRENTLIMIT = 45.0; 
         // public static final double SPINSPEED = -48.75;

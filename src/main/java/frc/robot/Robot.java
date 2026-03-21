@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
 
   private final RobotContainer m_robotContainer;
 
-  private final boolean kUseLimelight = false; //TODO: I think this is done somehwere else now
+  private final boolean kUseLimelight = fals; //TODO: I think this is done somehwere else now (that's why error)
 
   public Robot() {
     m_robotContainer = new RobotContainer();

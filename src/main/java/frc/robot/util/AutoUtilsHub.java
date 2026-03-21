@@ -46,9 +46,9 @@ public class AutoUtilsHub {
 
     private static Translation2d getGoalPose(boolean isBlueAlliance) {
         if (isBlueAlliance) {
-            return new Translation2d(4.6269, 4.034663); //TODO: move to constants
+            return new Translation2d(Constants.FieldConstants.BLUE_HUB.getX(), Constants.FieldConstants.BLUE_HUB.getY());
         } else {
-            return new Translation2d(11.91409, 4.034663);
+            return new Translation2d(Constants.FieldConstants.RED_HUB.getX(), Constants.FieldConstants.RED_HUB.getY());
         }
     }
 
@@ -87,13 +87,14 @@ public class AutoUtilsHub {
         Translation2d radial = delta.times(1 / distanceToGoal);
         Translation2d tangent = new Translation2d(-radial.getY(), radial.getX());
         double tangentSpeed = velocity.getX() * tangent.getX() + velocity.getY() * tangent.getY();
-        double shooterVelocity = ShooterLookup.calculateFlywheelVelocity(distanceToGoal);
+        double shooterRPM = ShooterLookup.calculateFlywheelVelocity(distanceToGoal);
+        double shooterVelocity = (shooterRPM * 2 * Math.PI / 60.0) * Constants.ShooterConstants.WHEELRADIUS;
 
         double flightTime = distanceToGoal / (shooterVelocity * Math.cos(shooterAngle));
 
         double lateralOffset = tangentSpeed * flightTime;
 
-        double angleOffset = Math.atan2(lateralOffset, distanceToGoal);
+        double angleOffset = Math.atan2(lateralOffset, distanceToGoal) * Constants.ShooterConstants.ANGLECOEFFICIENT;
 
         return new Rotation2d(angleOffset);
     }
