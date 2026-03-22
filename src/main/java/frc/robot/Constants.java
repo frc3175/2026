@@ -34,6 +34,8 @@ public class Constants {
         public static final int LEFTMOTORID = 37;
         public static final int RIGHTMOTORID = 25;
         public static final int RACKMOTORID = 23;
+        // CANcoder/encoder ID for the intake pivot
+        public static final int PIVOTENCODERID = 33;
 
         public static final double RACKCURRENTLIMIT = 20.0; 
         public static final double ROLLERCURRENTLIMIT = 25.0;
@@ -52,6 +54,18 @@ public class Constants {
         public static final double RACK_P = 3;
         public static final double RACK_I = 0;
         public static final double RACK_D = 0;
+    // Intake roller / pivot presets (tune these values for your robot)
+    public static final double INTAKE_ROLLER_VELOCITY = -1.0;
+    public static final double SHOOT_ROLLER_VELOCITY = 1.0;
+    public static final double CARRY_ROLLER_VELOCITY = 0.5;
+    public static final double RESET_ROLLER_VELOCITY = 0.0;
+    public static final double UNCLOG_ROLLER_VELOCITY = 0.8;
+
+    public static final double INTAKE_PIVOT_POSITION = RACKHOME; // default: folded
+    public static final double SHOOT_PIVOT_POSITION = -15.0;    // example value (degrees/encoder units)
+    public static final double CARRY_PIVOT_POSITION = -5.0;
+    public static final double RESET_PIVOT_POSITION = RACKHOME;
+    public static final double UNCLOG_PIVOT_POSITION = -10.0;
         
     }
     
@@ -126,12 +140,22 @@ public class Constants {
         
         public static final double FLOORSPEED = -1; 
         public static final double REVERSEFLOORSPEED = 0.3;
+        // Hopper velocity presets (tune for your mechanism)
+        public static final double INTAKE_HOPPER_VELOCITY = -1.0;
+        public static final double SHOOT_HOPPER_VELOCITY  = 1.0;
+        public static final double CARRY_HOPPER_VELOCITY  = 0.5;
+        public static final double RESET_HOPPER_VELOCITY  = 0.0;
+        public static final double UNCLOG_HOPPER_VELOCITY  = 0.6;
     }
 
     public class TowerConstants{
 
         public static final int KICKERID = 12;
         public static final int OPKICKID = 21;
+
+        // Legacy/alternate names expected elsewhere in the code
+        public static final int TOWER_ID = KICKERID;
+        public static final int OPPOSITE_TOWER_ID = OPKICKID;
 
         public static final double TOWERCURRENTLIMIT = 25.0; 
         public static final double RUNSPEED = -60;
@@ -144,6 +168,12 @@ public class Constants {
         public static final double TOWER_A = 15;
        
         public static final double STOP = 0;
+    // Tower velocity presets (tune as needed)
+    public static final double INTAKE_TOWER_VELOCITY = RUNSPEED;
+    public static final double SHOOT_TOWER_VELOCITY  = -30.0;
+    public static final double CARRY_TOWER_VELOCITY  = -10.0;
+    public static final double RESET_TOWER_VELOCITY  = STOP;
+    public static final double UNCLOG_TOWER_VELOCITY  = REVERSERUNSPEED;
         
 
     }

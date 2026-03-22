@@ -18,14 +18,16 @@ import frc.robot.Constants;
 
 public class Tower extends SubsystemBase {
   
-  TalonFX m_kickMotor;
-  VelocityVoltage towerVelocity;
-  TalonFX m_opposedKicker;
+  private TalonFX m_towerMotor;
+  private TalonFX m_opposedTowerMotor;
+
+  private VelocityVoltage towerVelocity = new VelocityVoltage(0);
+  private DutyCycleOut towerPercentOutput = new DutyCycleOut(0);
 
   public Tower(){
 
-      m_kickMotor = new TalonFX(Constants.TowerConstants.KICKERID , Constants.CANIVORE);
-      m_opposedKicker = new TalonFX(Constants.TowerConstants.OPKICKID, Constants.CANIVORE);
+      m_towerMotor = new TalonFX(Constants.TowerConstants.TOWER_ID , Constants.CANIVORE);
+      m_opposedTowerMotor = new TalonFX(Constants.TowerConstants.OPPOSITE_TOWER_ID, Constants.CANIVORE);
 
       final TalonFXConfiguration kickConfiguration = new TalonFXConfiguration();
       kickConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
@@ -43,32 +45,48 @@ public class Tower extends SubsystemBase {
       slot0Configs.kA = Constants.TowerConstants.TOWER_A;
     
 
-      m_kickMotor.getConfigurator().apply(kickConfiguration, 0.050);
-      m_opposedKicker.getConfigurator().apply(kickConfiguration, 0.050);
+      m_towerMotor.getConfigurator().apply(kickConfiguration, 0.050);
+      m_opposedTowerMotor.getConfigurator().apply(kickConfiguration, 0.050);
      
       
       towerVelocity = new VelocityVoltage(0);
       
-      m_opposedKicker.setControl(new Follower(Constants.TowerConstants.KICKERID, MotorAlignmentValue.Opposed));
+      m_opposedTowerMotor.setControl(new Follower(Constants.TowerConstants.TOWER_ID, MotorAlignmentValue.Opposed));
 
       // periodic, run Motion Magic with slot 0 configs,
   }
     
   @Override
-  public void periodic() {
-    
-  }
+  public void periodic() {}
 
-  public void towerrun(double velocity){
+  public void setTowerVelocity(double velocity){
   
     towerVelocity.Velocity = velocity;
-        m_kickMotor.setControl(towerVelocity);
+    m_towerMotor.setControl(towerVelocity);
       
   }
 
-  public void setpercentout(double speed){
-    m_kickMotor.setControl(new DutyCycleOut(speed));
+  public void setTowerPercentOutput(double percentOutput){
+
+    towerPercentOutput.Output = percentOutput;
+    m_towerMotor.setControl(towerPercentOutput);
+
   }
+
+  public enum TowerState {
+    INTAKE(Constants.TowerConstants.INTAKE_TOWER_VELOCITY),
+    SHOOT(Constants.TowerConstants.SHOOT_TOWER_VELOCITY),
+    CARRY(Constants.TowerConstants.CARRY_TOWER_VELOCITY),
+    RESET(Constants.TowerConstants.RESET_TOWER_VELOCITY),
+    UNCLOG(Constants.TowerConstants.UNCLOG_TOWER_VELOCITY);
+
+    public double towerVelocity;
+    private TowerState(double towerVelocity) {
+      this.towerVelocity = towerVelocity;
+    }
+    
+  }
+
 }
 
 

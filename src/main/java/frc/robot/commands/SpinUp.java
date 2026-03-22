@@ -32,7 +32,7 @@ public class SpinUp extends Command {
   @Override
   public void execute() {
     m_shooter.setShooterVelocity(m_velocity);
-    m_tower.towerrun(Constants.TowerConstants.REVERSERUNSPEED);
+    m_tower.setTowerVelocity(Constants.TowerConstants.REVERSERUNSPEED);
 
   }
 
