@@ -155,6 +155,8 @@ public class Constants {
         //public static final double LIMELIGHT_OFFSET = 11.5;
         public static final double LIMELIGHT_OFFSET = -18.5;
         public static final double LIMELIGHT_BACK_OFFSET = 11.5;
+        public static final boolean USES_MT2 = true;
+
     }
 
     public class AutoAlignConstants { 
