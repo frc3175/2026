@@ -43,9 +43,9 @@ public class Intake extends SubsystemBase {
     pivotConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     pivotConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
-    pivotConfiguration.Slot0.kP = Constants.IntakeConstants.RACK_P;
-    pivotConfiguration.Slot0.kI = Constants.IntakeConstants.RACK_I;
-    pivotConfiguration.Slot0.kD = Constants.IntakeConstants.RACK_D;
+    pivotConfiguration.Slot0.kP = Constants.IntakeConstants.PIVOT_P;
+    pivotConfiguration.Slot0.kI = Constants.IntakeConstants.PIVOT_I;
+    pivotConfiguration.Slot0.kD = Constants.IntakeConstants.PIVOT_D;
     
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
     rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.ROLLERCURRENTLIMIT);

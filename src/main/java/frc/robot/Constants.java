@@ -31,7 +31,7 @@ public class Constants {
 
     public class IntakeConstants{
 
-        public static final int LEFTMOTORID = 37;
+        public static final int LEFTMOTORID = 35;
         public static final int RIGHTMOTORID = 25;
         public static final int RACKMOTORID = 23;
         // CANcoder/encoder ID for the intake pivot
@@ -46,14 +46,18 @@ public class Constants {
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
-        public static final double RACKHOME = 0;
-        public static final double RACKMAX = -22; //-20.0500390625
-        public static final double RACKVEL = -0.25;
-        public static final double RACKHOLD = 0;
+        public static final double PIVOTHOME = 0;
+        public static final double PIVOTOUT = -22; //-20.0500390625
+        public static final double PIVOTVEL = -0.25;
+        public static final double PIVOTHOLD = 0;
        
-        public static final double RACK_P = 3;
-        public static final double RACK_I = 0;
-        public static final double RACK_D = 0;
+        public static final double PIVOT_P = 3;
+        public static final double PIVOT_I = 0;
+        public static final double PIVOT_D = 0;
+
+        public static final double PIVOT_S = 0;
+        public static final double PIVOT_V = 0;
+        public static final double PIVOT_A = 0;
     // Intake roller / pivot presets (tune these values for your robot)
     public static final double INTAKE_ROLLER_VELOCITY = -1.0;
     public static final double SHOOT_ROLLER_VELOCITY = 1.0;
@@ -61,10 +65,10 @@ public class Constants {
     public static final double RESET_ROLLER_VELOCITY = 0.0;
     public static final double UNCLOG_ROLLER_VELOCITY = 0.8;
 
-    public static final double INTAKE_PIVOT_POSITION = RACKHOME; // default: folded
+    public static final double INTAKE_PIVOT_POSITION = PIVOTHOME; // default: folded
     public static final double SHOOT_PIVOT_POSITION = -15.0;    // example value (degrees/encoder units)
     public static final double CARRY_PIVOT_POSITION = -5.0;
-    public static final double RESET_PIVOT_POSITION = RACKHOME;
+    public static final double RESET_PIVOT_POSITION = PIVOTHOME;
     public static final double UNCLOG_PIVOT_POSITION = -10.0;
         
     }
