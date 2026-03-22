@@ -63,6 +63,7 @@ public class Hopper extends SubsystemBase {
 
   public enum HopperState {
     INTAKE(Constants.HopperConstants.INTAKE_HOPPER_VELOCITY),
+    SPINUP(Constants.HopperConstants.SPINUP_HOPPER_VELOCITY),
     SHOOT(Constants.HopperConstants.SHOOT_HOPPER_VELOCITY),
     CARRY(Constants.HopperConstants.CARRY_HOPPER_VELOCITY),
     RESET(Constants.HopperConstants.RESET_HOPPER_VELOCITY),

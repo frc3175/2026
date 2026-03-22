@@ -30,6 +30,7 @@ public class RobotState extends SubsystemBase {
 
   public enum BotState {
     INTAKE(HopperState.INTAKE, IntakeState.INTAKE, TowerState.INTAKE),
+    SPINUP(HopperState.SPINUP, IntakeState.SPINUP, TowerState.SPINUP),
     SHOOT(HopperState.SHOOT, IntakeState.SHOOT, TowerState.SHOOT),
     CARRY(HopperState.CARRY, IntakeState.CARRY, TowerState.CARRY),
     RESET(HopperState.RESET, IntakeState.RESET, TowerState.RESET),

@@ -18,7 +18,7 @@ public class SpinDown extends Command {
   @Override
   public void initialize() {
 
-    m_shooter.setShooterVelocity(0);
+    m_shooter.setShooterPercentOutput(0);
 
   }
 

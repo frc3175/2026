@@ -85,7 +85,7 @@ public class RobotContainer {
 
         m_shooter.m_Limelight = m_ll; // give shooter access to limelight object, dangerous but im lazy
 
-        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, getDesiredShooterVelocity()));
+        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
          NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.RESET_PIVOT_POSITION)));
@@ -138,8 +138,8 @@ public class RobotContainer {
         IntakeInButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
-        Spinup.whileTrue(new SpinUp(m_shooter, getDesiredShooterVelocity()))
-            .onFalse(new SpinDown(m_shooter));
+        Spinup.whileTrue(new SpinUp(m_shooter, getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+            .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
 
         Extendhop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
         Retracthop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));

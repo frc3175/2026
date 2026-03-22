@@ -104,6 +104,7 @@ public class Intake extends SubsystemBase {
 
   public enum IntakeState {
     INTAKE(Constants.IntakeConstants.INTAKE_ROLLER_VELOCITY, Constants.IntakeConstants.INTAKE_PIVOT_POSITION),
+    SPINUP(Constants.IntakeConstants.SPINUP_ROLLER_VELOCITY, Constants.IntakeConstants.SPINUP_PIVOT_POSIITON),
     SHOOT(Constants.IntakeConstants.SHOOT_ROLLER_VELOCITY, Constants.IntakeConstants.SHOOT_PIVOT_POSITION),
     CARRY(Constants.IntakeConstants.CARRY_ROLLER_VELOCITY, Constants.IntakeConstants.CARRY_PIVOT_POSITION),
     RESET(Constants.IntakeConstants.RESET_ROLLER_VELOCITY, Constants.IntakeConstants.RESET_PIVOT_POSITION),

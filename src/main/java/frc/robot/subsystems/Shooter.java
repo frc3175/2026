@@ -87,7 +87,7 @@ public class Shooter extends SubsystemBase {
 
   public Command coastShooter() {
 
-    return runOnce(() -> m_frontLeftShooterMotor.setControl(coastRequest));
+    return runOnce(() -> m_frontLeftShooterMotor.setControl(new DutyCycleOut(0)));
 
   }
 

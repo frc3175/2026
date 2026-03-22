@@ -72,6 +72,7 @@ public class Tower extends SubsystemBase {
 
   public enum TowerState {
     INTAKE(Constants.TowerConstants.INTAKE_TOWER_VELOCITY),
+    SPINUP(Constants.TowerConstants.SPINUP_TOWER_VELOCITY),
     SHOOT(Constants.TowerConstants.SHOOT_TOWER_VELOCITY),
     CARRY(Constants.TowerConstants.CARRY_TOWER_VELOCITY),
     RESET(Constants.TowerConstants.RESET_TOWER_VELOCITY),

@@ -60,12 +60,14 @@ public class Constants {
         public static final double PIVOT_A = 0;
     // Intake roller / pivot presets (tune these values for your robot)
     public static final double INTAKE_ROLLER_VELOCITY = -1.0;
+    public static final double SPINUP_ROLLER_VELOCITY = 0.0;
     public static final double SHOOT_ROLLER_VELOCITY = 1.0;
     public static final double CARRY_ROLLER_VELOCITY = 0.5;
     public static final double RESET_ROLLER_VELOCITY = 0.0;
     public static final double UNCLOG_ROLLER_VELOCITY = 0.8;
 
     public static final double INTAKE_PIVOT_POSITION = PIVOTHOME; // default: folded
+    public static final double SPINUP_PIVOT_POSIITON = -5.0;
     public static final double SHOOT_PIVOT_POSITION = -15.0;    // example value (degrees/encoder units)
     public static final double CARRY_PIVOT_POSITION = -5.0;
     public static final double RESET_PIVOT_POSITION = PIVOTHOME;
@@ -146,8 +148,9 @@ public class Constants {
         public static final double REVERSEFLOORSPEED = 0.3;
         // Hopper velocity presets (tune for your mechanism)
         public static final double INTAKE_HOPPER_VELOCITY = -1.0;
+        public static final double SPINUP_HOPPER_VELOCITY = -0.1;
         public static final double SHOOT_HOPPER_VELOCITY  = 1.0;
-        public static final double CARRY_HOPPER_VELOCITY  = 0.5;
+        public static final double CARRY_HOPPER_VELOCITY  = 0;
         public static final double RESET_HOPPER_VELOCITY  = 0.0;
         public static final double UNCLOG_HOPPER_VELOCITY  = 0.6;
     }
@@ -173,9 +176,10 @@ public class Constants {
        
         public static final double STOP = 0;
     // Tower velocity presets (tune as needed)
-    public static final double INTAKE_TOWER_VELOCITY = RUNSPEED;
+    public static final double INTAKE_TOWER_VELOCITY = STOP;
     public static final double SHOOT_TOWER_VELOCITY  = -30.0;
-    public static final double CARRY_TOWER_VELOCITY  = -10.0;
+    public static final double SPINUP_TOWER_VELOCITY = 5.0;
+    public static final double CARRY_TOWER_VELOCITY  = STOP;
     public static final double RESET_TOWER_VELOCITY  = STOP;
     public static final double UNCLOG_TOWER_VELOCITY  = REVERSERUNSPEED;
         
