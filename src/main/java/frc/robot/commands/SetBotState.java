@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -39,11 +40,12 @@ public class SetBotState extends Command {
     m_intake.setIntakeVelocity(m_robotState.getRobotState().intakeState.intakeVelocity);
     m_intake.setIntakePivotPose(m_robotState.getRobotState().intakeState.pivotPosition);
     m_tower.setTowerVelocity(m_robotState.getRobotState().towerState.towerVelocity);
-
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    SmartDashboard.putString("state", m_botState.name());
+  }
 
   @Override
   public void end(boolean isFinished) {}

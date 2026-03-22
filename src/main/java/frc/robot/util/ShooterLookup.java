@@ -12,11 +12,11 @@ public class ShooterLookup {
         // example values:
         // key: distance to target in meters
         // value: shooter wheel velocity 
-        velocityMap.put(1.0, 5.0);
-        velocityMap.put(2.0, 10.0);
-        velocityMap.put(3.0, 15.0);
-        velocityMap.put(4.0, 20.0);
-        velocityMap.put(5.0, 25.0);
+        velocityMap.put(1.0, -5.0);
+        velocityMap.put(2.0, -10.0);
+        velocityMap.put(3.0, -15.0);
+        velocityMap.put(4.0, -20.0);
+        velocityMap.put(5.0, -25.0);
     }
 
     public static double calculateFlywheelVelocity(double distanceMeters) {

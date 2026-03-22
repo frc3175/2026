@@ -46,8 +46,18 @@ public class Intake extends SubsystemBase {
     pivotConfiguration.Slot0.kP = Constants.IntakeConstants.PIVOT_P;
     pivotConfiguration.Slot0.kI = Constants.IntakeConstants.PIVOT_I;
     pivotConfiguration.Slot0.kD = Constants.IntakeConstants.PIVOT_D;
-    
+    pivotConfiguration.Slot0.kV = Constants.IntakeConstants.PIVOT_V;
+
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
+
+    rollerConfiguration.Slot0.kP = Constants.IntakeConstants.ROLLER_P;
+    rollerConfiguration.Slot0.kI = Constants.IntakeConstants.ROLLER_I;
+    rollerConfiguration.Slot0.kD = Constants.IntakeConstants.ROLLER_D;
+
+    rollerConfiguration.Slot0.kV = Constants.IntakeConstants.ROLLER_V;
+    rollerConfiguration.Slot0.kS = Constants.IntakeConstants.ROLLER_S;
+
+    
     rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.ROLLERCURRENTLIMIT);
     rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     rollerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
@@ -107,7 +117,7 @@ public class Intake extends SubsystemBase {
     SPINUP(Constants.IntakeConstants.SPINUP_ROLLER_VELOCITY, Constants.IntakeConstants.SPINUP_PIVOT_POSIITON),
     SHOOT(Constants.IntakeConstants.SHOOT_ROLLER_VELOCITY, Constants.IntakeConstants.SHOOT_PIVOT_POSITION),
     CARRY(Constants.IntakeConstants.CARRY_ROLLER_VELOCITY, Constants.IntakeConstants.CARRY_PIVOT_POSITION),
-    RESET(Constants.IntakeConstants.RESET_ROLLER_VELOCITY, Constants.IntakeConstants.RESET_PIVOT_POSITION),
+    RESET(Constants.IntakeConstants.STOP, Constants.IntakeConstants.RESET_PIVOT_POSITION),
     UNCLOG(Constants.IntakeConstants.UNCLOG_ROLLER_VELOCITY, Constants.IntakeConstants.UNCLOG_PIVOT_POSITION);
 
     public double intakeVelocity;

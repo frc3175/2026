@@ -56,17 +56,24 @@ public class Constants {
         public static final double PIVOT_D = 0;
 
         public static final double PIVOT_S = 0;
-        public static final double PIVOT_V = 0;
+        public static final double PIVOT_V = 0.12;
         public static final double PIVOT_A = 0;
-    // Intake roller / pivot presets (tune these values for your robot)
-    public static final double INTAKE_ROLLER_VELOCITY = -1.0;
-    public static final double SPINUP_ROLLER_VELOCITY = 0.0;
-    public static final double SHOOT_ROLLER_VELOCITY = 1.0;
-    public static final double CARRY_ROLLER_VELOCITY = 0.5;
-    public static final double RESET_ROLLER_VELOCITY = 0.0;
-    public static final double UNCLOG_ROLLER_VELOCITY = 0.8;
 
-    public static final double INTAKE_PIVOT_POSITION = PIVOTHOME; // default: folded
+        public static final double ROLLER_P = 0.2;
+        public static final double ROLLER_I = 0;
+        public static final double ROLLER_D = 0;
+
+        public static final double ROLLER_V = 0.12;
+        public static final double ROLLER_S = 0.02;
+    // Intake roller / pivot presets (tune these values for your robot)
+    public static final double INTAKE_ROLLER_VELOCITY = -90.0;
+    public static final double SPINUP_ROLLER_VELOCITY = -12.0;
+    public static final double SHOOT_ROLLER_VELOCITY = -20.0;
+    public static final double CARRY_ROLLER_VELOCITY = -10.0;
+    public static final double RESET_ROLLER_VELOCITY = 0.0;
+    public static final double UNCLOG_ROLLER_VELOCITY = 0.0;
+
+    public static final double INTAKE_PIVOT_POSITION = PIVOTOUT; // default: folded
     public static final double SPINUP_PIVOT_POSIITON = -5.0;
     public static final double SHOOT_PIVOT_POSITION = -15.0;    // example value (degrees/encoder units)
     public static final double CARRY_PIVOT_POSITION = -5.0;
@@ -85,13 +92,6 @@ public class Constants {
         public static final double WHEELRADIUS = 2.0;
 
         public static final double SHOOTERCURRENTLIMIT = 45.0; 
-        // public static final double SPINSPEED = -48.75;
-        // public static final double SHOOTER_P = 2;
-        // public static final double SHOOTER_I = 0;
-        // public static final double SHOOTER_D = 2;
-        // public static final double SHOOTER_V = 8;
-        // public static final double SHOOTER_S = 0;
-        // public static final double SHOOTER_A = 80;
 
         public static final double SPINSPEED = -47.5;
         public static final double TRENCHSPEED = -49.5;
