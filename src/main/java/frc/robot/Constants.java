@@ -6,6 +6,9 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+
 
 public class Constants {
     public static final double TRACK_WIDTH = Units.inchesToMeters(23.5);
@@ -26,11 +29,15 @@ public class Constants {
     public static final CommandXboxController DRIVER_CONTROLER = new CommandXboxController(0);
     public static final CommandXboxController OPERATOR_CONTROLER = new CommandXboxController(1);
 
+    public static final double slewRate = 1.5;
+
     public class IntakeConstants{
 
-        public static final int LEFTMOTORID = 37;
+        public static final int LEFTMOTORID = 35;
         public static final int RIGHTMOTORID = 25;
         public static final int RACKMOTORID = 23;
+        // CANcoder/encoder ID for the intake pivot
+        public static final int PIVOTENCODERID = 33;
 
         public static final double RACKCURRENTLIMIT = 20.0; 
         public static final double ROLLERCURRENTLIMIT = 25.0;
@@ -41,14 +48,39 @@ public class Constants {
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
-        public static final double RACKHOME = 0;
-        public static final double RACKMAX = -22; //-20.0500390625
-        public static final double RACKVEL = -0.25;
-        public static final double RACKHOLD = 0;
+        public static final double PIVOTHOME = 0;
+        public static final double PIVOTOUT = -22; //-20.0500390625
+        public static final double PIVOTVEL = -0.25;
+        public static final double PIVOTHOLD = 0;
        
-        public static final double RACK_P = 3;
-        public static final double RACK_I = 0;
-        public static final double RACK_D = 0;
+        public static final double PIVOT_P = 3;
+        public static final double PIVOT_I = 0;
+        public static final double PIVOT_D = 0;
+
+        public static final double PIVOT_S = 0;
+        public static final double PIVOT_V = 0.12;
+        public static final double PIVOT_A = 0;
+
+        public static final double ROLLER_P = 0.2;
+        public static final double ROLLER_I = 0;
+        public static final double ROLLER_D = 0;
+
+        public static final double ROLLER_V = 0.12;
+        public static final double ROLLER_S = 0.02;
+    // Intake roller / pivot presets (tune these values for your robot)
+    public static final double INTAKE_ROLLER_VELOCITY = -90.0;
+    public static final double SPINUP_ROLLER_VELOCITY = -12.0;
+    public static final double SHOOT_ROLLER_VELOCITY = -20.0;
+    public static final double CARRY_ROLLER_VELOCITY = -10.0;
+    public static final double RESET_ROLLER_VELOCITY = 0.0;
+    public static final double UNCLOG_ROLLER_VELOCITY = 0.0;
+
+    public static final double INTAKE_PIVOT_POSITION = PIVOTOUT; // default: folded
+    public static final double SPINUP_PIVOT_POSIITON = -5.0;
+    public static final double SHOOT_PIVOT_POSITION = -15.0;    // example value (degrees/encoder units)
+    public static final double CARRY_PIVOT_POSITION = -5.0;
+    public static final double RESET_PIVOT_POSITION = PIVOTHOME;
+    public static final double UNCLOG_PIVOT_POSITION = -10.0;
         
     }
     
@@ -57,14 +89,11 @@ public class Constants {
         public static final int FRONTRIGHTMOTORID = 11;
         public static final int BACKRIGHTMOTORID = 32;
 
+        public static final double SHOOTERANGLE = 67; //TODO: FIX THIS ANGLE
+        public static final double ANGLECOEFFICIENT = 1.0; //TODO: TUNE FOR SHOOT ON MOVE (PROBOBALY LOWER)
+        public static final double WHEELRADIUS = 2.0;
+
         public static final double SHOOTERCURRENTLIMIT = 45.0; 
-        // public static final double SPINSPEED = -48.75;
-        // public static final double SHOOTER_P = 2;
-        // public static final double SHOOTER_I = 0;
-        // public static final double SHOOTER_D = 2;
-        // public static final double SHOOTER_V = 8;
-        // public static final double SHOOTER_S = 0;
-        // public static final double SHOOTER_A = 80;
 
         public static final double SPINSPEED = -47.5;
         public static final double TRENCHSPEED = -49.5;
@@ -99,6 +128,11 @@ public class Constants {
 
 
     } 
+    public static final class FieldConstants {
+        public static final Pose2d BLUE_HUB = new Pose2d(4.625, 4.035, new Rotation2d());
+        public static final Pose2d RED_HUB  = new Pose2d(11.92, 4.035, new Rotation2d());
+    }
+
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
@@ -114,12 +148,23 @@ public class Constants {
         
         public static final double FLOORSPEED = -1; 
         public static final double REVERSEFLOORSPEED = 0.3;
+        // Hopper velocity presets (tune for your mechanism)
+        public static final double INTAKE_HOPPER_VELOCITY = -1.0;
+        public static final double SPINUP_HOPPER_VELOCITY = -0.1;
+        public static final double SHOOT_HOPPER_VELOCITY  = 1.0;
+        public static final double CARRY_HOPPER_VELOCITY  = 0;
+        public static final double RESET_HOPPER_VELOCITY  = 0.0;
+        public static final double UNCLOG_HOPPER_VELOCITY  = 0.6;
     }
 
     public class TowerConstants{
 
         public static final int KICKERID = 12;
         public static final int OPKICKID = 21;
+
+        // Legacy/alternate names expected elsewhere in the code
+        public static final int TOWER_ID = KICKERID;
+        public static final int OPPOSITE_TOWER_ID = OPKICKID;
 
         public static final double TOWERCURRENTLIMIT = 25.0; 
         public static final double RUNSPEED = -60;
@@ -132,6 +177,13 @@ public class Constants {
         public static final double TOWER_A = 15;
        
         public static final double STOP = 0;
+    // Tower velocity presets (tune as needed)
+    public static final double INTAKE_TOWER_VELOCITY = STOP;
+    public static final double SHOOT_TOWER_VELOCITY  = -30.0;
+    public static final double SPINUP_TOWER_VELOCITY = 5.0;
+    public static final double CARRY_TOWER_VELOCITY  = STOP;
+    public static final double RESET_TOWER_VELOCITY  = STOP;
+    public static final double UNCLOG_TOWER_VELOCITY  = REVERSERUNSPEED;
         
 
     }
@@ -143,6 +195,8 @@ public class Constants {
         //public static final double LIMELIGHT_OFFSET = 11.5;
         public static final double LIMELIGHT_OFFSET = -18.5;
         public static final double LIMELIGHT_BACK_OFFSET = 11.5;
+        public static final boolean USES_MT2 = true;
+
     }
 
     public static final class FieldConstants {

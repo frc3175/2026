@@ -25,21 +25,25 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
 
-  private final TalonFX m_frontLeftShooterMotor;
-  private final TalonFX m_frontRightShooterMotor;
-  private final TalonFX m_backRightShooterMotor;
+  private TalonFX m_frontLeftShooterMotor;
+  private TalonFX m_frontRightShooterMotor;
+  private TalonFX m_backRightShooterMotor;
+  //private TalonFX m_backLeftShooterMotor;
 
   private final CoastOut coastRequest = new CoastOut();
 
   public  boolean m_running = false;
 
   private VelocityVoltage shooterVelocityVoltage = new VelocityVoltage(0);
+  private DutyCycleOut shooterPercentOutput = new DutyCycleOut(0);
+  public Limelight m_Limelight;
    
   /** Creates a new Shooter. */
   public Shooter() {
     m_frontLeftShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTLEFTMOTORID, Constants.CANIVORE);
     m_frontRightShooterMotor = new TalonFX(Constants.ShooterConstants.FRONTRIGHTMOTORID, Constants.CANIVORE);
     m_backRightShooterMotor = new TalonFX(Constants.ShooterConstants.BACKRIGHTMOTORID, Constants.CANIVORE);
+    //m_backLeftShooterMotor = new TalonFX(Constants.ShooterConstants.BACKLEFTMOTORID, Constants.CANIVORE);
 
     final TalonFXConfiguration shooterConfig = new TalonFXConfiguration()
       .withMotorOutput(new MotorOutputConfigs()
@@ -63,30 +67,41 @@ public class Shooter extends SubsystemBase {
     m_backRightShooterMotor.getConfigurator().apply(shooterConfig);
     m_frontRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Opposed));
     m_backRightShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Aligned));
+    //m_backLeftShooterMotor.setControl(new Follower(Constants.ShooterConstants.FRONTLEFTMOTORID, MotorAlignmentValue.Aligned));
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+  
     SmartDashboard.putNumber("shooter velocity", getShooterVelocity());
     SmartDashboard.putBoolean("shooterruning", shooterVelocityVoltage.Velocity != 0);
+
   }
 
   public void setShooterVelocity(double velocity) {
+
     shooterVelocityVoltage.Velocity = velocity;
-    m_frontLeftShooterMotor.setControl(shooterVelocityVoltage);      
+    m_frontLeftShooterMotor.setControl(shooterVelocityVoltage);  
+
   }
 
   public Command coastShooter() {
-    return runOnce(() -> m_frontLeftShooterMotor.setControl(coastRequest));
+
+    return runOnce(() -> m_frontLeftShooterMotor.setControl(new DutyCycleOut(0)));
+
   }
 
   public double getShooterVelocity() {
+
     return m_frontLeftShooterMotor.getVelocity().getValueAsDouble();
+
   }
 
-  public void shootpercentout(double speed){
-    m_frontLeftShooterMotor.setControl(new DutyCycleOut(speed));
+  public void setShooterPercentOutput(double percentOutput) {
+
+    shooterPercentOutput.Output = percentOutput;
+    m_frontLeftShooterMotor.setControl(shooterPercentOutput);
+
   }
 
 }

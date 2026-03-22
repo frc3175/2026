@@ -7,22 +7,21 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathConstraints;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.lib.geometry.Translation2dPlus;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.util.AutoUtilsHub;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 
 import static edu.wpi.first.units.Units.*;
 
@@ -38,10 +37,9 @@ public class SwerveDrive extends Command {
     private BooleanSupplier m_robotCentricSup;
     private BooleanSupplier m_isEvading;
     public BooleanSupplier m_isCrawling;
-    private Limelight m_ll;
     private BooleanSupplier m_isAligning;
-    //public SlewRateLimiter xAxisLimiter;
-    //public SlewRateLimiter yAxisLimiter;
+    public SlewRateLimiter xAxisLimiter;
+    public SlewRateLimiter yAxisLimiter;
     
 
     
@@ -66,11 +64,10 @@ public class SwerveDrive extends Command {
         m_rotationSup = rotationSup;
         m_robotCentricSup = robotCentricSup;
         m_isEvading = isEvading;
-        m_ll = ll;
         m_isAligning = isAligning;
      
-          //xAxisLimiter = new SlewRateLimiter(1.5);
-          //yAxisLimiter = new SlewRateLimiter(1.5);
+        xAxisLimiter = new SlewRateLimiter(Constants.slewRate);
+        yAxisLimiter = new SlewRateLimiter(Constants.slewRate);
     }
 
     private Translation2d getCenterOfRotation(final Rotation2d direction, final double rotation) {
@@ -140,17 +137,9 @@ public class SwerveDrive extends Command {
             // Use open-loop control for drive motors
 
         
-            double rAxisActual;
+            double rAxisActual = rAxisSquared * MaxAngularRate * -1;
        
-        // if(!m_isAligning.getAsBoolean()){
-            rAxisActual = rAxisSquared * MaxAngularRate * -1;
-       // }
-        //else{
-            //rAxisActual = -m_ll.shooterGetHorizontalOffset();
-       // }
-   
-       
-    
+        if(!m_isAligning.getAsBoolean()) {
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
@@ -158,6 +147,15 @@ public class SwerveDrive extends Command {
                     .withCenterOfRotation(newCenterOfRotation));
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
+        } else {
+            Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
+            m_swerveDrivetrain.setControl(
+                aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
+                    .withVelocityY(velocity.getY()) // Drive left with negative X (left)
+                    .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_swerveDrivetrain)
+                        .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)) //shoot while moving???
+                    )); 
+        }
     
 
                     

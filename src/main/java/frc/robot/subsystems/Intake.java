@@ -6,105 +6,130 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+//import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.PositionDutyCycle;
-import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
 public class Intake extends SubsystemBase {
   
-  TalonFX m_rackMotor;
-  TalonFX m_intakeLeftMotor;
-  TalonFX m_intakeRightMotor;
+  private TalonFX m_pivotMotor;
+  private TalonFX m_intakeLeftMotor;
+  private TalonFX m_intakeRightMotor;
+  //private CANcoder m_pivotEncoder;
 
-  DutyCycleOut intakePercentOutput;
-  DutyCycleOut intakeRackOutput;
+  private PositionTorqueCurrentFOC pivotMotionMagic = new PositionTorqueCurrentFOC(0);
+  private VelocityTorqueCurrentFOC intakeVelocity = new VelocityTorqueCurrentFOC(0);
+  private DutyCycleOut intakePercentOutput = new DutyCycleOut(0);
+  private DutyCycleOut intakePivotPercentOutput = new DutyCycleOut(0) ;
 
   public Intake() {
 
-    m_rackMotor = new TalonFX(Constants.IntakeConstants.RACKMOTORID , Constants.CANIVORE);
+    m_pivotMotor = new TalonFX(Constants.IntakeConstants.RACKMOTORID , Constants.CANIVORE);
     m_intakeLeftMotor = new TalonFX(Constants.IntakeConstants.LEFTMOTORID, Constants.CANIVORE);
     m_intakeRightMotor = new TalonFX(Constants.IntakeConstants.RIGHTMOTORID, Constants.CANIVORE);
+    //m_pivotEncoder = new CANcoder(Constants.IntakeConstants.PIVOTENCODERID, Constants.CANIVORE);
      
-    final TalonFXConfiguration rackConfiguration = new TalonFXConfiguration();
-    rackConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.RACKCURRENTLIMIT);
-    rackConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+    final TalonFXConfiguration pivotConfiguration = new TalonFXConfiguration();
+    pivotConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.RACKCURRENTLIMIT);
+    pivotConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
+    pivotConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
-    rackConfiguration.Slot0.kP = Constants.IntakeConstants.RACK_P;
-    rackConfiguration.Slot0.kI = Constants.IntakeConstants.RACK_I;
-    rackConfiguration.Slot0.kD = Constants.IntakeConstants.RACK_D;
-    
+    pivotConfiguration.Slot0.kP = Constants.IntakeConstants.PIVOT_P;
+    pivotConfiguration.Slot0.kI = Constants.IntakeConstants.PIVOT_I;
+    pivotConfiguration.Slot0.kD = Constants.IntakeConstants.PIVOT_D;
+    pivotConfiguration.Slot0.kV = Constants.IntakeConstants.PIVOT_V;
+
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
+
+    rollerConfiguration.Slot0.kP = Constants.IntakeConstants.ROLLER_P;
+    rollerConfiguration.Slot0.kI = Constants.IntakeConstants.ROLLER_I;
+    rollerConfiguration.Slot0.kD = Constants.IntakeConstants.ROLLER_D;
+
+    rollerConfiguration.Slot0.kV = Constants.IntakeConstants.ROLLER_V;
+    rollerConfiguration.Slot0.kS = Constants.IntakeConstants.ROLLER_S;
+
+    
     rollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.ROLLERCURRENTLIMIT);
     rollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    rackConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+    rollerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
-   
-
-    m_rackMotor.getConfigurator().apply(rackConfiguration, 0.050);
+    m_pivotMotor.getConfigurator().apply(pivotConfiguration, 0.050);
     m_intakeLeftMotor.getConfigurator().apply(rollerConfiguration, 0.050);
     m_intakeRightMotor.getConfigurator().apply(rollerConfiguration, 0.050);
 
-    intakePercentOutput = new DutyCycleOut(0);
-    intakeRackOutput = new DutyCycleOut(0);
-
     m_intakeRightMotor.setControl(new Follower(Constants.IntakeConstants.LEFTMOTORID, MotorAlignmentValue.Opposed));
-    // periodic, run Motion Magic with slot 0 configs,
+
   }
   
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("rackpose", getrackpose());
+
+    SmartDashboard.putNumber("Pivot pose", getPivotPose());
     SmartDashboard.putNumber("Roller vel", m_intakeLeftMotor.getVelocity().getValueAsDouble());
+
   }
 
-  public void runIntake(double percentOutput){
-    intakePercentOutput.Output = percentOutput * 5;
-        m_intakeLeftMotor.setControl(intakePercentOutput);
+  public void setIntakePercentOutput(double percentOutput) {
+
+    intakePercentOutput.Output = percentOutput;
+    m_intakeLeftMotor.setControl(intakePercentOutput);
+
   }
 
- public void moverack(double vel){
-  m_rackMotor.setControl(new DutyCycleOut(vel));
- }
+  public void setIntakeVelocity(double velocity) {
 
-  public void stopRack(){
-    intakeRackOutput.Output = Constants.IntakeConstants.RACKHOLD;
-    m_rackMotor.setControl(intakeRackOutput);
+    intakeVelocity.Velocity = velocity;
+    m_intakeLeftMotor.setControl(intakeVelocity);
+
   }
 
-  public double getRackStatorCurrent() {
-    return m_rackMotor.getStatorCurrent().getValueAsDouble();
+  public void setIntakePivotPercentOutput(double percentOutput) {
+
+    intakePivotPercentOutput.Output = percentOutput;
+    m_pivotMotor.setControl(intakePivotPercentOutput);
+
   }
 
-  public void extendintake(){
-    m_rackMotor.setControl(new PositionVoltage(Constants.IntakeConstants.RACKMAX));
+  public void setIntakePivotPose(double position) {
+
+    pivotMotionMagic.withPosition(position);
+    m_pivotMotor.setControl(pivotMotionMagic);
+
   }
 
-  public void retractintake(){
-    m_rackMotor.setControl(new PositionVoltage(Constants.IntakeConstants.RACKHOME));
+  public double getPivotPose() {
+
+    return m_pivotMotor.getPosition().getValueAsDouble();
+
   }
 
-  public double getrackpose(){
-    return m_rackMotor.getPosition().getValueAsDouble();
+  public enum IntakeState {
+    INTAKE(Constants.IntakeConstants.INTAKE_ROLLER_VELOCITY, Constants.IntakeConstants.INTAKE_PIVOT_POSITION),
+    SPINUP(Constants.IntakeConstants.SPINUP_ROLLER_VELOCITY, Constants.IntakeConstants.SPINUP_PIVOT_POSIITON),
+    SHOOT(Constants.IntakeConstants.SHOOT_ROLLER_VELOCITY, Constants.IntakeConstants.SHOOT_PIVOT_POSITION),
+    CARRY(Constants.IntakeConstants.CARRY_ROLLER_VELOCITY, Constants.IntakeConstants.CARRY_PIVOT_POSITION),
+    RESET(Constants.IntakeConstants.STOP, Constants.IntakeConstants.RESET_PIVOT_POSITION),
+    UNCLOG(Constants.IntakeConstants.UNCLOG_ROLLER_VELOCITY, Constants.IntakeConstants.UNCLOG_PIVOT_POSITION);
+
+    public double intakeVelocity;
+    public double pivotPosition;
+    private IntakeState(double intakeVelocity, double pivotPosition) {
+      this.intakeVelocity = intakeVelocity;
+      this.pivotPosition = pivotPosition;
+    }
   }
 
-  public Object extendIntake() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'extendIntake'");
-  }
-
-  public void resetIntakeRackZero() {
-    m_rackMotor.setPosition(0);
-    retractintake();
-  }
+  
 
 }
 
