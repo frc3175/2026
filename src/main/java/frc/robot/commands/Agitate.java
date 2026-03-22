@@ -7,22 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.RobotState;
-import frc.robot.subsystems.Tower;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Agitate extends Command {
-  public Tower m_tower;
-  public Hopper m_hopper;
-  public Intake m_intake;
-  public RobotState m_robotState;
+
+  private Intake m_intake;
 
   public Agitate(Intake intake) {
 
     m_intake = intake;
-
     addRequirements(m_intake);
    
   }
@@ -44,6 +38,8 @@ public class Agitate extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
+    m_intake.setIntakePivotPose(Constants.IntakeConstants.RESET_PIVOT_POSITION);
 
   }
 

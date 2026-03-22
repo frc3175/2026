@@ -14,12 +14,11 @@ import frc.robot.subsystems.RobotState.BotState;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class SetBotState extends Command {
 
-  RobotState m_robotState;
-  BotState m_botState;
-  Hopper m_hopper;
-  Intake m_intake;
-  Tower m_tower;
-
+  private RobotState m_robotState;
+  private BotState m_botState;
+  private Hopper m_hopper;
+  private Intake m_intake;
+  private Tower m_tower;
   public SetBotState(RobotState robotState, Hopper hopper, Intake intake, Tower tower, BotState desiredState) {
 
     m_robotState = robotState;

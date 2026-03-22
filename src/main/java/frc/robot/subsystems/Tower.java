@@ -11,7 +11,7 @@ import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -21,7 +21,7 @@ public class Tower extends SubsystemBase {
   private TalonFX m_towerMotor;
   private TalonFX m_opposedTowerMotor;
 
-  private VelocityVoltage towerVelocity = new VelocityVoltage(0);
+  private VelocityTorqueCurrentFOC towerVelocity = new VelocityTorqueCurrentFOC(0);
   private DutyCycleOut towerPercentOutput = new DutyCycleOut(0);
 
   public Tower(){
@@ -47,9 +47,6 @@ public class Tower extends SubsystemBase {
 
       m_towerMotor.getConfigurator().apply(kickConfiguration, 0.050);
       m_opposedTowerMotor.getConfigurator().apply(kickConfiguration, 0.050);
-     
-      
-      towerVelocity = new VelocityVoltage(0);
       
       m_opposedTowerMotor.setControl(new Follower(Constants.TowerConstants.TOWER_ID, MotorAlignmentValue.Opposed));
 
