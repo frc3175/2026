@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,7 +27,7 @@ public class Intake extends SubsystemBase {
   private TalonFX m_intakeRightMotor;
   //private CANcoder m_pivotEncoder;
 
-  private MotionMagicTorqueCurrentFOC pivotMotionMagic = new MotionMagicTorqueCurrentFOC(0);
+  private PositionTorqueCurrentFOC pivotMotionMagic = new PositionTorqueCurrentFOC(0);
   private VelocityTorqueCurrentFOC intakeVelocity = new VelocityTorqueCurrentFOC(0);
   private DutyCycleOut intakePercentOutput = new DutyCycleOut(0);
   private DutyCycleOut intakePivotPercentOutput = new DutyCycleOut(0) ;
