@@ -143,8 +143,9 @@ public class RobotContainer {
         TrenchShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.SPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
         
-        opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+        opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.30))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+        opController.pov(180).onTrue(new InstantCommand(()->m_intake.zeroPivot()));
 
 
         }

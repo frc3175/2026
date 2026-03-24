@@ -108,6 +108,10 @@ public class Intake extends SubsystemBase {
 
   }
 
+  public void zeroPivot() {
+    m_pivotMotor.setPosition(0);
+  }
+
   public double getPivotPose() {
 
     return m_pivotMotor.getPosition().getValueAsDouble();
