@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.util.ShooterLookup;
 import frc.robot.LimelightHelpers;
 
 @SuppressWarnings("all")
@@ -43,6 +45,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
     public Limelight m_Limelight;
+    public double desiredShooterVelocity = 0;
 
     public Pigeon2 m_pigeon = new Pigeon2(0, Constants.RIO);
 
@@ -321,7 +324,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             );
 
             addVisionUpdatesFromLimelight(m_Limelight);
+
+            Pose2d botpose = getState().Pose;
+            SmartDashboard.putNumber("X:", botpose.getX());
+            SmartDashboard.putNumber("Y:", botpose.getY());
+            SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
+            SmartDashboard.putNumber("Desired shooter velocity", getDesiredShooterVelocity());
+            desiredShooterVelocity = getDesiredShooterVelocity();
+
         }
+        
         
     }
 
@@ -350,6 +362,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
            return 360 - (Math.abs(m_pigeon.getRotation2d().getDegrees())% 360); 
         
         return m_pigeon.getRotation2d().getDegrees()% 360;
+        
         
     }
 
@@ -403,6 +416,28 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     // ) {
     //     super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
     // }
+
+        
+    public Pose2d getCurrentHubPose() {
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+
+        if (alliance.isPresent() && alliance.get() == Alliance.Red) {
+            return Constants.FieldConstants.RED_HUB;
+        }
+
+        return Constants.FieldConstants.BLUE_HUB;
+    }
+
+    public double getDistanceToTargetMeters() {
+        Pose2d robotPose = getState().Pose;
+        Pose2d hubPose = getCurrentHubPose();
+
+        return robotPose.getTranslation().getDistance(hubPose.getTranslation());
+    }
+
+    public double getDesiredShooterVelocity() {
+        return ShooterLookup.calculateFlywheelVelocity(getDistanceToTargetMeters());
+    }
 
     
 }

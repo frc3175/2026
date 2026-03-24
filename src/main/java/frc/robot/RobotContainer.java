@@ -44,7 +44,6 @@ public class RobotContainer {
 
     public  final CommandXboxController drivecontroller = new CommandXboxController(0);
     public  final CommandXboxController opController = new CommandXboxController(1);
-    public Pose2d botpose;
 
     public final Trigger Spinup = opController.leftBumper();
     public final Trigger ShootButton = drivecontroller.rightBumper();
@@ -85,7 +84,7 @@ public class RobotContainer {
 
         m_shooter.m_Limelight = m_ll; // give shooter access to limelight object, dangerous but im lazy
 
-        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
+        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain.desiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.RESET_PIVOT_POSITION)));
@@ -101,8 +100,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("Auto Mode", autoChooser);
         SmartDashboard.putNumber("set elevator", 0);
-        
-        SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
+    
 
         configureBindings();
         
@@ -139,7 +137,7 @@ public class RobotContainer {
         IntakeInButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
-        Spinup.whileTrue(new SpinUp(m_shooter, getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+        Spinup.whileTrue(new SpinUp(m_shooter, drivetrain.desiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
 
         Extendhop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
@@ -161,34 +159,5 @@ public class RobotContainer {
         /* Run the path selected from the auto chooser */
         return autoChooser.getSelected();
        // return null;
-    }
-    public void periodic() {
-
-        botpose = drivetrain.getState().Pose;
-        //SmartDashboard.putNumber("to ang", m_ll.AimToTarget(botpose.getX(), botpose.getY(), 12, 4) - drivetrain.getState().Pose.getRotation().getRadians());
-        SmartDashboard.putNumber("X:", botpose.getX());
-        SmartDashboard.putNumber("Y:", botpose.getY());
-        SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
-    }
-
-    public Pose2d getCurrentHubPose() {
-        Optional<Alliance> alliance = DriverStation.getAlliance();
-
-        if (alliance.isPresent() && alliance.get() == Alliance.Red) {
-            return Constants.FieldConstants.RED_HUB;
-        }
-
-        return Constants.FieldConstants.BLUE_HUB;
-    }
-
-    public double getDistanceToTargetMeters() {
-        Pose2d robotPose = drivetrain.getState().Pose;
-        Pose2d hubPose = getCurrentHubPose();
-
-        return robotPose.getTranslation().getDistance(hubPose.getTranslation());
-    }
-
-    public double getDesiredShooterVelocity() {
-        return ShooterLookup.calculateFlywheelVelocity(getDistanceToTargetMeters());
     }
 }
