@@ -36,7 +36,6 @@ public class Shooter extends SubsystemBase {
 
   private VelocityVoltage shooterVelocityVoltage = new VelocityVoltage(0);
   private DutyCycleOut shooterPercentOutput = new DutyCycleOut(0);
-  public Limelight m_Limelight;
    
   /** Creates a new Shooter. */
   public Shooter() {

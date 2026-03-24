@@ -9,11 +9,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
-
-import java.util.Optional;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -62,7 +57,7 @@ public class RobotContainer {
     
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    public final Limelight m_ll = new Limelight();
+    public final Limelight m_ll = new Limelight("limelight-shooter", drivetrain);
     public static final Shooter m_shooter = new Shooter();
     public static final Hopper m_hopper = new Hopper();
     public final Intake m_intake = new Intake();
@@ -81,8 +76,7 @@ public class RobotContainer {
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-
-        m_shooter.m_Limelight = m_ll; // give shooter access to limelight object, dangerous but im lazy
+        drivetrain.m_Limelight = m_ll;
 
         NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain.desiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
