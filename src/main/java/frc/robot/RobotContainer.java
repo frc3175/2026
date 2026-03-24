@@ -166,6 +166,8 @@ public class RobotContainer {
 
         botpose = drivetrain.getState().Pose;
         //SmartDashboard.putNumber("to ang", m_ll.AimToTarget(botpose.getX(), botpose.getY(), 12, 4) - drivetrain.getState().Pose.getRotation().getRadians());
+        SmartDashboard.putNumber("X:", botpose.getX());
+        SmartDashboard.putNumber("Y:", botpose.getY());
         SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
     }
 
