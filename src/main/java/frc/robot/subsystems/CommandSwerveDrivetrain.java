@@ -289,19 +289,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
 
-        if (m_Limelight != null) {
-            double yawDeg = getState().Pose.getRotation().getDegrees();
-            double yawRateDegPerSec = Math.toDegrees(getState().Speeds.omegaRadiansPerSecond);
+        // if (m_Limelight != null) {
+        //     double yawDeg = getState().Pose.getRotation().getDegrees();
+        //     double yawRateDegPerSec = Math.toDegrees(getState().Speeds.omegaRadiansPerSecond);
 
-            LimelightHelpers.SetRobotOrientation(
-                "limelight-shooter",
-                yawDeg,
-                yawRateDegPerSec,
-                0,
-                0,
-                0,
-                0
-            );
+            // LimelightHelpers.SetRobotOrientation(
+            //     "limelight-shooter",
+            //     yawDeg,
+            //     yawRateDegPerSec,
+            //     0,
+            //     0,
+            //     0,
+            //     0
+            // );
 
             // LimelightHelpers.SetRobotOrientation(
             //     "limelight-left",
@@ -323,16 +323,17 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             //     0
             // );
 
-            addVisionUpdatesFromLimelight(m_Limelight);
+            //addVisionUpdatesFromLimelight(m_Limelight);
 
-            Pose2d botpose = getState().Pose;
+            
+        //}
+        Pose2d botpose = getState().Pose;
             SmartDashboard.putNumber("X:", botpose.getX());
             SmartDashboard.putNumber("Y:", botpose.getY());
             SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
             SmartDashboard.putNumber("Desired shooter velocity", getDesiredShooterVelocity());
             desiredShooterVelocity = getDesiredShooterVelocity();
 
-        }
         
         
     }

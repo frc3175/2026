@@ -37,6 +37,9 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
 
     CommandScheduler.getInstance().run();
+
+    m_robotContainer.drivetrain.addVisionUpdatesFromLimelight(m_robotContainer.drivetrain.m_Limelight);   
+        
   }
     
 
