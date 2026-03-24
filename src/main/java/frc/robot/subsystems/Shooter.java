@@ -33,6 +33,7 @@ public class Shooter extends SubsystemBase {
   private final CoastOut coastRequest = new CoastOut();
 
   public  boolean m_running = false;
+  public double targetShooterVelocity = 0;
 
   private VelocityVoltage shooterVelocityVoltage = new VelocityVoltage(0);
   private DutyCycleOut shooterPercentOutput = new DutyCycleOut(0);
@@ -74,6 +75,7 @@ public class Shooter extends SubsystemBase {
   
     SmartDashboard.putNumber("shooter velocity", getShooterVelocity());
     SmartDashboard.putBoolean("shooterruning", shooterVelocityVoltage.Velocity != 0);
+    SmartDashboard.putNumber("target shooter velocity", targetShooterVelocity);
 
   }
 
@@ -81,13 +83,13 @@ public class Shooter extends SubsystemBase {
 
     shooterVelocityVoltage.Velocity = velocity;
     m_frontLeftShooterMotor.setControl(shooterVelocityVoltage);  
-
+    targetShooterVelocity = velocity;
   }
 
   public Command coastShooter() {
 
+    targetShooterVelocity = 0;
     return runOnce(() -> m_frontLeftShooterMotor.setControl(new DutyCycleOut(0)));
-
   }
 
   public double getShooterVelocity() {
