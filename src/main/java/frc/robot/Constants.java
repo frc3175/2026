@@ -39,27 +39,25 @@ public class Constants {
         // CANcoder/encoder ID for the intake pivot
         public static final int PIVOTENCODERID = 33;
 
-        public static final double RACKCURRENTLIMIT = 20.0; 
-        public static final double ROLLERCURRENTLIMIT = 25.0;
-
-        public static final double HARDSTOPCURRENTLIMIT = 40.0;
-        
+        public static final double PIVOTCURRENTLIMIT = 100.0; 
+        public static final double ROLLERCURRENTLIMIT = 35.0;
 
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double PIVOTHOME = 0;
-        public static final double PIVOTOUT = -22; //-20.0500390625
+        public static final double PIVOTOUT = -18.9; //-20.0500390625
         public static final double PIVOTVEL = -0.25;
         public static final double PIVOTHOLD = 0;
        
-        public static final double PIVOT_P = 3;
+        public static final double PIVOT_P = 12;
         public static final double PIVOT_I = 0;
-        public static final double PIVOT_D = 0;
+        public static final double PIVOT_D = 3;
 
-        public static final double PIVOT_S = 0;
-        public static final double PIVOT_V = 0.12;
-        public static final double PIVOT_A = 0;
+        public static final double PIVOT_S = 2;
+        public static final double PIVOT_V = 0;
+        public static final double PIVOT_G = 12;
+
 
         public static final double ROLLER_P = 0.2;
         public static final double ROLLER_I = 0;
@@ -76,11 +74,11 @@ public class Constants {
     public static final double UNCLOG_ROLLER_VELOCITY = 0.0;
 
     public static final double INTAKE_PIVOT_POSITION = PIVOTOUT; // default: folded
-    public static final double SPINUP_PIVOT_POSIITON = -5.0;
-    public static final double SHOOT_PIVOT_POSITION = -15.0;    // example value (degrees/encoder units)
-    public static final double CARRY_PIVOT_POSITION = -5.0;
+    public static final double SPINUP_PIVOT_POSIITON = -16.5;
+    public static final double SHOOT_PIVOT_POSITION = -10;    // example value (degrees/encoder units)
+    public static final double CARRY_PIVOT_POSITION = -16;
     public static final double RESET_PIVOT_POSITION = PIVOTHOME;
-    public static final double UNCLOG_PIVOT_POSITION = -10.0;
+    public static final double UNCLOG_PIVOT_POSITION = -16.5;
         
     }
     
@@ -149,12 +147,12 @@ public class Constants {
         public static final double FLOORSPEED = -1; 
         public static final double REVERSEFLOORSPEED = 0.3;
         // Hopper velocity presets (tune for your mechanism)
-        public static final double INTAKE_HOPPER_VELOCITY = -1.0;
-        public static final double SPINUP_HOPPER_VELOCITY = -0.1;
-        public static final double SHOOT_HOPPER_VELOCITY  = 1.0;
+        public static final double INTAKE_HOPPER_VELOCITY = -15.0;
+        public static final double SPINUP_HOPPER_VELOCITY = 15;
+        public static final double SHOOT_HOPPER_VELOCITY  = -90.0;
         public static final double CARRY_HOPPER_VELOCITY  = 0;
         public static final double RESET_HOPPER_VELOCITY  = 0.0;
-        public static final double UNCLOG_HOPPER_VELOCITY  = 0.6;
+        public static final double UNCLOG_HOPPER_VELOCITY  = 40;
     }
 
     public class TowerConstants{
@@ -179,8 +177,8 @@ public class Constants {
         public static final double STOP = 0;
     // Tower velocity presets (tune as needed)
     public static final double INTAKE_TOWER_VELOCITY = STOP;
-    public static final double SHOOT_TOWER_VELOCITY  = -30.0;
-    public static final double SPINUP_TOWER_VELOCITY = 5.0;
+    public static final double SHOOT_TOWER_VELOCITY  = -70.0;
+    public static final double SPINUP_TOWER_VELOCITY = 25.0;
     public static final double CARRY_TOWER_VELOCITY  = STOP;
     public static final double RESET_TOWER_VELOCITY  = STOP;
     public static final double UNCLOG_TOWER_VELOCITY  = REVERSERUNSPEED;
@@ -195,13 +193,8 @@ public class Constants {
         //public static final double LIMELIGHT_OFFSET = 11.5;
         public static final double LIMELIGHT_OFFSET = -18.5;
         public static final double LIMELIGHT_BACK_OFFSET = 11.5;
-        public static final boolean USES_MT2 = true;
+        public static final boolean USES_MT2 = false;
 
-    }
-
-    public static final class FieldConstants {
-        public static final Pose2d BLUE_HUB = new Pose2d(4.625, 4.035, new Rotation2d());
-        public static final Pose2d RED_HUB  = new Pose2d(11.92, 4.035, new Rotation2d());
     }
 
     public class AutoAlignConstants { 

@@ -40,14 +40,16 @@ public class Intake extends SubsystemBase {
     //m_pivotEncoder = new CANcoder(Constants.IntakeConstants.PIVOTENCODERID, Constants.CANIVORE);
      
     final TalonFXConfiguration pivotConfiguration = new TalonFXConfiguration();
-    pivotConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.RACKCURRENTLIMIT);
+    pivotConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.IntakeConstants.PIVOTCURRENTLIMIT);
     pivotConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     pivotConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
     pivotConfiguration.Slot0.kP = Constants.IntakeConstants.PIVOT_P;
     pivotConfiguration.Slot0.kI = Constants.IntakeConstants.PIVOT_I;
     pivotConfiguration.Slot0.kD = Constants.IntakeConstants.PIVOT_D;
+    pivotConfiguration.Slot0.kS = Constants.IntakeConstants.PIVOT_S;
     pivotConfiguration.Slot0.kV = Constants.IntakeConstants.PIVOT_V;
+    pivotConfiguration.Slot0.kG = Constants.IntakeConstants.PIVOT_G;
 
     final TalonFXConfiguration rollerConfiguration = new TalonFXConfiguration();
 
@@ -76,7 +78,6 @@ public class Intake extends SubsystemBase {
 
     SmartDashboard.putNumber("Pivot pose", getPivotPose());
     SmartDashboard.putNumber("Roller vel", m_intakeLeftMotor.getVelocity().getValueAsDouble());
-
   }
 
   public void setIntakePercentOutput(double percentOutput) {

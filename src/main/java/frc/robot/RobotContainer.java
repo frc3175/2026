@@ -87,7 +87,7 @@ public class RobotContainer {
 
         NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
-         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
+        NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.RESET_PIVOT_POSITION)));
         NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
         NamedCommands.registerCommand("STOPSHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
@@ -102,6 +102,7 @@ public class RobotContainer {
         SmartDashboard.putData("Auto Mode", autoChooser);
         SmartDashboard.putNumber("set elevator", 0);
         
+        SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
 
         configureBindings();
         
@@ -146,6 +147,13 @@ public class RobotContainer {
         UnclogTower.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
 
+        
+        TrenchShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.SPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+            .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
+        
+        opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+        opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.30))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+
 
         }
 
@@ -158,7 +166,7 @@ public class RobotContainer {
 
         botpose = drivetrain.getState().Pose;
         //SmartDashboard.putNumber("to ang", m_ll.AimToTarget(botpose.getX(), botpose.getY(), 12, 4) - drivetrain.getState().Pose.getRotation().getRadians());
-        
+        SmartDashboard.putNumber("Distance to target", getDistanceToTargetMeters());
     }
 
     public Pose2d getCurrentHubPose() {
