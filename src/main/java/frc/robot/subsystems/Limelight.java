@@ -59,9 +59,9 @@ public class Limelight extends SubsystemBase {
     }
 
     private final List<CameraConfig> cameras = List.of(
-        new CameraConfig("limelight-shooter"),
-        new CameraConfig("limelight-left"),
-        new CameraConfig("limelight-right")
+        new CameraConfig("limelight-shooter")//,
+       // new CameraConfig("limelight-left"),
+        //new CameraConfig("limelight-right")
     );
 
     private Pose2d lastAcceptedVisionPose = null;
@@ -185,11 +185,11 @@ public class Limelight extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putBoolean("LL Shooter Has Target", LimelightHelpers.getTV("limelight-shooter"));
-        SmartDashboard.putBoolean("LL Left Has Target", LimelightHelpers.getTV("limelight-left"));
-        SmartDashboard.putBoolean("LL Right Has Target", LimelightHelpers.getTV("limelight-right"));
+       // SmartDashboard.putBoolean("LL Left Has Target", LimelightHelpers.getTV("limelight-left"));
+      //  SmartDashboard.putBoolean("LL Right Has Target", LimelightHelpers.getTV("limelight-right"));
 
         SmartDashboard.putNumber("LL Shooter Target Count", LimelightHelpers.getTargetCount("limelight-shooter"));
-        SmartDashboard.putNumber("LL Left Target Count", LimelightHelpers.getTargetCount("limelight-left"));
-        SmartDashboard.putNumber("LL Right Target Count", LimelightHelpers.getTargetCount("limelight-right"));
+       // SmartDashboard.putNumber("LL Left Target Count", LimelightHelpers.getTargetCount("limelight-left"));
+       // SmartDashboard.putNumber("LL Right Target Count", LimelightHelpers.getTargetCount("limelight-right"));
     }
 }
