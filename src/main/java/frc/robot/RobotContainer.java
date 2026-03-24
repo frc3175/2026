@@ -157,6 +157,7 @@ public class RobotContainer {
     public void periodic() {
 
         botpose = drivetrain.getState().Pose;
+        SmartDashboard.putNumber("distance to target: ", getDistanceToTargetMeters());
         //SmartDashboard.putNumber("to ang", m_ll.AimToTarget(botpose.getX(), botpose.getY(), 12, 4) - drivetrain.getState().Pose.getRotation().getRadians());
         
     }
