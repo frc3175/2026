@@ -4,15 +4,18 @@ import java.util.Arrays;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.ctre.phoenix6.swerve.SwerveRequest.FieldCentricFacingAngle;
-import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.geometry.Translation2dPlus;
@@ -21,9 +24,6 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.util.AutoUtilsHub;
-import edu.wpi.first.math.filter.SlewRateLimiter;
-
-import static edu.wpi.first.units.Units.*;
 
 
 
@@ -153,7 +153,7 @@ public class SwerveDrive extends Command {
                 aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
                     .withVelocityY(velocity.getY()) // Drive left with negative X (left)
                     .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_swerveDrivetrain)
-                        .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)) //shoot while moving???
+          //              .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)) //shoot while moving???
                     )); 
         }
     
