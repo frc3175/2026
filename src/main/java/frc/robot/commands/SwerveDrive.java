@@ -109,6 +109,14 @@ public class SwerveDrive extends Command {
 
         double xAxisSquared = xAxis * xAxis * Math.signum(xAxis);
         double yAxisSquared = yAxis * yAxis * Math.signum(yAxis);
+
+        double xAxisFiltered;
+        double yAxisFiltered;
+
+        xAxisFiltered = xAxisLimiter.calculate(xAxisSquared);
+        yAxisFiltered = yAxisLimiter.calculate(yAxisSquared);
+
+
         double rAxisSquared = rAxis * rAxis * Math.signum(rAxis);
 
        
@@ -141,14 +149,14 @@ public class SwerveDrive extends Command {
        
         if(!m_isAligning.getAsBoolean()) {
             m_swerveDrivetrain.setControl(
-                drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
-                    .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
+                drive.withVelocityX( xAxisFiltered * MaxSpeed ) // Drive forward with negative Y (forward)
+                    .withVelocityY( yAxisFiltered * MaxSpeed ) // Drive left with negative X (left)
                     .withRotationalRate(rAxisActual )
                     .withCenterOfRotation(newCenterOfRotation));
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
         } else {
-            Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
+            Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisFiltered, xAxisFiltered, MaxSpeed);
             m_swerveDrivetrain.setControl(
                 aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
                     .withVelocityY(velocity.getY()) // Drive left with negative X (left)
