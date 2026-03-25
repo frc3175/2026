@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 
@@ -27,7 +28,7 @@ public class Intake extends SubsystemBase {
   private TalonFX m_intakeRightMotor;
   private CANcoder m_pivotEncoder;
 
-  private PositionTorqueCurrentFOC pivotPosition = new PositionTorqueCurrentFOC(0);
+  private PositionDutyCycle pivotPosition = new PositionDutyCycle(0);
   private VelocityTorqueCurrentFOC intakeVelocity = new VelocityTorqueCurrentFOC(0);
   private DutyCycleOut intakePercentOutput = new DutyCycleOut(0);
   private DutyCycleOut intakePivotPercentOutput = new DutyCycleOut(0);
@@ -63,6 +64,7 @@ public class Intake extends SubsystemBase {
     pivotConfiguration.Slot0.kS = Constants.IntakeConstants.PIVOT_S;
     pivotConfiguration.Slot0.kV = Constants.IntakeConstants.PIVOT_V;
     pivotConfiguration.Slot0.kG = Constants.IntakeConstants.PIVOT_G;
+    pivotConfiguration.Slot0.kA = Constants.IntakeConstants.PIVOT_A;
     pivotConfiguration.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
 
     // Use CANcoder as feedback

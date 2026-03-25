@@ -3,6 +3,8 @@ package frc.robot.util;
 import java.util.Map;
 import java.util.TreeMap;
 
+import frc.robot.Constants;
+
 public class ShooterLookup {
 
     private static final TreeMap<Double, Double> velocityMap = new TreeMap<>();
@@ -14,7 +16,8 @@ public class ShooterLookup {
         // value: shooter wheel velocity 
         velocityMap.put(1.0, -5.0);
         velocityMap.put(2.0, -10.0);
-        velocityMap.put(3.0, -15.0);
+        velocityMap.put(2.87, Constants.ShooterConstants.TOWERSPINSPEED);
+        velocityMap.put(3.7, Constants.ShooterConstants.TRENCHSPINSPEED);
         velocityMap.put(4.0, -20.0);
         velocityMap.put(5.0, -25.0);
     }

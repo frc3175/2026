@@ -43,6 +43,7 @@ public class RobotContainer {
     public final Trigger Spinup = opController.leftBumper();
     public final Trigger ShootButton = drivecontroller.rightBumper();
     public final Trigger IntakeInButton = opController.rightBumper();
+    public final Trigger AgitateHopper = new Trigger(() -> (Math.abs(opController.getLeftTriggerAxis()) >= 0.3));
     public final Trigger Extendhop = opController.x();
     public final Trigger Retracthop = opController.b();
     public final Trigger UnclogTower = opController.y();
@@ -123,13 +124,14 @@ public class RobotContainer {
         drivecontroller.x().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         ShootButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT))
-            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
+            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
           //  .whileTrue(new Agitate(m_intake));
 
     
         
-        IntakeInButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE))
-            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
+         IntakeInButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE))
+        //        .onFalse(new InstantCommand(() -> m_intake.setIntakeVelocity(0)));
+             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
         Spinup.whileTrue(new SpinUp(m_shooter, drivetrain.desiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
@@ -140,13 +142,14 @@ public class RobotContainer {
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
 
         
-        TrenchShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.SPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+        TrenchShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
         
-        opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+        opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+        //opController.rightBumper().onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.30))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
-
-        }
+        AgitateHopper.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)).onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
+    }
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
