@@ -123,8 +123,8 @@ public class RobotContainer {
         drivecontroller.x().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         ShootButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT))
-            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET))
-            .whileTrue(new Agitate(m_intake));
+            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
+          //  .whileTrue(new Agitate(m_intake));
 
     
         
@@ -145,8 +145,6 @@ public class RobotContainer {
         
         opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.30))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
-        opController.pov(180).onTrue(new InstantCommand(()->m_intake.zeroPivot()));
-
 
         }
 

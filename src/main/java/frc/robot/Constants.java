@@ -38,6 +38,7 @@ public class Constants {
         public static final int RACKMOTORID = 23;
         // CANcoder/encoder ID for the intake pivot
         public static final int PIVOTENCODERID = 33;
+        public static final double PIVOTENCODEROFFSET = -85.78125 / 360; //TODO: TUNE
 
         public static final double PIVOTCURRENTLIMIT = 100.0; 
         public static final double ROLLERCURRENTLIMIT = 35.0;
@@ -46,17 +47,17 @@ public class Constants {
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double PIVOTHOME = 0;
-        public static final double PIVOTOUT = -18.9; //-20.0500390625
+        public static final double PIVOTOUT = 78; //TODO: TUNE
         public static final double PIVOTVEL = -0.25;
         public static final double PIVOTHOLD = 0;
        
-        public static final double PIVOT_P = 12;
+        public static final double PIVOT_P = 200;
         public static final double PIVOT_I = 0;
-        public static final double PIVOT_D = 3;
+        public static final double PIVOT_D = 10;
 
-        public static final double PIVOT_S = 2;
+        public static final double PIVOT_S = 8;
         public static final double PIVOT_V = 0;
-        public static final double PIVOT_G = 12;
+        public static final double PIVOT_G = 8;
 
 
         public static final double ROLLER_P = 0.2;
@@ -74,11 +75,11 @@ public class Constants {
     public static final double UNCLOG_ROLLER_VELOCITY = 0.0;
 
     public static final double INTAKE_PIVOT_POSITION = PIVOTOUT; // default: folded
-    public static final double SPINUP_PIVOT_POSIITON = -16.5;
-    public static final double SHOOT_PIVOT_POSITION = -10;    // example value (degrees/encoder units)
-    public static final double CARRY_PIVOT_POSITION = -16;
+    public static final double SPINUP_PIVOT_POSIITON = 72; //TODO: tune
+    public static final double SHOOT_PIVOT_POSITION = 56;     //TODO: tune// example value (degrees/encoder units)
+    public static final double CARRY_PIVOT_POSITION = 72; //TODO: tune
     public static final double RESET_PIVOT_POSITION = PIVOTHOME;
-    public static final double UNCLOG_PIVOT_POSITION = -16.5;
+    public static final double UNCLOG_PIVOT_POSITION = 74; //TODO: tune
         
     }
     
