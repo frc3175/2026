@@ -40,7 +40,7 @@ public class Constants {
         public static final double PIVOTENCODEROFFSET = -85.78125 / 360; //TODO: TUNE
 
         public static final double PIVOTCURRENTLIMIT = 40.0; 
-        public static final double ROLLERCURRENTLIMIT = 45.0;
+        public static final double ROLLERCURRENTLIMIT = 70.0;
 
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
