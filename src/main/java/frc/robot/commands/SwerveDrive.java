@@ -132,7 +132,10 @@ public class SwerveDrive extends Command {
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
-            SwerveRequest.FieldCentricFacingAngle aligneddrive = new FieldCentricFacingAngle();
+            SwerveRequest.FieldCentricFacingAngle aligneddrive = new FieldCentricFacingAngle()
+                .withHeadingPID(10, 0, 0);
+            aligneddrive.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
+            aligneddrive.HeadingController.setTolerance(Math.toRadians(2));
             
             // Use open-loop control for drive motors
 
