@@ -95,7 +95,7 @@ public class Constants {
         public static final double SHOOTERCURRENTLIMIT = 45.0; 
 
         public static final double TOWERSPINSPEED = -47.5;
-        public static final double TRENCHSPINSPEED = -49.5;
+        public static final double TRENCHSPINSPEED = -49.9;
         public static final double SHOOTER_P = 4.25;
         public static final double SHOOTER_I = 0;
         public static final double SHOOTER_D = 0;

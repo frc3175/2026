@@ -133,7 +133,7 @@ public class RobotContainer {
         //        .onFalse(new InstantCommand(() -> m_intake.setIntakeVelocity(0)));
              .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
-        Spinup.whileTrue(new SpinUp(m_shooter, drivetrain.desiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+        Spinup.whileTrue(new SpinUp(m_shooter, drivetrain.getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
 
         Extendhop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
