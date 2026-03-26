@@ -5,18 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import java.util.function.DoubleSupplier;
 import frc.robot.subsystems.Shooter;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class SpinUp extends Command {
   private Shooter m_shooter;
-  private double m_velocity;
+  // private double m_velocity;
+  private DoubleSupplier m_velocity;
 
   /** Creates a new setshootvel. */
-  public SpinUp(Shooter shooter,  double velocity) {
+  public SpinUp(Shooter shooter,  DoubleSupplier velocitySupplier) {
 
     m_shooter = shooter;
-    m_velocity = velocity;
+    m_velocity = velocitySupplier;
 
     addRequirements(m_shooter);
 
@@ -31,7 +33,7 @@ public class SpinUp extends Command {
   @Override
   public void execute() {
     
-    m_shooter.setShooterVelocity(m_velocity);
+    m_shooter.setShooterVelocity(m_velocity.getAsDouble());
 
   }
 

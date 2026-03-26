@@ -79,7 +79,7 @@ public class RobotContainer {
     public RobotContainer() {
         drivetrain.m_Limelight = m_ll;
 
-        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain.desiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
+        NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
         NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.RESET_PIVOT_POSITION)));
@@ -133,7 +133,7 @@ public class RobotContainer {
         //        .onFalse(new InstantCommand(() -> m_intake.setIntakeVelocity(0)));
              .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
-        Spinup.whileTrue(new SpinUp(m_shooter, drivetrain.getDesiredShooterVelocity()).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+        Spinup.whileTrue(new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
 
         Extendhop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
