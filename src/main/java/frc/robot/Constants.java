@@ -203,6 +203,11 @@ public class Constants {
     public class AutoAlignConstants { 
      public static final double RED_ANGLE_OFFSET = 68;
      public static final double BLUE_ANGLE_OFFSET = 240 ;
+
+     public static final double ALIGN_P = 2;
+     public static final double ALIGN_I = 0;
+     public static final double ALIGN_D = 0;
+
     }
 
     /** Meters per Second */

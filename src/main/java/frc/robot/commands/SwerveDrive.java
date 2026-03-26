@@ -41,6 +41,11 @@ public class SwerveDrive extends Command {
     public SlewRateLimiter xAxisLimiter;
     public SlewRateLimiter yAxisLimiter;
     
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
+    private final SwerveRequest.FieldCentricFacingAngle aligneddrive = new FieldCentricFacingAngle()
+        .withHeadingPID(Constants.AutoAlignConstants.ALIGN_P, Constants.AutoAlignConstants.ALIGN_I, Constants.AutoAlignConstants.ALIGN_D);
 
     
     private static final Translation2d[] WHEEL_POSITIONS =
@@ -68,6 +73,9 @@ public class SwerveDrive extends Command {
      
         xAxisLimiter = new SlewRateLimiter(Constants.slewRate);
         yAxisLimiter = new SlewRateLimiter(Constants.slewRate);
+
+        aligneddrive.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
+        aligneddrive.HeadingController.setTolerance(Math.toRadians(2));
     }
 
     private Translation2d getCenterOfRotation(final Rotation2d direction, final double rotation) {
@@ -111,7 +119,7 @@ public class SwerveDrive extends Command {
         double yAxisSquared = yAxis * yAxis * Math.signum(yAxis);
         double rAxisSquared = rAxis * rAxis * Math.signum(rAxis);
 
-       
+        
 
 
         double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
@@ -127,15 +135,6 @@ public class SwerveDrive extends Command {
          } else {
              newCenterOfRotation = new Translation2d();
          }
-
-        SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
-
-            SwerveRequest.FieldCentricFacingAngle aligneddrive = new FieldCentricFacingAngle()
-                .withHeadingPID(10, 0, 0);
-            aligneddrive.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
-            aligneddrive.HeadingController.setTolerance(Math.toRadians(2));
             
             // Use open-loop control for drive motors
 
@@ -147,6 +146,7 @@ public class SwerveDrive extends Command {
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
                     .withRotationalRate(rAxisActual )
+                    .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
                     .withCenterOfRotation(newCenterOfRotation));
 
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
