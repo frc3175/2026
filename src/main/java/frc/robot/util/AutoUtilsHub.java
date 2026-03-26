@@ -52,7 +52,7 @@ public class AutoUtilsHub {
 
     public static Rotation2d getOrbitRotation(CommandSwerveDrivetrain drivetrain) {
         Pose2d botpose = drivetrain.getState().Pose;      
-        Rotation2d goalRotation = new Rotation2d(getAngleToGoal(botpose, getGoalPose(getIsBlueAlliance())));
+        Rotation2d goalRotation = Rotation2d.fromDegrees(getAngleToGoal(botpose, getGoalPose(getIsBlueAlliance())));
         return goalRotation;
 
     } 
