@@ -80,6 +80,7 @@ public class Constants {
     public static final double CARRY_PIVOT_POSITION = 65; //TODO: tune
     public static final double RESET_PIVOT_POSITION = PIVOTHOME;
     public static final double UNCLOG_PIVOT_POSITION = 70; //TODO: tune
+    public static final double AGITATE_PIVOT_POSITION = 20;
         
     }
     

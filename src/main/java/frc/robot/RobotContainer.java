@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.Agitate;
 import frc.robot.commands.SetBotState;
 import frc.robot.commands.SpinDown;
 import frc.robot.commands.SpinUp;
@@ -43,8 +42,7 @@ public class RobotContainer {
     public final Trigger Spinup = opController.leftBumper();
     public final Trigger ShootButton = drivecontroller.rightBumper();
     public final Trigger IntakeInButton = opController.rightBumper();
-    public final Trigger AgitateHopper = new Trigger(() -> (Math.abs(opController.getLeftTriggerAxis()) >= 0.3));
-    public final Trigger Extendhop = opController.x();
+    public final Trigger AgitateHop = opController.x();
     public final Trigger Retracthop = opController.b();
     public final Trigger UnclogTower = opController.y();
     public final Trigger TrenchShot = opController.a();
@@ -82,7 +80,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
-        NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.RESET_PIVOT_POSITION)));
+        NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION)));
         NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
         NamedCommands.registerCommand("STOPSHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         NamedCommands.registerCommand("SPINDOWN", new SpinDown(m_shooter));
@@ -136,7 +134,7 @@ public class RobotContainer {
         Spinup.whileTrue(new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
 
-        Extendhop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
+        AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION)));
         Retracthop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         UnclogTower.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
@@ -148,7 +146,6 @@ public class RobotContainer {
         opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         //opController.rightBumper().onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.30))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
-        AgitateHopper.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)).onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
     }
 
     public Command getAutonomousCommand() {
