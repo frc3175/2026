@@ -77,10 +77,11 @@ public class RobotContainer {
     public RobotContainer() {
         drivetrain.m_Limelight = m_ll;
 
+        NamedCommands.registerCommand("SPINUPTOWER", new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
-        NamedCommands.registerCommand("RETRACTHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION)));
+        NamedCommands.registerCommand("AGITATE", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION)));
         NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
         NamedCommands.registerCommand("STOPSHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         NamedCommands.registerCommand("SPINDOWN", new SpinDown(m_shooter));
@@ -134,7 +135,7 @@ public class RobotContainer {
         Spinup.whileTrue(new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
 
-        AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION)));
+        AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION))).onFalse(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
         Retracthop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         UnclogTower.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
