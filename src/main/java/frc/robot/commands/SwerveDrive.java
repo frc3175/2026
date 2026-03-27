@@ -153,7 +153,9 @@ public class SwerveDrive extends Command {
         } else {
             Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
             m_swerveDrivetrain.setControl(
-                aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
+                aligneddrive
+                    .withForwardPerspective(SwerveRequest.ForwardPerspectiveValue.BlueAlliance) //TODO: see if this fixes zero issue
+                    .withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
                     .withVelocityY(velocity.getY()) // Drive left with negative X (left)
                     .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_swerveDrivetrain)
           //              .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)) //shoot while moving???
