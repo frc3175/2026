@@ -45,7 +45,8 @@ public class SwerveDrive extends Command {
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private final SwerveRequest.FieldCentricFacingAngle aligneddrive = new FieldCentricFacingAngle()
-        .withHeadingPID(Constants.AutoAlignConstants.ALIGN_P, Constants.AutoAlignConstants.ALIGN_I, Constants.AutoAlignConstants.ALIGN_D);
+        .withHeadingPID(Constants.AutoAlignConstants.ALIGN_P, Constants.AutoAlignConstants.ALIGN_I, Constants.AutoAlignConstants.ALIGN_D)
+        .withForwardPerspective(SwerveRequest.ForwardPerspectiveValue.BlueAlliance); //TODO: see if this fixes zero issue
 
     
     private static final Translation2d[] WHEEL_POSITIONS =
@@ -153,9 +154,7 @@ public class SwerveDrive extends Command {
         } else {
             Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);
             m_swerveDrivetrain.setControl(
-                aligneddrive
-                    .withForwardPerspective(SwerveRequest.ForwardPerspectiveValue.BlueAlliance) //TODO: see if this fixes zero issue
-                    .withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
+                aligneddrive.withVelocityX(velocity.getX()) // Drive forward with negative Y (forward)
                     .withVelocityY(velocity.getY()) // Drive left with negative X (left)
                     .withTargetDirection(AutoUtilsHub.getOrbitRotation(m_swerveDrivetrain)
           //              .plus(AutoUtilsHub.calculateOrbitRotationOffset(m_swerveDrivetrain, Units.degreesToRadians(Constants.ShooterConstants.SHOOTERANGLE), velocity)) //shoot while moving???
