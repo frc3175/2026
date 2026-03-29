@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.Agitate;
 import frc.robot.commands.SetBotState;
 import frc.robot.commands.SpinDown;
 import frc.robot.commands.SpinUp;
@@ -29,6 +30,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.RobotState;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Tower;
+import frc.robot.subsystems.RobotState.BotState;
 import frc.robot.util.ShooterLookup;
 
 
@@ -46,6 +48,7 @@ public class RobotContainer {
     public final Trigger Retracthop = opController.b();
     public final Trigger UnclogTower = opController.y();
     public final Trigger TrenchShot = opController.a();
+    public final Trigger AutoAlign = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kLeftTrigger.value) == 1);
     
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -82,11 +85,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));
         NamedCommands.registerCommand("EXTENDHOP", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
         NamedCommands.registerCommand("AGITATE", new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION)));
-        NamedCommands.registerCommand("HOME", new InstantCommand(() -> CommandScheduler.getInstance().cancelAll()));
-        NamedCommands.registerCommand("STOPSHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
+        NamedCommands.registerCommand("RESET", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         NamedCommands.registerCommand("SPINDOWN", new SpinDown(m_shooter));
         NamedCommands.registerCommand("INTAKE", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE));
-        NamedCommands.registerCommand("INTAKESTOP", new InstantCommand(() -> m_intake.setIntakePercentOutput(0)));
+        NamedCommands.registerCommand("CARRY",new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY) );
         NamedCommands.registerCommand("UNCLOGAUTO", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG));
 
          autoChooser = AutoBuilder.buildAutoChooser("New Auto");
@@ -111,9 +113,9 @@ public class RobotContainer {
                 () -> -Constants.DRIVER_CONTROLER.getRawAxis(strafeAxis), 
                 () -> Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
-                () -> drivecontroller.leftTrigger().getAsBoolean(),
+                () -> drivecontroller.leftBumper().getAsBoolean(),
                 m_ll,
-                () -> drivecontroller.leftBumper().getAsBoolean()
+                () -> drivecontroller.y().getAsBoolean()
             )
         );
 
@@ -132,21 +134,22 @@ public class RobotContainer {
         //        .onFalse(new InstantCommand(() -> m_intake.setIntakeVelocity(0)));
              .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
-        Spinup.whileTrue(new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
-            .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
+        Spinup.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+        .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, BotState.RESET).alongWith(new SpinDown(m_shooter)));
+        
 
-        AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION))).onFalse(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.CARRY_PIVOT_POSITION)));
+        AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION))).onFalse(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.SHOOT_PIVOT_POSITION)));
         Retracthop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         UnclogTower.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
 
         
-        TrenchShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
+        TrenchShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TRENCHSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)))
             .onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
         
         opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         //opController.rightBumper().onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
-        opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.30))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
+        opController.pov(90).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
     }
 
     public Command getAutonomousCommand() {

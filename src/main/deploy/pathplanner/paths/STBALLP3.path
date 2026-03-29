@@ -3,75 +3,71 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.33,
-        "y": 3.6923555555555545
+        "x": 6.042811111111112,
+        "y": 5.002466666666667
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.25365164323289,
-        "y": 3.5072793907066417
+        "x": 5.813230281602089,
+        "y": 5.10142444919007
       },
       "isLocked": false,
-      "linkedName": "Right Bump Back"
+      "linkedName": "STBALLEP2"
     },
     {
       "anchor": {
-        "x": 5.599388888888889,
-        "y": 2.936522222222221
+        "x": 5.498611111111112,
+        "y": 5.214099999999999
       },
       "prevControl": {
-        "x": 7.266501193286721,
-        "y": 2.881258830916216
+        "x": 6.269155768706319,
+        "y": 5.079535008036793
       },
       "nextControl": {
-        "x": 3.77531111111111,
-        "y": 2.9969888888888874
+        "x": 4.669918063211232,
+        "y": 5.358819805959894
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.6342222222222222,
-        "y": 2.936522222222221
+        "x": 3.5536000000000003,
+        "y": 5.3048
       },
       "prevControl": {
-        "x": 4.076500883171257,
-        "y": 3.04131440216235
+        "x": 4.192162652726346,
+        "y": 5.165201553434347
       },
       "nextControl": {
-        "x": 2.9089802499832036,
-        "y": 2.7646855636506187
+        "x": 3.225340950539163,
+        "y": 5.376561875174196
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.747,
-        "y": 1.739
+        "x": 2.213,
+        "y": 6.009
       },
       "prevControl": {
-        "x": 2.9832122422351683,
-        "y": 1.8208765938362987
+        "x": 3.04109826925671,
+        "y": 5.614957748568962
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Bump Shoot Spot"
+      "linkedName": "Left Shoot Wayne"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9947368421052647,
-      "rotationDegrees": 45.0
+      "waypointRelativePos": 0.9947368421052653,
+      "rotationDegrees": -45.0
     },
     {
-      "waypointRelativePos": 2.1157894736842597,
-      "rotationDegrees": 45.0
-    },
-    {
-      "waypointRelativePos": 3.0,
-      "rotationDegrees": 52.0
+      "waypointRelativePos": 2.0315789473684362,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [],
@@ -87,13 +83,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 51.14662565964662
+    "rotation": -40.599
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -66.21796957677864
   },
   "useDefaultConstraints": true
 }

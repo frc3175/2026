@@ -3,60 +3,55 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.85,
-        "y": 5.4862
+        "x": 5.710244444444445,
+        "y": 5.496277777777777
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.097155359984168,
-        "y": 5.448593776697248
+        "x": 7.371403448548775,
+        "y": 4.685740141851131
       },
       "isLocked": false,
-      "linkedName": "past bump blue"
+      "linkedName": "Left Troy Over Bump End"
     },
     {
       "anchor": {
-        "x": 8.028,
-        "y": 7.235414285714286
+        "x": 8.32038888888889,
+        "y": 4.2164
       },
       "prevControl": {
-        "x": 7.256842436401577,
-        "y": 7.708223033149582
+        "x": 8.042744379263397,
+        "y": 3.9376705594032453
       },
       "nextControl": {
-        "x": 8.770296053221818,
-        "y": 6.7803009810968975
+        "x": 8.54382149975001,
+        "y": 4.440705701994236
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.297,
-        "y": 4.464973166368515
+        "x": 8.12891111111111,
+        "y": 6.786233333333334
       },
       "prevControl": {
-        "x": 8.138980470330285,
-        "y": 4.670450177318219
+        "x": 8.204696419932146,
+        "y": 5.614447105548336
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": "Left Troy After Sweep"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.3023255813953523,
-      "rotationDegrees": -90.89610293963355
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.1488250652741534,
+      "minWaypointRelativePos": 0.38981173864894875,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 1.0,
+        "maxVelocity": 1.5,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -77,13 +72,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 112.01128319791931
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -135.0
+    "rotation": -43.91907581333928
   },
   "useDefaultConstraints": true
 }

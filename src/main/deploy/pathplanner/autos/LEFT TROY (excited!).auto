@@ -7,7 +7,69 @@
         {
           "type": "path",
           "data": {
-            "pathName": "to outpost"
+            "pathName": "Left Troy Over Bump"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "INTAKE"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Through Balls Troy"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Troy Sweep 2"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CARRY"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Troy Back Over Bump"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SPINUPTOWER"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SHOOT"
           }
         },
         {
@@ -19,25 +81,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SPINUP"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "outpost to shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SHOOT"
+            "name": "AGITATE"
           }
         },
         {
@@ -49,37 +93,7 @@
         {
           "type": "named",
           "data": {
-            "name": "STOPSHOOT"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "shimmy outpost"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SHOOT"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "STOPSHOOT"
+            "name": "CARRY"
           }
         },
         {
@@ -92,12 +106,6 @@
           "type": "named",
           "data": {
             "name": "SPINDOWN"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "outpost shoot to center"
           }
         }
       ]

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6342222222222222,
+        "y": 5.5164333333333335
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.961364619081979,
+        "y": 5.509320649737473
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.710244444444445,
+        "y": 5.496277777777777
+      },
+      "prevControl": {
+        "x": 4.865741768331791,
+        "y": 5.502100125969321
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Troy Over Bump End"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -43.91907581333928
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -45.90938044919901
+  },
+  "useDefaultConstraints": true
+}

@@ -30,33 +30,52 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "INTAKESTOP"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "CARRY"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "go to shoot blue"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "SPINUP"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "go to shoot blue"
+            "name": "SPINUPTOWER"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
           }
         },
         {
           "type": "named",
           "data": {
             "name": "SHOOT"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AGITATE"
           }
         },
         {
@@ -68,7 +87,7 @@
         {
           "type": "named",
           "data": {
-            "name": "STOPSHOOT"
+            "name": "RESET"
           }
         },
         {
@@ -78,45 +97,41 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "psudeo-shimmy bump"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "SPINDOWN"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left bump Bakc to center"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "wait",
+          "type": "parallel",
           "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SHOOT"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 200.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "STOPSHOOT"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SPINDOWN"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "INTAKE"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Bump Second Intake"
+                }
+              }
+            ]
           }
         }
       ]

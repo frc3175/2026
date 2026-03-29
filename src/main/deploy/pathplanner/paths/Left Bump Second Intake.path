@@ -3,60 +3,68 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.85,
-        "y": 5.4862
+        "x": 5.8211,
+        "y": 5.133477777777777
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.097155359984168,
-        "y": 5.448593776697248
+        "x": 6.701975402752274,
+        "y": 3.782408647812339
       },
       "isLocked": false,
-      "linkedName": "past bump blue"
+      "linkedName": "Left bump second intake"
     },
     {
       "anchor": {
-        "x": 8.028,
-        "y": 7.235414285714286
+        "x": 6.929655555555557,
+        "y": 4.226477777777777
       },
       "prevControl": {
-        "x": 7.256842436401577,
-        "y": 7.708223033149582
+        "x": 6.68064943446911,
+        "y": 4.248747749970888
       },
       "nextControl": {
-        "x": 8.770296053221818,
-        "y": 6.7803009810968975
+        "x": 7.218898721515272,
+        "y": 4.200609187741255
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.297,
-        "y": 4.464973166368515
+        "x": 8.159144444444443,
+        "y": 5.345111111111112
       },
       "prevControl": {
-        "x": 8.138980470330285,
-        "y": 4.670450177318219
+        "x": 8.10000685214575,
+        "y": 5.102206304289358
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.3023255813953523,
-      "rotationDegrees": -90.89610293963355
+      "waypointRelativePos": 0.08771929824561885,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.2982456140351004,
+      "rotationDegrees": 45.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.1488250652741534,
+      "minWaypointRelativePos": 0,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 1.0,
+        "maxVelocity": 1.5,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -77,13 +85,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 92.38594403038847
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -135.0
+    "rotation": -44.33211386819427
   },
   "useDefaultConstraints": true
 }

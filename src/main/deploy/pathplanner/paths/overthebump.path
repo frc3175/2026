@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.600510083036774,
+        "y": 2.587888493475682
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.53655990510083,
+        "y": 2.609406880189798
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.236512455516015,
+        "y": 2.587888493475682
+      },
+      "prevControl": {
+        "x": 5.236512455516015,
+        "y": 2.587888493475682
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "right troy ovr bump"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 46.90915243299641
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 45.0
+  },
+  "useDefaultConstraints": true
+}

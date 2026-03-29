@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.376079640507786,
-        "y": 1.132639396456129
+        "x": 7.577085978611768,
+        "y": 0.7798417407150333
       },
       "isLocked": false,
       "linkedName": "Right Bump Over"
@@ -20,12 +20,12 @@
         "y": 1.031822222222222
       },
       "prevControl": {
-        "x": 8.335930436323162,
-        "y": 0.7818410673748338
+        "x": 8.337627754933965,
+        "y": 0.7818259883636322
       },
       "nextControl": {
-        "x": 8.380655308497397,
-        "y": 4.424174758277365
+        "x": 8.355911187844884,
+        "y": 4.1127101597610185
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 3.6923555555555545
       },
       "prevControl": {
-        "x": 8.313985104986168,
-        "y": 3.406424640205889
+        "x": 8.308454926078102,
+        "y": 3.4442285750413313
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,7 +56,7 @@
       "minWaypointRelativePos": 0.9213732004429755,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 0.75,
+        "maxVelocity": 1.0,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,

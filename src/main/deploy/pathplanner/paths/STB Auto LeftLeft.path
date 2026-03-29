@@ -3,77 +3,64 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.33,
-        "y": 3.6923555555555545
+        "x": 3.533444444444445,
+        "y": 5.5063555555555554
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.25365164323289,
-        "y": 3.5072793907066417
-      },
-      "isLocked": false,
-      "linkedName": "Right Bump Back"
-    },
-    {
-      "anchor": {
-        "x": 5.599388888888889,
-        "y": 2.936522222222221
-      },
-      "prevControl": {
-        "x": 7.266501193286721,
-        "y": 2.881258830916216
-      },
-      "nextControl": {
-        "x": 3.77531111111111,
-        "y": 2.9969888888888874
+        "x": 4.533444444444446,
+        "y": 5.5063555555555554
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.6342222222222222,
-        "y": 2.936522222222221
+        "x": 5.891644444444445,
+        "y": 5.4862
       },
       "prevControl": {
-        "x": 4.076500883171257,
-        "y": 3.04131440216235
+        "x": 5.155966666666667,
+        "y": 5.546666666666668
       },
       "nextControl": {
-        "x": 2.9089802499832036,
-        "y": 2.7646855636506187
+        "x": 6.643978202162268,
+        "y": 5.424364348680726
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.747,
-        "y": 1.739
+        "x": 7.9979,
+        "y": 4.639666666666667
       },
       "prevControl": {
-        "x": 2.9832122422351683,
-        "y": 1.8208765938362987
+        "x": 7.416506904653859,
+        "y": 4.218921663455644
+      },
+      "nextControl": {
+        "x": 8.76381111111111,
+        "y": 5.193944444444444
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 9.21731111111111,
+        "y": 5.496277777777777
+      },
+      "prevControl": {
+        "x": 8.481633333333333,
+        "y": 4.952077777777777
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Bump Shoot Spot"
+      "linkedName": "STBALLEP1"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.9947368421052647,
-      "rotationDegrees": 45.0
-    },
-    {
-      "waypointRelativePos": 2.1157894736842597,
-      "rotationDegrees": 45.0
-    },
-    {
-      "waypointRelativePos": 3.0,
-      "rotationDegrees": 52.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -87,13 +74,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 51.14662565964662
+    "rotation": -135.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -135.0
   },
   "useDefaultConstraints": true
 }

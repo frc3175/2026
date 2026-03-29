@@ -34,7 +34,8 @@ public class RobotState extends SubsystemBase {
     SHOOT(HopperState.SHOOT, IntakeState.SHOOT, TowerState.SHOOT),
     CARRY(HopperState.CARRY, IntakeState.CARRY, TowerState.CARRY),
     RESET(HopperState.RESET, IntakeState.RESET, TowerState.RESET),
-    UNCLOG(HopperState.UNCLOG, IntakeState.UNCLOG, TowerState.UNCLOG);
+    UNCLOG(HopperState.UNCLOG, IntakeState.UNCLOG, TowerState.UNCLOG),
+    AGITATEDOWN(HopperState.SHOOT, IntakeState.INTAKE, TowerState.SHOOT);
 
     public HopperState hopperState;
     public IntakeState intakeState;

@@ -25,7 +25,7 @@ public class AutoUtilsHub {
 
         double angle = Math.toDegrees(Math.atan2(dy, dx)); //dy could be negative
 
-        return angle;
+        return !getIsBlueAlliance() ? (angle+180)%360 : angle % 360;
     }
 
     private static double getDistanceToGoal(Pose2d currentPosition, Translation2d goalPosition) {

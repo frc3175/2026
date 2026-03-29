@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Over Bump"
+            "pathName": "overthebump"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
@@ -23,10 +29,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Intake Fuel Right Blue"
+                  "pathName": "right through balls troy"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right troy sweep 2 electric boogaloo"
           }
         },
         {
@@ -42,7 +54,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Go to shoot right Blue"
+                  "pathName": "right troy back over bump"
                 }
               }
             ]
@@ -51,13 +63,13 @@
         {
           "type": "named",
           "data": {
-            "name": "SPINUP"
+            "name": "SPINUPTOWER"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 1.5
           }
         },
         {
@@ -105,26 +117,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right bump back to center"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "INTAKE"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right second intake"
-                }
-              }
-            ]
+            "pathName": "Right Troy Back to Center"
           }
         }
       ]

@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.297,
-        "y": 4.464973166368515
+        "x": 2.213,
+        "y": 6.009
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.118206479825086,
-        "y": 5.476122222222221
+        "x": 3.4125111111111113,
+        "y": 5.224177777777778
       },
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": "Left Shoot Wayne"
     },
     {
       "anchor": {
-        "x": 4.541222222222222,
-        "y": 5.254411111111112
+        "x": 3.533444444444445,
+        "y": 5.264488888888889
       },
       "prevControl": {
-        "x": 5.6594795248451835,
-        "y": 5.083174816014724
+        "x": 3.1574066500062274,
+        "y": 5.38138999307201
       },
       "nextControl": {
-        "x": 3.4992251651178745,
-        "y": 5.413969841594133
+        "x": 3.806444939576849,
+        "y": 5.179619602355617
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.213,
-        "y": 6.009
+        "x": 5.8211,
+        "y": 5.133477777777777
       },
       "prevControl": {
-        "x": 1.944913462136821,
-        "y": 6.037345597630654
+        "x": 4.723938339002335,
+        "y": 5.127765770903099
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Shoot Wayne"
+      "linkedName": "Left bump second intake"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
-      "rotationDegrees": -50.0
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.599
+    "rotation": -44.33211386819427
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -40.599
   },
   "useDefaultConstraints": true
 }

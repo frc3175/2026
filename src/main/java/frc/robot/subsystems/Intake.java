@@ -15,7 +15,9 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VoltageOut;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,7 +31,6 @@ public class Intake extends SubsystemBase {
   private CANcoder m_pivotEncoder;
 
   private PositionDutyCycle pivotPosition = new PositionDutyCycle(0);
-  private VelocityTorqueCurrentFOC intakeVelocity = new VelocityTorqueCurrentFOC(0);
   private DutyCycleOut intakePercentOutput = new DutyCycleOut(0);
   private DutyCycleOut intakePivotPercentOutput = new DutyCycleOut(0);
 
@@ -125,11 +126,6 @@ SmartDashboard.putNumber("Pivot Error", m_pivotMotor.getClosedLoopError().getVal
   public void setIntakePercentOutput(double percentOutput) {
     intakePercentOutput.Output = percentOutput;
     m_intakeLeftMotor.setControl(intakePercentOutput);
-  }
-
-  public void setIntakeVelocity(double velocity) {
-    intakeVelocity.Velocity = velocity;
-    m_intakeLeftMotor.setControl(intakeVelocity);
   }
 
   // ================= Pivot =================

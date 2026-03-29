@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.297,
-        "y": 4.464973166368515
+        "x": 8.12891111111111,
+        "y": 6.786233333333334
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.118206479825086,
-        "y": 5.476122222222221
+        "x": 7.815329857513226,
+        "y": 7.67536383342015
       },
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": "Left Troy After Sweep"
     },
     {
       "anchor": {
-        "x": 4.541222222222222,
-        "y": 5.254411111111112
+        "x": 6.395533333333334,
+        "y": 6.584677777777777
       },
       "prevControl": {
-        "x": 5.6594795248451835,
-        "y": 5.083174816014724
+        "x": 6.525809501745141,
+        "y": 6.801577145429924
       },
       "nextControl": {
-        "x": 3.4992251651178745,
-        "y": 5.413969841594133
+        "x": 5.941862285138532,
+        "y": 5.829351882987181
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.213,
-        "y": 6.009
+        "x": 6.738177777777778,
+        "y": 4.730366666666666
       },
       "prevControl": {
-        "x": 1.944913462136821,
-        "y": 6.037345597630654
+        "x": 6.519344275671021,
+        "y": 5.125206839180979
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Shoot Wayne"
+      "linkedName": "Left Troy After Sweep 2"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
-      "rotationDegrees": -50.0
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -145.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.599
+    "rotation": -48.012787504183244
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 112.01128319791931
   },
   "useDefaultConstraints": true
 }

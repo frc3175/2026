@@ -46,7 +46,7 @@ public class Constants {
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double PIVOTHOME = 15;
-        public static final double PIVOTOUT = 78; //TODO: TUNE
+        public static final double PIVOTOUT = 77.5; //TODO: TUNE
         public static final double PIVOTVEL = -0.25;
         public static final double PIVOTHOLD = 0;
        
@@ -67,12 +67,13 @@ public class Constants {
         public static final double ROLLER_V = 0.12;
         public static final double ROLLER_S = 0.02;
     // Intake roller / pivot presets (tune these values for your robot)
-    public static final double INTAKE_ROLLER_VELOCITY = -90.0;
-    public static final double SPINUP_ROLLER_VELOCITY = -12.0;
-    public static final double SHOOT_ROLLER_VELOCITY = -20.0;
-    public static final double CARRY_ROLLER_VELOCITY = -10.0;
+    public static final double INTAKE_ROLLER_VELOCITY = -1;
+    public static final double SPINUP_ROLLER_VELOCITY = -0.3;
+    public static final double SHOOT_ROLLER_VELOCITY = 0;
+    public static final double CARRY_ROLLER_VELOCITY = 0.0;
     public static final double RESET_ROLLER_VELOCITY = 0.0;
     public static final double UNCLOG_ROLLER_VELOCITY = 0.0;
+    public static final double AGITATE_ROLLER_PERCENT = -0.5;
 
     public static final double INTAKE_PIVOT_POSITION = PIVOTOUT; // default: folded
     public static final double SPINUP_PIVOT_POSIITON = 65; //TODO: tune
@@ -138,7 +139,7 @@ public class Constants {
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
-        public static final double HOPPERCURRENTLIMIT = 20.0;
+        public static final double HOPPERCURRENTLIMIT = 30.0;
         
         public static final double HOPPER_P = 0.8;
         public static final double HOPPER_I = 0;
@@ -205,9 +206,9 @@ public class Constants {
      public static final double RED_ANGLE_OFFSET = 68;
      public static final double BLUE_ANGLE_OFFSET = 240 ;
 
-     public static final double ALIGN_P = 2;
+     public static final double ALIGN_P = 4;
      public static final double ALIGN_I = 0;
-     public static final double ALIGN_D = 0;
+     public static final double ALIGN_D = 0.2;
 
     }
 

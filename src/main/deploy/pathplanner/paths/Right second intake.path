@@ -3,51 +3,63 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.297,
-        "y": 4.464973166368515
+        "x": 6.0125777777777785,
+        "y": 2.471
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.118206479825086,
-        "y": 5.476122222222221
+        "x": 5.87717755717617,
+        "y": 3.259345513143093
       },
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": "right auto second jump"
     },
     {
       "anchor": {
-        "x": 4.541222222222222,
-        "y": 5.254411111111112
+        "x": 6.899422222222223,
+        "y": 3.662122222222222
       },
       "prevControl": {
-        "x": 5.6594795248451835,
-        "y": 5.083174816014724
+        "x": 6.64091581716675,
+        "y": 3.63124435366965
       },
       "nextControl": {
-        "x": 3.4992251651178745,
-        "y": 5.413969841594133
+        "x": 7.259787444823138,
+        "y": 3.7051668422269044
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.213,
-        "y": 6.009
+        "x": 8.018055555555556,
+        "y": 2.160533333333333
       },
       "prevControl": {
-        "x": 1.944913462136821,
-        "y": 6.037345597630654
+        "x": 8.195881149064649,
+        "y": 3.3217293654710036
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Shoot Wayne"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.9,
-      "rotationDegrees": -50.0
+      "waypointRelativePos": 0.18245614035088298,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 0.6280701754385957,
+      "rotationDegrees": 45.0
+    },
+    {
+      "waypointRelativePos": 1.1614035087719394,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.5543859649122724,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +75,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.599
+    "rotation": -95.71059313749971
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 41.31610648434641
   },
   "useDefaultConstraints": true
 }

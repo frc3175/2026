@@ -3,60 +3,60 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.85,
-        "y": 5.4862
+        "x": 9.21731111111111,
+        "y": 5.496277777777777
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.097155359984168,
-        "y": 5.448593776697248
+        "x": 8.812321715801723,
+        "y": 5.852114634665895
       },
       "isLocked": false,
-      "linkedName": "past bump blue"
+      "linkedName": "STBALLEP1"
     },
     {
       "anchor": {
-        "x": 8.028,
-        "y": 7.235414285714286
+        "x": 7.252144444439405,
+        "y": 7.259888888893929
       },
       "prevControl": {
-        "x": 7.256842436401577,
-        "y": 7.708223033149582
+        "x": 7.817527449874568,
+        "y": 7.214082772379958
       },
       "nextControl": {
-        "x": 8.770296053221818,
-        "y": 6.7803009810968975
+        "x": 6.832244273484193,
+        "y": 7.293908298692437
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.297,
-        "y": 4.464973166368515
+        "x": 6.042811111111112,
+        "y": 5.002466666666667
       },
       "prevControl": {
-        "x": 8.138980470330285,
-        "y": 4.670450177318219
+        "x": 6.309040720110383,
+        "y": 5.391806976447766
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "intaked fuel blue"
+      "linkedName": "STBALLEP2"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.3023255813953523,
-      "rotationDegrees": -90.89610293963355
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 124.86181451743201
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.1488250652741534,
+      "minWaypointRelativePos": 0,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 1.0,
+        "maxVelocity": 1.5,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -77,7 +77,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -66.21796957677864
   },
   "reversed": false,
   "folder": null,

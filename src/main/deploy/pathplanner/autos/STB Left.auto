@@ -7,7 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Over Bump"
+            "pathName": "STB Auto LeftLeft"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 4.0
           }
         },
         {
@@ -23,7 +29,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Intake Fuel Right Blue"
+                  "pathName": "STBALLP2"
                 }
               }
             ]
@@ -42,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Go to shoot right Blue"
+                  "pathName": "STBALLP3"
                 }
               }
             ]
@@ -51,7 +57,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SPINUP"
+            "name": "SPINUPTOWER"
           }
         },
         {
@@ -81,7 +87,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 2.0
           }
         },
         {
@@ -100,31 +106,6 @@
           "type": "named",
           "data": {
             "name": "SPINDOWN"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right bump back to center"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "INTAKE"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right second intake"
-                }
-              }
-            ]
           }
         }
       ]
