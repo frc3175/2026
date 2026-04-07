@@ -75,7 +75,7 @@ public class Intake extends SubsystemBase {
         FeedbackSensorSourceValue.RemoteCANcoder;
 
     // Gear ratio (motor rotations per mechanism rotation)
-    pivotConfiguration.Feedback.RotorToSensorRatio = 114.28;
+    pivotConfiguration.Feedback.RotorToSensorRatio = 64.516;
     pivotConfiguration.Feedback.SensorToMechanismRatio = 1.0;
 
     m_pivotMotor.getConfigurator().apply(pivotConfiguration, 0.050);

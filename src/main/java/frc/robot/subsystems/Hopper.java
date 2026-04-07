@@ -4,11 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -17,6 +20,8 @@ import frc.robot.Constants;
 public class Hopper extends SubsystemBase {
   
   private TalonFX m_hopperMotor;
+  private TalonFX m_rightsauce;
+  private TalonFX m_leftsauce;
 
   private DutyCycleOut hopperPercentOutput = new DutyCycleOut(0);
   private VelocityTorqueCurrentFOC hopperVelocity = new VelocityTorqueCurrentFOC(0);
@@ -24,11 +29,24 @@ public class Hopper extends SubsystemBase {
   public Hopper() {
 
     m_hopperMotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
+    m_leftsauce = new TalonFX(Constants.HopperConstants.LEFTSAUCEID);
+    m_rightsauce = new TalonFX(Constants.HopperConstants.RIGHTSAUCEID);
+    
 
     final TalonFXConfiguration floorConfiguration = new TalonFXConfiguration();
     floorConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
     floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.HOPPERCURRENTLIMIT);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
+
+    final TalonFXConfiguration sauceConfiguration = new TalonFXConfiguration();
+    sauceConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
+    sauceConfiguration.CurrentLimits.withStatorCurrentLimit(15);
+    sauceConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+    sauceConfiguration.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(3));
+
+    
+
+
     
     var slot0Configs = floorConfiguration.Slot0;
     
@@ -40,7 +58,21 @@ public class Hopper extends SubsystemBase {
     slot0Configs.kV = Constants.HopperConstants.HOPPER_V;
     slot0Configs.kA = Constants.HopperConstants.HOPPER_A;
 
+    var sauceslot0Configs = sauceConfiguration.Slot0;
+
+    sauceslot0Configs.kP = 0.8;
+    sauceslot0Configs.kI = 0;
+    sauceslot0Configs.kD = 0;
+    sauceslot0Configs.kV = 0.12;
+    sauceslot0Configs.kA = 0;
+    sauceslot0Configs.kS = 0; 
+    
+
     m_hopperMotor.getConfigurator().apply(floorConfiguration); 
+    m_leftsauce.getConfigurator().apply(sauceConfiguration);
+    m_rightsauce.getConfigurator().apply(sauceConfiguration);
+
+    m_rightsauce.setControl(new Follower(Constants.HopperConstants.LEFTSAUCEID, MotorAlignmentValue.Opposed));
 
   }
   
@@ -51,6 +83,7 @@ public class Hopper extends SubsystemBase {
 
     hopperPercentOutput.Output = percentOutput;
     m_hopperMotor.setControl(hopperPercentOutput);
+    m_leftsauce.setControl(hopperPercentOutput);
 
   }
 
@@ -58,6 +91,7 @@ public class Hopper extends SubsystemBase {
 
     hopperVelocity.Velocity = velocity;
     m_hopperMotor.setControl(hopperVelocity);
+    m_leftsauce.setControl(hopperVelocity);
 
   }
 
