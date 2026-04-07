@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.213,
-        "y": 6.009
+        "x": 2.413,
+        "y": 5.909
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4125111111111113,
-        "y": 5.224177777777778
+        "x": 3.612511111111111,
+        "y": 5.124177777777778
       },
       "isLocked": false,
       "linkedName": "Left Shoot Wayne"
