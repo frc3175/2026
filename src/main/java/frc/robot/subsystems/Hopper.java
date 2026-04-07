@@ -7,10 +7,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,8 +22,8 @@ import frc.robot.Constants;
 public class Hopper extends SubsystemBase {
   
   private TalonFX m_hopperMotor;
-  private TalonFX m_rightsauce;
-  private TalonFX m_leftsauce;
+  private TalonFXS m_rightsauce;
+  private TalonFXS m_leftsauce;
 
   private DutyCycleOut hopperPercentOutput = new DutyCycleOut(0);
   private VelocityTorqueCurrentFOC hopperVelocity = new VelocityTorqueCurrentFOC(0);
@@ -29,8 +31,8 @@ public class Hopper extends SubsystemBase {
   public Hopper() {
 
     m_hopperMotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
-    m_leftsauce = new TalonFX(Constants.HopperConstants.LEFTSAUCEID);
-    m_rightsauce = new TalonFX(Constants.HopperConstants.RIGHTSAUCEID);
+    m_leftsauce = new TalonFXS(Constants.HopperConstants.LEFTSAUCEID);
+    m_rightsauce = new TalonFXS(Constants.HopperConstants.RIGHTSAUCEID);
     
 
     final TalonFXConfiguration floorConfiguration = new TalonFXConfiguration();
@@ -38,11 +40,10 @@ public class Hopper extends SubsystemBase {
     floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.HOPPERCURRENTLIMIT);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
-    final TalonFXConfiguration sauceConfiguration = new TalonFXConfiguration();
+    final TalonFXSConfiguration sauceConfiguration = new TalonFXSConfiguration();
     sauceConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    sauceConfiguration.CurrentLimits.withStatorCurrentLimit(15);
+    sauceConfiguration.CurrentLimits.withStatorCurrentLimit(40.0);
     sauceConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
-    sauceConfiguration.withFeedback(new FeedbackConfigs().withSensorToMechanismRatio(3));
 
     
 

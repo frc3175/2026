@@ -37,7 +37,7 @@ public class Constants {
         public static final int RACKMOTORID = 23;
         // CANcoder/encoder ID for the intake pivot
         public static final int PIVOTENCODERID = 33;
-        public static final double PIVOTENCODEROFFSET = -85.78125 / 360; //TODO: TUNE
+        public static final double PIVOTENCODEROFFSET = 176.923828125 / 360; //TODO: TUNE
 
         public static final double PIVOTCURRENTLIMIT = 40.0; 
         public static final double ROLLERCURRENTLIMIT = 70.0;
@@ -46,11 +46,9 @@ public class Constants {
         public static final double OUTTAKE = -0.5;
         public static final double STOP = 0;
         public static final double PIVOTHOME = 15;
-        public static final double PIVOTOUT = 77.5; //TODO: TUNE
-        public static final double PIVOTVEL = -0.25;
-        public static final double PIVOTHOLD = 0;
+        public static final double PIVOTOUT = 75; //TODO: TUNE
        
-        public static final double PIVOT_P = 10;
+        public static final double PIVOT_P = 5;
         public static final double PIVOT_I = 0;
         public static final double PIVOT_D = 0;
 
@@ -139,8 +137,8 @@ public class Constants {
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
-        public static final int RIGHTSAUCEID = 99;
-        public static final int LEFTSAUCEID = 98;
+        public static final int RIGHTSAUCEID = 48;
+        public static final int LEFTSAUCEID = 47;
         public static final double HOPPERCURRENTLIMIT = 30.0;
         
         public static final double HOPPER_P = 0.8;
