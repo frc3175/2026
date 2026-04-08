@@ -38,6 +38,7 @@ public class SwerveDrive extends Command {
     private BooleanSupplier m_isEvading;
     public BooleanSupplier m_isCrawling;
     private BooleanSupplier m_isAligning;
+    private BooleanSupplier m_isShooting;
     public SlewRateLimiter xAxisLimiter;
     public SlewRateLimiter yAxisLimiter;
     
@@ -59,7 +60,8 @@ public class SwerveDrive extends Command {
                        BooleanSupplier robotCentricSup, 
                        BooleanSupplier isEvading,
                        Limelight ll,
-                       BooleanSupplier isAligning) {
+                       BooleanSupplier isAligning,
+                       BooleanSupplier isShooting) {
 
         m_swerveDrivetrain = swerveDrivetrain;
         addRequirements(m_swerveDrivetrain);
@@ -70,6 +72,7 @@ public class SwerveDrive extends Command {
         m_robotCentricSup = robotCentricSup;
         m_isEvading = isEvading;
         m_isAligning = isAligning;
+        m_isShooting = isShooting;
      
         xAxisLimiter = new SlewRateLimiter(Constants.slewRate);
         yAxisLimiter = new SlewRateLimiter(Constants.slewRate);
@@ -141,14 +144,15 @@ public class SwerveDrive extends Command {
         
             double rAxisActual = rAxisSquared * MaxAngularRate * -1;
        
-        if(!m_isAligning.getAsBoolean()) {
+        if (Math.abs(xAxisSquared) < 0.1 && Math.abs(yAxisSquared) < 0.1 && m_isShooting.getAsBoolean()) {
+            m_swerveDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
+        } else if(!m_isAligning.getAsBoolean()) {
             m_swerveDrivetrain.setControl(
                 drive.withVelocityX( xAxisSquared * MaxSpeed ) // Drive forward with negative Y (forward)
                     .withVelocityY( yAxisSquared * MaxSpeed ) // Drive left with negative X (left)
                     .withRotationalRate(rAxisActual )
                     .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
                     .withCenterOfRotation(newCenterOfRotation));
-
                     SmartDashboard.putNumber("rotationamount", rAxisActual);
         } else {
             Translation2d velocity = AutoUtilsHub.getOrbitTranslation(m_swerveDrivetrain, yAxisSquared, xAxisSquared, MaxSpeed);

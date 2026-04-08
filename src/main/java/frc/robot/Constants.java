@@ -160,9 +160,10 @@ public class Constants {
         public static final double RESET_HOPPER_VELOCITY  = 0.0;
         public static final double UNCLOG_HOPPER_VELOCITY  = 40;
 
+        public static final double SIDEROLLER_CURRENTLIMIT = 15.0;
         public static final double INTAKE_SIDEROLLER_PCTOUT = 0.0;
         public static final double SPINUP_SIDEROLLER_PCTOUT = 0.0;
-        public static final double SHOOT_SIDEROLLER_PCTOUT  = -0.5;
+        public static final double SHOOT_SIDEROLLER_PCTOUT  = -4;
         public static final double CARRY_SIDEROLLER_PCTOUT  = 0.0;
         public static final double RESET_SIDEROLLER_PCTOUT  = 0.0;
         public static final double UNCLOG_SIDEROLLER_PCTOUT  = 0.0;

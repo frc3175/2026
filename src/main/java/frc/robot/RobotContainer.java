@@ -115,7 +115,8 @@ public class RobotContainer {
                 () -> true, 
                 () -> drivecontroller.leftBumper().getAsBoolean(),
                 m_ll,
-                () -> drivecontroller.y().getAsBoolean()
+                () -> drivecontroller.y().getAsBoolean(),
+                () -> drivecontroller.rightBumper().getAsBoolean()
             )
         );
 

@@ -38,8 +38,8 @@ public class Hopper extends SubsystemBase {
   public Hopper() {
 
     m_hopperMotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
-    m_leftSideRoller = new TalonFXS(Constants.HopperConstants.LEFTSIDEROLLERID);
-    m_rightSideRoller = new TalonFXS(Constants.HopperConstants.RIGHTSIDEROLLERID);
+    m_leftSideRoller = new TalonFXS(Constants.HopperConstants.LEFTSIDEROLLERID, Constants.CANIVORE);
+    m_rightSideRoller = new TalonFXS(Constants.HopperConstants.RIGHTSIDEROLLERID, Constants.CANIVORE);
     
 
     final TalonFXConfiguration floorConfiguration = new TalonFXConfiguration();
@@ -49,7 +49,7 @@ public class Hopper extends SubsystemBase {
 
     final TalonFXSConfiguration sideRollerConfiguration = new TalonFXSConfiguration();
     sideRollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    sideRollerConfiguration.CurrentLimits.withStatorCurrentLimit(15.0);
+    sideRollerConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.SIDEROLLER_CURRENTLIMIT);
     sideRollerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
     sideRollerConfiguration.withCommutation(new CommutationConfigs().withMotorArrangement(MotorArrangementValue.Minion_JST).withAdvancedHallSupport(AdvancedHallSupportValue.Enabled));
     
