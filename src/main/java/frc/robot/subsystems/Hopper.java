@@ -28,8 +28,8 @@ import frc.robot.Constants;
 public class Hopper extends SubsystemBase {
   
   private TalonFX m_hopperMotor;
-  private TalonFXS m_rightsauce;
-  private TalonFXS m_leftsauce;
+  private TalonFXS m_rightSideRoller;
+  private TalonFXS m_leftSideRoller;
 
   private DutyCycleOut hopperPercentOutput = new DutyCycleOut(0);
   private VelocityTorqueCurrentFOC hopperVelocity = new VelocityTorqueCurrentFOC(0);
@@ -38,8 +38,8 @@ public class Hopper extends SubsystemBase {
   public Hopper() {
 
     m_hopperMotor = new TalonFX(Constants.HopperConstants.HOPPERFLOORMOTORID , Constants.CANIVORE);
-    m_leftsauce = new TalonFXS(Constants.HopperConstants.LEFTSAUCEID);
-    m_rightsauce = new TalonFXS(Constants.HopperConstants.RIGHTSAUCEID);
+    m_leftSideRoller = new TalonFXS(Constants.HopperConstants.LEFTSIDEROLLERID);
+    m_rightSideRoller = new TalonFXS(Constants.HopperConstants.RIGHTSIDEROLLERID);
     
 
     final TalonFXConfiguration floorConfiguration = new TalonFXConfiguration();
@@ -47,15 +47,11 @@ public class Hopper extends SubsystemBase {
     floorConfiguration.CurrentLimits.withStatorCurrentLimit(Constants.HopperConstants.HOPPERCURRENTLIMIT);
     floorConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake));
 
-    final TalonFXSConfiguration sauceConfiguration = new TalonFXSConfiguration();
-    sauceConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
-    sauceConfiguration.CurrentLimits.withStatorCurrentLimit(15.0);
-    sauceConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
-    sauceConfiguration.withCommutation(new CommutationConfigs().withMotorArrangement(MotorArrangementValue.Minion_JST).withAdvancedHallSupport(AdvancedHallSupportValue.Enabled));
-
-    
-
-
+    final TalonFXSConfiguration sideRollerConfiguration = new TalonFXSConfiguration();
+    sideRollerConfiguration.CurrentLimits.withStatorCurrentLimitEnable(true);
+    sideRollerConfiguration.CurrentLimits.withStatorCurrentLimit(15.0);
+    sideRollerConfiguration.withMotorOutput(new MotorOutputConfigs().withNeutralMode(NeutralModeValue.Coast));
+    sideRollerConfiguration.withCommutation(new CommutationConfigs().withMotorArrangement(MotorArrangementValue.Minion_JST).withAdvancedHallSupport(AdvancedHallSupportValue.Enabled));
     
     var slot0Configs = floorConfiguration.Slot0;
     
@@ -67,21 +63,20 @@ public class Hopper extends SubsystemBase {
     slot0Configs.kV = Constants.HopperConstants.HOPPER_V;
     slot0Configs.kA = Constants.HopperConstants.HOPPER_A;
 
-    var sauceslot0Configs = sauceConfiguration.Slot0;
+    var sideRollerSlot0Configs = sideRollerConfiguration.Slot0;
 
-    sauceslot0Configs.kP = 0.8;
-    sauceslot0Configs.kI = 0;
-    sauceslot0Configs.kD = 0;
-    sauceslot0Configs.kV = 0.12;
-    sauceslot0Configs.kA = 0;
-    sauceslot0Configs.kS = 0; 
-    
+    sideRollerSlot0Configs.kP = 0.8;
+    sideRollerSlot0Configs.kI = 0;
+    sideRollerSlot0Configs.kD = 0;
+    sideRollerSlot0Configs.kV = 0.12;
+    sideRollerSlot0Configs.kA = 0;
+    sideRollerSlot0Configs.kS = 0; 
 
     m_hopperMotor.getConfigurator().apply(floorConfiguration, 0.050); 
-    m_leftsauce.getConfigurator().apply(sauceConfiguration, 0.050);
-    m_rightsauce.getConfigurator().apply(sauceConfiguration, 0.050);
+    m_leftSideRoller.getConfigurator().apply(sideRollerConfiguration, 0.050);
+    m_rightSideRoller.getConfigurator().apply(sideRollerConfiguration, 0.050);
 
-    m_rightsauce.setControl(new Follower(Constants.HopperConstants.LEFTSAUCEID, MotorAlignmentValue.Opposed));
+    m_rightSideRoller.setControl(new Follower(Constants.HopperConstants.LEFTSIDEROLLERID, MotorAlignmentValue.Opposed));
 
   }
   
@@ -94,19 +89,18 @@ public class Hopper extends SubsystemBase {
 
     hopperPercentOutput.Output = percentOutput;
     //m_hopperMotor.setControl(hopperPercentOutput);
-    m_leftsauce.setControl(hopperPercentOutput);
+    m_leftSideRoller.setControl(hopperPercentOutput);
 
   }
 
   public void setHopperVelocity(double velocity) {
     hopperVelocity.Velocity = velocity;
     m_hopperMotor.setControl(hopperVelocity);
-  //  m_leftsauce.setControl(hopperVelocity);
   }
 
   public void setSideRollerVoltage(double voltage) {
    // sideRollerVoltage.Output = voltage;
-    m_leftsauce.setControl(sideRollerVoltage.withOutput(voltage));
+    m_leftSideRoller.setControl(sideRollerVoltage.withOutput(voltage));
     SmartDashboard.putNumber("Side roller desired voltage", voltage);
   }
   

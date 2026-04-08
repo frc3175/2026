@@ -137,8 +137,8 @@ public class Constants {
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
-        public static final int RIGHTSAUCEID = 14;
-        public static final int LEFTSAUCEID = 15;
+        public static final int RIGHTSIDEROLLERID = 14;
+        public static final int LEFTSIDEROLLERID = 15;
         public static final double HOPPERCURRENTLIMIT = 30.0;
         
         public static final double HOPPER_P = 0.8;
