@@ -37,6 +37,7 @@ public class SetBotState extends Command {
 
     m_robotState.setRobotState(m_botState);
     m_hopper.setHopperVelocity(m_robotState.getRobotState().hopperState.hopperVelocity);
+    m_hopper.setHopperPercentOutput(m_robotState.getRobotState().hopperState.sideRollersVoltage);
     m_intake.setIntakePercentOutput(m_robotState.getRobotState().intakeState.intakeVelocity);
     m_intake.setIntakePivotPose(m_robotState.getRobotState().intakeState.pivotPosition);
     m_tower.setTowerVelocity(m_robotState.getRobotState().towerState.towerVelocity);

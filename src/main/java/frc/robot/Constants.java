@@ -137,8 +137,8 @@ public class Constants {
 
     public class HopperConstants{
         public static final int HOPPERFLOORMOTORID = 44;
-        public static final int RIGHTSAUCEID = 48;
-        public static final int LEFTSAUCEID = 47;
+        public static final int RIGHTSAUCEID = 14;
+        public static final int LEFTSAUCEID = 15;
         public static final double HOPPERCURRENTLIMIT = 30.0;
         
         public static final double HOPPER_P = 0.8;
@@ -159,6 +159,13 @@ public class Constants {
         public static final double CARRY_HOPPER_VELOCITY  = 0;
         public static final double RESET_HOPPER_VELOCITY  = 0.0;
         public static final double UNCLOG_HOPPER_VELOCITY  = 40;
+
+        public static final double INTAKE_SIDEROLLER_PCTOUT = 0.0;
+        public static final double SPINUP_SIDEROLLER_PCTOUT = 0.0;
+        public static final double SHOOT_SIDEROLLER_PCTOUT  = -0.5;
+        public static final double CARRY_SIDEROLLER_PCTOUT  = 0.0;
+        public static final double RESET_SIDEROLLER_PCTOUT  = 0.0;
+        public static final double UNCLOG_SIDEROLLER_PCTOUT  = 0.0;
     }
 
     public class TowerConstants{
