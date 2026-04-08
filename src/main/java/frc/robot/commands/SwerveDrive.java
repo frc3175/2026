@@ -144,7 +144,7 @@ public class SwerveDrive extends Command {
         
             double rAxisActual = rAxisSquared * MaxAngularRate * -1;
        
-        if (Math.abs(xAxisSquared) < 0.1 && Math.abs(yAxisSquared) < 0.1 && m_isShooting.getAsBoolean()) {
+        if (Math.abs(xAxisSquared) < 0.1 && Math.abs(yAxisSquared) < 0.1 && Math.abs(rAxisActual) < 0.1 && m_isShooting.getAsBoolean()) {
             m_swerveDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
         } else if(!m_isAligning.getAsBoolean()) {
             m_swerveDrivetrain.setControl(
