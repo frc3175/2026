@@ -67,15 +67,15 @@ public class Constants {
     // Intake roller / pivot presets (tune these values for your robot)
     public static final double INTAKE_ROLLER_VELOCITY = -1;
     public static final double SPINUP_ROLLER_VELOCITY = -0.3;
-    public static final double SHOOT_ROLLER_VELOCITY = 0;
+    public static final double SHOOT_ROLLER_VELOCITY = -0.3;
     public static final double CARRY_ROLLER_VELOCITY = 0.0;
     public static final double RESET_ROLLER_VELOCITY = 0.0;
     public static final double UNCLOG_ROLLER_VELOCITY = 0.0;
     public static final double AGITATE_ROLLER_PERCENT = -0.5;
 
     public static final double INTAKE_PIVOT_POSITION = PIVOTOUT; // default: folded
-    public static final double SPINUP_PIVOT_POSIITON = 65; //TODO: tune
-    public static final double SHOOT_PIVOT_POSITION = 56;     //TODO: tune// example value (degrees/encoder units)
+    public static final double SPINUP_PIVOT_POSIITON = PIVOTOUT; //TODO: tune
+    public static final double SHOOT_PIVOT_POSITION = 45;     //TODO: tune// example value (degrees/encoder units)
     public static final double CARRY_PIVOT_POSITION = 65; //TODO: tune
     public static final double RESET_PIVOT_POSITION = PIVOTHOME;
     public static final double UNCLOG_PIVOT_POSITION = 70; //TODO: tune

@@ -91,7 +91,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("CARRY",new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY) );
         NamedCommands.registerCommand("UNCLOGAUTO", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG));
 
-         autoChooser = AutoBuilder.buildAutoChooser("New Auto");
+        autoChooser = AutoBuilder.buildAutoChooser("New Auto");
        
 
         SmartDashboard.putData("Auto Mode", autoChooser);
@@ -116,7 +116,8 @@ public class RobotContainer {
                 () -> drivecontroller.leftBumper().getAsBoolean(),
                 m_ll,
                 () -> drivecontroller.y().getAsBoolean(),
-                () -> drivecontroller.rightBumper().getAsBoolean()
+                () -> drivecontroller.rightBumper().getAsBoolean(),
+                () -> opController.b().getAsBoolean()
             )
         );
 
@@ -129,9 +130,7 @@ public class RobotContainer {
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
           //  .whileTrue(new Agitate(m_intake));
 
-    
-        
-         IntakeInButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE))
+        IntakeInButton.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.INTAKE))
         //        .onFalse(new InstantCommand(() -> m_intake.setIntakeVelocity(0)));
              .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
