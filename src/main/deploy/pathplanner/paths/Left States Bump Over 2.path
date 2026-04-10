@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.492918149466193,
+        "y": 5.568185053380782
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.499940241655992,
+        "y": 5.579622068975303
+      },
+      "isLocked": false,
+      "linkedName": "Left States Shoot Position"
+    },
+    {
+      "anchor": {
+        "x": 6.0932,
+        "y": 5.466044444444444
+      },
+      "prevControl": {
+        "x": 5.683166550251956,
+        "y": 5.503768992308095
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left States After Bump 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": -37.775684305954655
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -58.39249775375109
+  },
+  "useDefaultConstraints": true
+}

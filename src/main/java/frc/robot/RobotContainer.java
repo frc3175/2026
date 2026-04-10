@@ -81,6 +81,7 @@ public class RobotContainer {
     public RobotContainer() {
         drivetrain.m_Limelight = m_ll;
 
+        NamedCommands.registerCommand("SPINUPBUMP", new SpinUp(m_shooter, Constants.ShooterConstants.BUMPAUTOSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SPINUPTOWER", new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SPINUP", new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SHOOT", new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SHOOT));

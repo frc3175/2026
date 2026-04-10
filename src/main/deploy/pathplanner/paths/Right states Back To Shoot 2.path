@@ -1,0 +1,86 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.445922222222223,
+        "y": 2.422555555555555
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.209485897591792,
+        "y": 2.341328316311238
+      },
+      "isLocked": false,
+      "linkedName": "Right states After Sweep 2"
+    },
+    {
+      "anchor": {
+        "x": 5.438144444444444,
+        "y": 2.563644444444444
+      },
+      "prevControl": {
+        "x": 6.372755968939908,
+        "y": 2.535913388994408
+      },
+      "nextControl": {
+        "x": 5.179801057280819,
+        "y": 2.571309805513528
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.785388888888889,
+        "y": 2.4628666666666663
+      },
+      "prevControl": {
+        "x": 4.110847337504637,
+        "y": 2.5208477377313
+      },
+      "nextControl": {
+        "x": 3.5392641504428592,
+        "y": 2.419019054133332
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.5435222222222222,
+        "y": 2.392322222222223
+      },
+      "prevControl": {
+        "x": 3.833595435359147,
+        "y": 2.4898456789801036
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right States Shoot Position"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 48.6913859864513
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": 128.480198248343
+  },
+  "useDefaultConstraints": true
+}

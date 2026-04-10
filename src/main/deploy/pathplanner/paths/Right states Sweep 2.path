@@ -1,0 +1,125 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.441,
+        "y": 3.1582333333333326
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.299893657587777,
+        "y": 3.3646043587488315
+      },
+      "isLocked": false,
+      "linkedName": "Right States After Bump One"
+    },
+    {
+      "anchor": {
+        "x": 6.381975694444444,
+        "y": 3.816753125
+      },
+      "prevControl": {
+        "x": 6.240481928629883,
+        "y": 3.6106475349845564
+      },
+      "nextControl": {
+        "x": 6.694154595190807,
+        "y": 4.2714856438378055
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.846733333333335,
+        "y": 3.7628999999999992
+      },
+      "prevControl": {
+        "x": 7.622657535065509,
+        "y": 4.328190244345474
+      },
+      "nextControl": {
+        "x": 8.002662141320895,
+        "y": 3.3695284951379207
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.445922222222223,
+        "y": 2.422555555555555
+      },
+      "prevControl": {
+        "x": 7.602081760073074,
+        "y": 2.4659991558753775
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Right states After Sweep 2"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2736842105263195,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 0.8421052631579017,
+      "rotationDegrees": 59.99999999999999
+    },
+    {
+      "waypointRelativePos": 1.194736842105255,
+      "rotationDegrees": 29.999999999999996
+    },
+    {
+      "waypointRelativePos": 1.4684210526315788,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.8736842105263183,
+      "rotationDegrees": -45.0
+    },
+    {
+      "waypointRelativePos": 2.4157894736842316,
+      "rotationDegrees": -90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.6245847176079711,
+      "maxWaypointRelativePos": 2.7906976744186105,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": 128.480198248343
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": 29.999999999999996
+  },
+  "useDefaultConstraints": true
+}

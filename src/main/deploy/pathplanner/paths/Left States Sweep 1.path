@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.44093712930012,
+        "y": 4.965670225385528
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.715807218514014,
+        "y": 4.4329062016812895
+      },
+      "isLocked": false,
+      "linkedName": "Left States After Bump 1"
+    },
+    {
+      "anchor": {
+        "x": 8.370777777777779,
+        "y": 4.841222222222223
+      },
+      "prevControl": {
+        "x": 8.190621797886717,
+        "y": 4.644030688988488
+      },
+      "nextControl": {
+        "x": 8.53940204485431,
+        "y": 5.02579160362906
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.552177777777779,
+        "y": 6.020322222222221
+      },
+      "prevControl": {
+        "x": 8.739380507884805,
+        "y": 5.756674180743012
+      },
+      "nextControl": {
+        "x": 8.265307866560388,
+        "y": 6.424337111366947
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.617244444444444,
+        "y": 5.6676
+      },
+      "prevControl": {
+        "x": 7.60925283668109,
+        "y": 6.215912530707389
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left States After Sweep 1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 1.45,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.35215946843854057,
+      "maxWaypointRelativePos": 2.7574750830564674,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": -122.19573393471327
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": -45.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,86 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.153666666666667,
+        "y": 5.5970555555555555
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.438743796599873,
+        "y": 5.531673496979644
+      },
+      "isLocked": false,
+      "linkedName": "Left States After Sweep 2"
+    },
+    {
+      "anchor": {
+        "x": 5.599388888888889,
+        "y": 5.566822222222222
+      },
+      "prevControl": {
+        "x": 6.313467191424456,
+        "y": 5.634184439202682
+      },
+      "nextControl": {
+        "x": 5.127077401160108,
+        "y": 5.522266955935911
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.785388888888889,
+        "y": 5.546666666666668
+      },
+      "prevControl": {
+        "x": 4.495171680937091,
+        "y": 5.761019203151551
+      },
+      "nextControl": {
+        "x": 3.31219487244723,
+        "y": 5.403763318191503
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.442744444444445,
+        "y": 5.445888888888889
+      },
+      "prevControl": {
+        "x": 3.6877120909965875,
+        "y": 5.495797326479187
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left States After Back 2"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -58.46520809481175
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": -131.90594194108294
+  },
+  "useDefaultConstraints": true
+}

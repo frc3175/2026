@@ -48,7 +48,7 @@ public class Constants {
         public static final double PIVOTHOME = 15;
         public static final double PIVOTOUT = 75; //TODO: TUNE
        
-        public static final double PIVOT_P = 5;
+        public static final double PIVOT_P = 6;
         public static final double PIVOT_I = 0;
         public static final double PIVOT_D = 0;
 
@@ -94,6 +94,8 @@ public class Constants {
 
         public static final double SHOOTERCURRENTLIMIT = 45.0; 
 
+        public static final double BUMPAUTOSPEED = -41.25;
+        public static final double BUMPTELESPEED = -40.75;
         public static final double TOWERSPINSPEED = -47.5;
         public static final double TRENCHSPINSPEED = -49.9;
         public static final double SHOOTER_P = 4.25;
