@@ -40,13 +40,13 @@ public class RobotContainer {
     public  final CommandXboxController opController = new CommandXboxController(1);
 
     public final Trigger Spinup = opController.leftBumper();
-    public final Trigger ShootButton = drivecontroller.rightBumper();
+    public final Trigger ShootButton = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kRightTrigger.value) >= 0.5);
     public final Trigger IntakeInButton = opController.rightBumper();
     public final Trigger AgitateHop = opController.x();
     public final Trigger Retracthop = opController.b();
     public final Trigger UnclogTower = opController.y();
     public final Trigger TowerShot = opController.a();
-    public final Trigger AutoAlign = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kLeftTrigger.value) == 1);
+    public final Trigger AutoAlign = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kLeftTrigger.value) >= 0.5);
     
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -114,9 +114,10 @@ public class RobotContainer {
                 () -> true, 
                 () -> drivecontroller.leftBumper().getAsBoolean(),
                 m_ll,
-                () -> drivecontroller.y().getAsBoolean(),
-                () -> drivecontroller.rightBumper().getAsBoolean(),
+                AutoAlign,
+                ShootButton,
                 () -> opController.b().getAsBoolean()
+                
             )
         );
 
