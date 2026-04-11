@@ -47,15 +47,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Left States Back Over 1"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "SPINUPBUMP"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left States Back Over 1"
                 }
               }
             ]
@@ -70,7 +70,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 3.5
           }
         },
         {
@@ -122,15 +122,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Left States Back Over 2"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "SPINUPBUMP"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left States Back Over 2"
                 }
               }
             ]
@@ -140,6 +140,31 @@
           "type": "named",
           "data": {
             "name": "SHOOT"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "INTAKE"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left States To Middle At End"
+                }
+              }
+            ]
           }
         }
       ]

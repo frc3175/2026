@@ -18,7 +18,6 @@ public class ShooterLookup {
         velocityMap.put(2.87, Constants.ShooterConstants.TOWERSPINSPEED);
         velocityMap.put(3.5, Constants.ShooterConstants.TRENCHSPINSPEED);
         velocityMap.put(4.5, -53.0);
-        velocityMap.put(5.5, -63.0);
     }
 
     public static double calculateFlywheelVelocity(double distanceMeters) {

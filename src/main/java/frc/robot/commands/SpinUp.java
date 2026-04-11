@@ -16,6 +16,7 @@ public class SpinUp extends Command {
   private DoubleSupplier m_velocity;
   private double d_velocity;
   private boolean isVariable = false;
+  private boolean finished = false;
 
   /** Creates a new setshootvel. */
   public SpinUp(Shooter shooter,  DoubleSupplier velocitySupplier) {
@@ -42,15 +43,18 @@ public class SpinUp extends Command {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (isVariable) {
         m_shooter.setShooterVelocity(m_velocity.getAsDouble());
+        finished = false;
     } else {
       m_shooter.setShooterVelocity(d_velocity);
+      finished = true;
     }
 
   }
@@ -58,12 +62,14 @@ public class SpinUp extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_shooter.setShooterPercentOutput(0);
+    if (isVariable) {
+      m_shooter.setShooterPercentOutput(0);
+    }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

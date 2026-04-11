@@ -64,7 +64,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.5
+            "waitTime": 3.5
           }
         },
         {
@@ -134,6 +134,31 @@
           "type": "named",
           "data": {
             "name": "SHOOT"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "INTAKE"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right States Back To Middle at End"
+                }
+              }
+            ]
           }
         }
       ]
