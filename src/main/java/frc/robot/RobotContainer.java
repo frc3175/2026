@@ -43,10 +43,11 @@ public class RobotContainer {
     public final Trigger ShootButton = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kRightTrigger.value) >= 0.5);
     public final Trigger IntakeInButton = opController.rightBumper();
     public final Trigger AgitateHop = opController.x();
-    public final Trigger Retracthop = opController.b();
+    public final Trigger FullFieldPass = opController.b();
     public final Trigger UnclogTower = opController.y();
     public final Trigger TowerShot = opController.a();
     public final Trigger AutoAlign = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kLeftTrigger.value) >= 0.5);
+    public final Trigger LockWheels = new Trigger(() -> opController.getRawAxis(XboxController.Axis.kRightTrigger.value) >= 0.5);
     
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -116,8 +117,7 @@ public class RobotContainer {
                 m_ll,
                 AutoAlign,
                 ShootButton,
-                () -> opController.b().getAsBoolean()
-                
+                LockWheels
             )
         );
 
@@ -140,7 +140,6 @@ public class RobotContainer {
         
 
         AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION))).onFalse(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.SHOOT_PIVOT_POSITION)));
-        Retracthop.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
         UnclogTower.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG))
             .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
 
@@ -148,6 +147,10 @@ public class RobotContainer {
         TowerShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED));
         TowerShot.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP));
         TowerShot.onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
+
+        FullFieldPass.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.FFPASSSPEED));
+        FullFieldPass.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP));
+        Spinup.onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, BotState.RESET).alongWith(new SpinDown(m_shooter)));
         
         opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         //opController.rightBumper().onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
