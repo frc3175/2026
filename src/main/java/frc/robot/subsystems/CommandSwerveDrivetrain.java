@@ -45,7 +45,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
-    public Limelight m_Limelight;
+    public Limelight m_LimelightTower;
+    public Limelight m_Limelight_Shooter;
     public double desiredShooterVelocity = 0;
 
     public Pigeon2 m_pigeon = new Pigeon2(0, Constants.RIO);
@@ -290,7 +291,23 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
 
-        if (m_Limelight != null) {
+        if (m_LimelightTower != null) {
+            double yawDeg = getState().Pose.getRotation().getDegrees();
+            double yawRateDegPerSec = Math.toDegrees(getState().Speeds.omegaRadiansPerSecond);
+
+            LimelightHelpers.SetRobotOrientation(
+                "limelight-tower",
+                yawDeg,
+                yawRateDegPerSec,
+                0,
+                0,
+                0,
+                0
+            );
+            addVisionUpdatesFromLimelight(m_LimelightTower);
+        }
+
+        if (m_Limelight_Shooter != null) {
             double yawDeg = getState().Pose.getRotation().getDegrees();
             double yawRateDegPerSec = Math.toDegrees(getState().Speeds.omegaRadiansPerSecond);
 
@@ -304,27 +321,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 0
             );
 
-            // LimelightHelpers.SetRobotOrientation(
-            //     "limelight-left",
-            //     yawDeg,
-            //     yawRateDegPerSec,
-            //     0,
-            //     0,
-            //     0,
-            //     0
-            // );
-
-            // LimelightHelpers.SetRobotOrientation(
-            //     "limelight-right",
-            //     yawDeg,
-            //     yawRateDegPerSec,
-            //     0,
-            //     0,
-            //     0,
-            //     0
-            // );
-
-            addVisionUpdatesFromLimelight(m_Limelight);
+            addVisionUpdatesFromLimelight(m_Limelight_Shooter);
 
             Pose2d botpose = getState().Pose;
             SmartDashboard.putNumber("X:", botpose.getX());
@@ -334,8 +331,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             desiredShooterVelocity = getDesiredShooterVelocity();
 
         }
-        
-        
     }
 
     private void startSimThread() {

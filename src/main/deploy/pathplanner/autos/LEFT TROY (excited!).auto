@@ -50,20 +50,20 @@
                 "data": {
                   "pathName": "Left Troy Back Over Bump"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SPINUPBUMP"
+                }
               }
             ]
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "SPINUPTOWER"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 0.2
           }
         },
         {

@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 1.6085888888888893,
-        "y": 3.833444444444444
+        "y": 4.033
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.5546082771301455,
-        "y": 3.2310691435992607
+        "y": 3.430624699154817
       },
       "isLocked": false,
       "linkedName": "Depot Auto Shoot Position"

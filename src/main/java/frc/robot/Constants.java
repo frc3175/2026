@@ -37,10 +37,10 @@ public class Constants {
         public static final int RACKMOTORID = 23;
         // CANcoder/encoder ID for the intake pivot
         public static final int PIVOTENCODERID = 33;
-        public static final double PIVOTENCODEROFFSET = 176.923828125 / 360; //TODO: TUNE
+        public static final double PIVOTENCODEROFFSET = 174.823828125 / 360; //TODO: TUNE
 
         public static final double PIVOTCURRENTLIMIT = 40.0; 
-        public static final double ROLLERCURRENTLIMIT = 70.0;
+        public static final double ROLLERCURRENTLIMIT = 50.0;
 
         public static final double INTAKEIN = 1;
         public static final double OUTTAKE = -0.5;
@@ -195,7 +195,7 @@ public class Constants {
     // Tower velocity presets (tune as needed)
     public static final double INTAKE_TOWER_VELOCITY = STOP;
     public static final double SHOOT_TOWER_VELOCITY  = -70.0;
-    public static final double SPINUP_TOWER_VELOCITY = 25.0;
+    public static final double SPINUP_TOWER_VELOCITY = 45.0;
     public static final double CARRY_TOWER_VELOCITY  = STOP;
     public static final double RESET_TOWER_VELOCITY  = STOP;
     public static final double UNCLOG_TOWER_VELOCITY  = REVERSERUNSPEED;

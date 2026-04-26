@@ -8,27 +8,48 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.750569671800717,
-        "y": 5.633242309219061
+        "x": 1.3882331943255721,
+        "y": 4.614982952759987
       },
       "isLocked": false,
       "linkedName": "Depot Auto After Depot"
     },
     {
       "anchor": {
-        "x": 1.6085888888888893,
-        "y": 3.833444444444444
+        "x": 1.8897983392645323,
+        "y": 5.159335705812574
       },
       "prevControl": {
-        "x": 2.4680119781330783,
-        "y": 5.053833268223503
+        "x": 1.2704806832666968,
+        "y": 5.4229305892854205
+      },
+      "nextControl": {
+        "x": 2.1198295763662176,
+        "y": 5.061429475380246
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.6085888888888893,
+        "y": 4.033
+      },
+      "prevControl": {
+        "x": 2.250989713881939,
+        "y": 4.454285911727618
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Depot Auto Shoot Position"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6807017543859609,
+      "rotationDegrees": -25.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

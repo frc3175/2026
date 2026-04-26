@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.0932,
-        "y": 5.466044444444444
+        "x": 6.466077777777778,
+        "y": 5.476122222222221
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.680270831839979,
-        "y": 3.7375108199088434
+        "x": 6.0531486096177565,
+        "y": 3.7475885976866206
       },
       "isLocked": false,
       "linkedName": "Left States After Bump 2"
@@ -79,7 +79,7 @@
     },
     {
       "waypointRelativePos": 2.75,
-      "rotationDegrees": -162.61545453231642
+      "rotationDegrees": -162.61545453231645
     }
   ],
   "constraintZones": [
@@ -88,7 +88,7 @@
       "minWaypointRelativePos": 0.46511627906976394,
       "maxWaypointRelativePos": 2.8172757475083254,
       "constraints": {
-        "maxVelocity": 3.0,
+        "maxVelocity": 2.0,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -108,13 +108,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 2.0,
     "rotation": -131.90594194108294
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 3.0,
+    "velocity": 1.5,
     "rotation": -37.775684305954655
   },
   "useDefaultConstraints": true

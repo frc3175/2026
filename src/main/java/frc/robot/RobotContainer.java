@@ -47,8 +47,9 @@ public class RobotContainer {
     public final Trigger UnclogTower = opController.y();
     public final Trigger TowerShot = opController.a();
     public final Trigger AutoAlign = new Trigger(() -> drivecontroller.getRawAxis(XboxController.Axis.kLeftTrigger.value) >= 0.5);
-    public final Trigger LockWheels = new Trigger(() -> opController.getRawAxis(XboxController.Axis.kRightTrigger.value) >= 0.5);
+    public final Trigger LockWheels = new Trigger(() -> (opController.getRawAxis(XboxController.Axis.kRightTrigger.value) >= 0.5 && ShootButton.getAsBoolean()) || drivecontroller.button(8).getAsBoolean() );
     
+
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     
@@ -58,7 +59,8 @@ public class RobotContainer {
     
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    public final Limelight m_ll = new Limelight("limelight-shooter", drivetrain);
+    public final Limelight m_ll_shooter = new Limelight("limelight-shooter", drivetrain);
+    public final Limelight m_ll_tower = new Limelight("limelight-tower", drivetrain);
     public static final Shooter m_shooter = new Shooter();
     public static final Hopper m_hopper = new Hopper();
     public final Intake m_intake = new Intake();
@@ -77,7 +79,8 @@ public class RobotContainer {
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-        drivetrain.m_Limelight = m_ll;
+        drivetrain.m_LimelightTower = m_ll_tower;
+        drivetrain.m_Limelight_Shooter = m_ll_shooter;
 
         NamedCommands.registerCommand("SPINUPBUMP", new SpinUp(m_shooter, Constants.ShooterConstants.BUMPAUTOSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
         NamedCommands.registerCommand("SPINUPTOWER", new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP)));
@@ -114,7 +117,7 @@ public class RobotContainer {
                 () -> Constants.DRIVER_CONTROLER.getRawAxis(rotationAxis), 
                 () -> true, 
                 () -> drivecontroller.leftBumper().getAsBoolean(),
-                m_ll,
+                m_ll_shooter,
                 AutoAlign,
                 ShootButton,
                 LockWheels
@@ -136,21 +139,21 @@ public class RobotContainer {
 
         Spinup.whileTrue(new SpinUp(m_shooter, drivetrain::getDesiredShooterVelocity));
         Spinup.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP));
-        Spinup.onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, BotState.RESET).alongWith(new SpinDown(m_shooter)));
+        Spinup.onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, BotState.CARRY).alongWith(new SpinDown(m_shooter)));
         
 
         AgitateHop.onTrue(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.AGITATE_PIVOT_POSITION))).onFalse(new InstantCommand(() -> m_intake.setIntakePivotPose(Constants.IntakeConstants.SHOOT_PIVOT_POSITION)));
         UnclogTower.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.UNCLOG))
-            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET));
+            .onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY));
 
         
         TowerShot.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.TOWERSPINSPEED));
         TowerShot.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP));
-        TowerShot.onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.RESET)));
+        TowerShot.onFalse(new SpinDown(m_shooter).alongWith(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.CARRY)));
 
         FullFieldPass.whileTrue(new SpinUp(m_shooter, Constants.ShooterConstants.FFPASSSPEED));
         FullFieldPass.onTrue(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, RobotState.BotState.SPINUP));
-        Spinup.onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, BotState.RESET).alongWith(new SpinDown(m_shooter)));
+        Spinup.onFalse(new SetBotState(m_robotState, m_hopper, m_intake, m_tower, BotState.CARRY).alongWith(new SpinDown(m_shooter)));
         
         opController.pov(270).onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.40))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));
         //opController.rightBumper().onTrue(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(-0.70))).onFalse(new InstantCommand(()->m_intake.setIntakePivotPercentOutput(0)));

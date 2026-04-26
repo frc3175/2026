@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.499940241655992,
-        "y": 5.579622068975303
+        "x": 4.465055097249297,
+        "y": 5.557883086868545
       },
       "isLocked": false,
       "linkedName": "Left States Shoot Position"
     },
     {
       "anchor": {
-        "x": 6.0932,
-        "y": 5.466044444444444
+        "x": 6.466077777777778,
+        "y": 5.476122222222221
       },
       "prevControl": {
-        "x": 5.683166550251956,
-        "y": 5.503768992308095
+        "x": 6.095043564047988,
+        "y": 5.471899954542595
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 1.5,
     "rotation": -37.775684305954655
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -58.39249775375109
+    "rotation": -52.392
   },
   "useDefaultConstraints": true
 }

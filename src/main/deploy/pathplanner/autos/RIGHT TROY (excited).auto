@@ -56,20 +56,20 @@
                 "data": {
                   "pathName": "right troy back over bump"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SPINUPBUMP"
+                }
               }
             ]
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "SPINUPTOWER"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 0.2
           }
         },
         {
@@ -97,27 +97,41 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "RESET"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SPINDOWN"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Troy Back to Center"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Troy Back to Center"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SPINDOWN"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "INTAKE"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

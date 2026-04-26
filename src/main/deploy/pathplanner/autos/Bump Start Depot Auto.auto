@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Depot Auto Part 1"
+            "pathName": "Depot Auto Part 1 Bump Start"
           }
         },
         {
@@ -36,9 +36,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0
+            "pathName": "Depot Auto Part 3"
           }
         },
         {
@@ -48,15 +48,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Depot Auto Part 3"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 1.5
           }
         },
         {
@@ -74,19 +68,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AGITATE"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RESET"
+            "name": "CARRY"
           }
         },
         {
