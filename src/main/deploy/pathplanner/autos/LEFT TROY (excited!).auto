@@ -36,15 +36,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "CARRY"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "CARRY"
-                }
-              },
               {
                 "type": "path",
                 "data": {

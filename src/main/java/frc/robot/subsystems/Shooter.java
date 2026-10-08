@@ -50,8 +50,10 @@ public class Shooter extends SubsystemBase {
           .withNeutralMode(NeutralModeValue.Coast)
           .withInverted(InvertedValue.CounterClockwise_Positive))
       .withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(Amps.of(Constants.ShooterConstants.SHOOTERCURRENTLIMIT))
+      .withStatorCurrentLimit(Constants.ShooterConstants.SHOOTERCURRENTLIMIT)
+      .withSupplyCurrentLimit(Constants.ShooterConstants.SHOOTERSUPPLYLIMIT)
+      .withSupplyCurrentLimitEnable(true)
       .withStatorCurrentLimitEnable(true));
-      
     var slot0Configs = shooterConfig.Slot0;
       
     slot0Configs.kP = Constants.ShooterConstants.SHOOTER_P;

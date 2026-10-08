@@ -6,6 +6,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import static edu.wpi.first.units.Units.Feet;
+
+import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -92,7 +94,8 @@ public class Constants {
         public static final double ANGLECOEFFICIENT = 1.0; //TODO: TUNE FOR SHOOT ON MOVE (PROBOBALY LOWER)
         public static final double WHEELRADIUS = 2.0;
 
-        public static final double SHOOTERCURRENTLIMIT = 45.0; 
+        public static final double SHOOTERCURRENTLIMIT = 80.0; 
+        public static final double SHOOTERSUPPLYLIMIT = 40.0;
 
         public static final double BUMPAUTOSPEED = -41.25;
         public static final double BUMPTELESPEED = -40.75;
@@ -127,6 +130,7 @@ public class Constants {
         public static final double SHOOTER_S = 0;
         public static final double SHOOTER_A = 5;
         */
+        
 
 
     } 
